@@ -22,6 +22,7 @@ public class LoginController {
                                  @RequestParam(name = "user_password") String userPassword,
                                  Model model) {
         if (userName.equals("NaamMKB") && userPassword.equals("geheim")) {
+            model.addAttribute("welcome", userName);
             return "sme_accountmanager_welcome";
         }else if (userName.equals("NaamParticulieren")&& userPassword.equals("geheim")) {
             return "private_client_accountmanager_welcome";
