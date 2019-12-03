@@ -9,6 +9,7 @@ public class IndexController {
 
     @PostMapping("go_to_login")
     public String go_to_loginHandler (Model model){
+        model.addAttribute("header_inlog", "Vul hier uw gegevens in");
         return "login";
     }
 

@@ -7,6 +7,7 @@
 <body>
     <h1> Welkom bij de Padaj Bank</h1>
     <h2>Inloggen</h2>
+    <h3><span th:text="${header_inlog}"/></h3>
         <form action="do_login" method="post">
             <table>
                 <tr>
@@ -19,8 +20,6 @@
                 </tr>
                     <td></td>
                     <td><input type="submit" value="Inloggen"></td>
-
-
             </table>
             <td>Wachtwoord vergeten klik <a href="set_password">hier</a></td>
         </form>
