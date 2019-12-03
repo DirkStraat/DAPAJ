@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Welkom bij de Padaj Bank</title>
+</head>
+<body>
+    <h1> Welkom bij de Padaj Bank</h1>
+    <h2>Inloggen</h2>
+        <form action="do_login" method="post">
+            <table>
+                <tr>
+
+                    <td>Gebruikersnaam:</td>
+                    <td><input type="text" name="user_name"></td>
+                </tr>
+                <tr>
+                    <td>Wachtwoord:</td>
+                    <td><input type="password" name="user_password"></td>
+                </tr>
+                    <td><input type="submit" value="Inloggen"></td>
+            </table>
+        </form>
+</body>
+</html>
