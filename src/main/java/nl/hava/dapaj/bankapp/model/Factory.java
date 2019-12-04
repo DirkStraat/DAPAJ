@@ -42,13 +42,7 @@ public class Factory {
         String firstName = faker.name().firstName();
         String prefix = this.createPrefix();
         String lastName = faker.name().lastName();
-        String street = faker.address().streetName();
-        String houseNr = Integer.toString((int)(Math.random()*600)+1);
-        String addressString = String.format(street + " " + houseNr);
-        String postcode = this.createRandomPostcode();
-        String city = faker.address().city();
-
-        Address address = new Address(addressString, postcode, city, "Nederland");
+        Address address = generateAddress();
         Customer customer = new Customer(firstName, prefix, lastName, address);
         return customer;
     }
@@ -73,5 +67,23 @@ public class Factory {
         }
 
         return customers;
+    }
+
+    public Address generateAddress(){
+        String street = faker.address().streetName();
+        String houseNr = Integer.toString((int)(Math.random()*600)+1);
+        String addressString = String.format(street + " " + houseNr);
+        String postcode = this.createRandomPostcode();
+        String city = faker.address().city();
+
+        Address address = new Address(addressString, postcode, city, "Nederland");
+        return address;
+    }
+
+    public Company generateCompany(){
+        String companyName = faker.company().name();
+        Address address = generateAddress();
+        Company company = new Company(companyName, address);
+        return company;
     }
 }
