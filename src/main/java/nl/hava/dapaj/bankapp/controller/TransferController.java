@@ -4,14 +4,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-public class IndexController {
+public class TransferController {
 
-    @PostMapping("go_to_login")
-    public String go_to_loginHandler (Model model){
-        model.addAttribute("header_inlog", "Vul hier uw gegevens in");
-        return "login";
+    @PostMapping("do_transfer")
+    public String doTransferHandler(Model model) {
+        return "";
     }
 
 }
