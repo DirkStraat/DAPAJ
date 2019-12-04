@@ -22,7 +22,7 @@ public class IBANGenerator {
      *                      a banck account number
      *                      prefixed with zeros if necessary to that it is 10 characters long
      */
-    private static String makeIBAN() {
+    private static String makeBBAN() {
         String temp = String.valueOf(incrementalID);
         int remainingLength = MAX_LENGTH_BANK_ACCOUNT - temp.length();
 
@@ -43,7 +43,7 @@ public class IBANGenerator {
     private static String makeControlNumber() {
         String dpagToNumber = "13251019";
         String nlToNumber = "2321";
-        String numericReference = dpagToNumber + makeIBAN() + nlToNumber + "00";
+        String numericReference = dpagToNumber + makeBBAN() + nlToNumber + "00";
 
         BigInteger numRef = new BigInteger(numericReference);
         BigInteger divisor = new BigInteger("97");
@@ -59,7 +59,7 @@ public class IBANGenerator {
      */
     public static String generateIBAN() {
         incrementalID++;
-        return COUNTRY_CODE + makeControlNumber() + dapajBankCode + makeIBAN();
+        return COUNTRY_CODE + makeControlNumber() + dapajBankCode + makeBBAN();
     }
 
 
