@@ -5,9 +5,20 @@
     <title>Welkom hoofd MKB</title>
 </head>
 <body>
-<h1>Hoofd MKB keuze pagina</h1>
-<h2>Welkom <span th:text="${welcome}"/></h2>
-<h3>Hieronder uw keuze mogelijkheden</h3>
+    <h1>Hoofd MKB keuze pagina</h1>
+        <h2>Welkom <span th:text="${welcome}"/></h2>
+            <h3>Hieronder uw keuze mogelijkheden</h3>
+    <table>
+    <tr>
+        <td> <a href="average_balance_branch">Saldo per sector overzicht</a></td>
+        <td> <a href="10_highest_balance_smec">Klant met hoogste saldo overzicht</a></td>
+    </tr>
+    <tr>
+        <td> <a href="10_highest_volume_smec">Meest active klant overzicht</a></td>
+        <td> <a href="link_terminal">Automaat koppelen</a></td>
+        <td>Wachtwoord vergeten klik <a href="average_balance_branch">hier</a></td>
 
+    </tr>
+    </table>
 </body>
 </html>
