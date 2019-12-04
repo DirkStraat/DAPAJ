@@ -1,11 +1,92 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
-    <title>Nieuwe klant</title>
+    <title>Grow your savings. Join DAPAJ today.</title>
 </head>
+
 <body>
-<h1>Nieuwe klant</h1>
+    <h1>DAPAJ Bank | Invest In Your Future. Join Today.</h1>
+
+    <form method="post">
+        <table>
+            <tr>
+                <td>First Name:</td>
+                <td><input type="text" placeholder="First Name" name="name"></td>
+            </tr>
+
+            <tr>
+                <td>Insert:</td>
+                <td><select>
+                    <option></option>
+                    <option>van</option>
+                    <option>van der</option>
+                    <option>den</option>
+                    <option>van den</option>
+                </select></td>
+            </tr>
+
+            <tr>
+                <td>Last Name:</td>
+                <td><input type="text" placeholder="Last Name" name="last name"></td>
+            </tr>
+
+            <tr>
+                <td>Client Type:</td>
+                <td><input type="radio" name="Client Type">Particular</td>
+                <td><input type="radio" name="Client Type">Company</td>
+            </tr>
+
+            <tr>
+                <td>Email:</td>
+                <td><input type="email" placeholder="Email" name="email"></td>
+            </tr>
+
+            <tr>
+                <td>BSN:</td>
+                <td><input type="number" placeholder="BSN Number" name="BSN"></td>
+            </tr> <br/>
+
+            <tr>
+                <td>Address:</td>
+                <td><input type="text" placeholder="Street and number" name="address"></td>
+            </tr> <br/>
+
+            <tr>
+                <td>Floor/Anex:</td>
+                <td><input type="text" placeholder="Floor or anex" name="anexation"></td>
+            </tr> <br/>
+
+            <tr>
+                <td>Postcode:</td>
+                <td><input type="text" placeholder="Postcode" name="postcode"></td>
+            </tr> <br/>
+
+            <tr>
+                <td>Floor/Anex:</td>
+                <td><input type="text" placeholder="Floor or anex" name="anexation"></td>
+            </tr> <br/>
+
+            <tr>
+                <td>City:</td>
+                <td><input type="text" placeholder="City" name="city"></td>
+            </tr> <br/>
+
+            <tr>
+                <td>Country:</td>
+                <td><input type="text" placeholder="Country" name="country"></td>
+            </tr> <br/>
+
+
+            <tr>
+                <td>Submit:</td>
+                <td><input type="submit" value="Submit" name="submit"></td>
+            </tr>
+
+
+        </table>
+    </form>
 
 </body>
 </html>

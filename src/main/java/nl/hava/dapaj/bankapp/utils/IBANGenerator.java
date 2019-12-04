@@ -55,7 +55,7 @@ public class IBANGenerator {
 
     /**
      *
-      * @return     the a String of an IBAN and increments the basic account number
+     * @return     the a String of an IBAN and increments the basic account number
      */
     public static String generateIBAN() {
         incrementalID++;
