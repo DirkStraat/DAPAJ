@@ -6,16 +6,14 @@ public class Employee extends User {
     private String employeePassword;
     private String role;
 
-    public Employee(String firstName, String prefix, String lastName, String address, String postcode, String city, String country, int employeeID, String employeeLoginName, String employeePassword, String role) {
-        super(firstName, prefix, lastName, address, postcode, city, country);
+    public Employee(String firstName, String prefix, String lastName, Address address, String role) {
+        super(firstName, prefix, lastName, address);
         this.employeeID = employeeID;
-        this.employeeLoginName = employeeLoginName;
-        this.employeePassword = employeePassword;
+        this.employeeLoginName = this.createEmployeeLoginName();
         this.role = role;
     }
 
-    @Override
-    public String creatUserName() {
-        return null;
+    public String createEmployeeLoginName() {
+        return String.format("Emp$"+this.loginName);
     }
 }

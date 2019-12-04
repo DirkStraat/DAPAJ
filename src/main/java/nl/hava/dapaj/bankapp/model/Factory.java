@@ -25,11 +25,12 @@ public class Factory {
             String lastName = faker.name().lastName();
             String street = faker.address().streetName();
             String houseNr = Integer.toString((int)(Math.random()*600)+1);
-            String addres = String.format(street + " " + houseNr);
+            String addressString = String.format(street + " " + houseNr);
             String postcode = this.createRandomPostcode();
             String city = faker.address().city();
 
-            Customer customer = new Customer(firstName, prefix, lastName, addres, postcode, city, "Nederland");
+            Address address = new Address(addressString, postcode, city, "Nederland");
+            Customer customer = new Customer(firstName, prefix, lastName, address);
             customers.add(customer);
         }
 
