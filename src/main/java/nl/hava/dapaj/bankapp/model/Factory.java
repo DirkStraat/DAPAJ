@@ -16,30 +16,6 @@ public class Factory {
         this.faker = new Faker(new Locale("nl"));
     }
 
-    public Set<Customer> generateCustomers(int amount){
-        Set<Customer>  customers = new HashSet<>();
-
-        for (int i = 0; i <amount ; i++) {
-            String firstName = faker.name().firstName();
-            String prefix = this.createPrefix();
-            String lastName = faker.name().lastName();
-            String street = faker.address().streetName();
-            String houseNr = Integer.toString((int)(Math.random()*600)+1);
-            String addressString = String.format(street + " " + houseNr);
-            String postcode = this.createRandomPostcode();
-            String city = faker.address().city();
-
-            Address address = new Address(addressString, postcode, city, "Nederland");
-            Customer customer = new Customer(firstName, prefix, lastName, address);
-            customers.add(customer);
-        }
-
-        for (Customer customer : customers) {
-            System.out.println(customer);
-        }
-
-        return customers;
-    }
 
     private String createRandomPostcode() {
         String result;
@@ -60,5 +36,42 @@ public class Factory {
             case 4: return "van den";
             default: return "toevalbestaatniet";
         }
+    }
+
+    private Customer generateCustomer(){
+        String firstName = faker.name().firstName();
+        String prefix = this.createPrefix();
+        String lastName = faker.name().lastName();
+        String street = faker.address().streetName();
+        String houseNr = Integer.toString((int)(Math.random()*600)+1);
+        String addressString = String.format(street + " " + houseNr);
+        String postcode = this.createRandomPostcode();
+        String city = faker.address().city();
+
+        Address address = new Address(addressString, postcode, city, "Nederland");
+        Customer customer = new Customer(firstName, prefix, lastName, address);
+        return customer;
+    }
+
+    private Employee generateEmployee(String role){
+        Customer employeeAsCustomer = generateCustomer();
+        Employee employee = new Employee(employeeAsCustomer.firstName, employeeAsCustomer.prefix,
+                employeeAsCustomer.lastName, employeeAsCustomer.address, role);
+        return employee;
+    }
+
+    public Set<Customer> generateCustomers(int amount){
+        Set<Customer>  customers = new HashSet<>();
+
+        for (int i = 0; i <amount ; i++) {
+            Customer customer = this.generateCustomer();
+            customers.add(customer);
+        }
+
+        for (Customer customer : customers) {
+            System.out.println(customer);
+        }
+
+        return customers;
     }
 }
