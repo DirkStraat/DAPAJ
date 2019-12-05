@@ -14,7 +14,7 @@ public class IBANGenerator {
     private static final String COUNTRY_CODE = "NL";
     private static final String dapajBankCode = "DPAJ";
     private static final int MAX_LENGTH_BANK_ACCOUNT = 10;
-    private static int incrementalID;
+    private static int incrementalID = 123456;
 
     /**
      *

@@ -12,9 +12,9 @@ public class JoinController {
         return "join_dapaj";
     }
 
-/*    @PostMapping("join_dapaj")
+    @PostMapping("set_password")
     public String processJoinForm() {
-        return null;
-    }*/
+        return "set_password";
+    }
 
 }
