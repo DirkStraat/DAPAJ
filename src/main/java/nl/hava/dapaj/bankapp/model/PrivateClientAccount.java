@@ -1,4 +1,4 @@
 package nl.hava.dapaj.bankapp.model;
 
-public class PrivateClientAccount {
-}
+/*public class PrivateClientAccount extends Account {
+}*/
