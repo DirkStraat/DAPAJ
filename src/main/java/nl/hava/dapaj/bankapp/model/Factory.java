@@ -2,28 +2,21 @@ package nl.hava.dapaj.bankapp.model;
 
 import com.github.javafaker.Faker;
 
-import java.util.HashSet;
-import java.util.Locale;
-import java.util.Set;
+import java.util.*;
+
 
 public class Factory {
-    public static final int POSTCODE_MINIMUM = 50;
-    public static final int POSTCODE_SCHAAL = 5;
+    static final int NUMBER_OF_CITIES = 10;
+    static final int NUMBER_OF_STREETS = 20;
+    static final int NUMBER_OF_HOUSES = 50;
 
     private Faker faker;
+    private List<Address> addresses;
 
     public Factory(){
         this.faker = new Faker(new Locale("nl"));
-    }
-
-
-    private String createRandomPostcode() {
-        String result;
-        int postcodeGetal = (int) (POSTCODE_MINIMUM + Math.random() * POSTCODE_SCHAAL);
-        char letter1 = (char)('A' + Math.random() * ('D' - 'A' + 1));
-        char letter2 = (char)('A' + Math.random() * ('D' - 'A' + 1));
-        result = "10" + postcodeGetal + letter1 + letter2;
-        return result;
+        this.addresses = new ArrayList<>();
+        generateAddresses();
     }
 
     private String createPrefix(){
@@ -42,7 +35,7 @@ public class Factory {
         String firstName = faker.name().firstName();
         String prefix = this.createPrefix();
         String lastName = faker.name().lastName();
-        Address address = generateAddress();
+        Address address = pickRandomAddress();
         Customer customer = new Customer(firstName, prefix, lastName, address);
         return customer;
     }
@@ -69,21 +62,36 @@ public class Factory {
         return customers;
     }
 
-    public Address generateAddress(){
-        String street = faker.address().streetName();
-        String houseNr = Integer.toString((int)(Math.random()*600)+1);
-        String addressString = String.format(street + " " + houseNr);
-        String postcode = this.createRandomPostcode();
-        String city = faker.address().city();
+    public void generateAddresses(){
+        String country = "Nederland";
 
-        Address address = new Address(addressString, postcode, city, "Nederland");
-        return address;
+        for (int i = 0; i <NUMBER_OF_CITIES ; i++) {
+            String city = faker.address().city();
+            for (int j = 0; j <NUMBER_OF_STREETS ; j++) {
+                String street = faker.address().streetName();
+                String postcode = faker.address().zipCode();
+                for (int k = 0; k <NUMBER_OF_HOUSES ; k++) {
+                    String housenumber = String.valueOf(k+1);
+                    String addressString = String.format(street + " " + housenumber);
+                    Address address = new Address(addressString, postcode, city, country);
+                    addresses.add(address);
+                }
+            }
+        }
     }
 
     public Company generateCompany(){
         String companyName = faker.company().name();
-        Address address = generateAddress();
+        Address address = pickRandomAddress();
         Company company = new Company(companyName, address);
         return company;
+    }
+
+    private Address pickRandomAddress(){
+        int addressessSize = addresses.size();
+        int randomAddressIndex = (int)(Math.random()*addressessSize);
+        Address address = addresses.get(randomAddressIndex);
+        addresses.remove(randomAddressIndex);
+        return address;
     }
 }
