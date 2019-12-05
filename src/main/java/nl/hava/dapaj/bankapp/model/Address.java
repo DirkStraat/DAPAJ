@@ -1,5 +1,8 @@
 package nl.hava.dapaj.bankapp.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Address {
     private String address;
     private String postcode;
