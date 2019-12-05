@@ -3,12 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <style>
+        .dropbtn {
+            background-color: black;
+            color: white;
+            padding: 5px;
+            font-size: 30px;
+            border: none;
+        }
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: lightgrey;
+            min-width: 40px;
+            z-index: 1;
+        }
+        .dropdown-content a {
+            color: black;
+            padding: 4px 4px;
+            text-decoration: none;
+            display: block;
+        }
+        .dropdown-content a:hover {background-color: white;}
+        .dropdown:hover .dropdown-content {display: block;}
+        .dropdown:hover .dropbtn {background-color: grey;}
+    </style>
 </head>
 <body>
-<h1>Welkom bij de Padaj Bank</h1>
+<h1>Welkom bij de Dapaj Bank</h1>
 <form action="go_to_login" method="post">
     Klik op inloggen
-    <input type="submit"  value="Inloggen"></td>
+    <input type="submit"  value="Inloggen"><br/>
 </form>
+
+<div class="dropdown">
+    <button class="dropbtn">Menu</button>
+    <div class="dropdown-content">
+        <a href="/join_dapaj">Join</a>
+        <a href="/set_password">Login</a>
+    </div>
+</div>
+
 </body>
 </html>
