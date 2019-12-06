@@ -1,21 +1,41 @@
 package nl.hava.dapaj.bankapp.model;
 
+import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
+import java.util.HashSet;
+import java.util.Set;
+
+@Entity
 public class Customer extends User {
-    private static int customerCount = 10000;
+    @ManyToMany
+    private Set<Account> accounts;
 
+    public Customer(){
+        super();
+    }
 
-    protected Customer(String firstName, String prefix, String lastName,
+    public Customer(String firstName, String prefix, String lastName,
                        Address address) {
         super(firstName, prefix, lastName, address);
-        this.customerId = customerCount;
-        customerCount++;
-        this.loginName = this.createUserName();
+        super.setLoginName(this.createUserName());
+        accounts = new HashSet<>();
     }
 
     @Override
     public String toString() {
-        if (prefix != null){
-        return String.format(firstName +" "+prefix +" "+lastName +" "+ address+" "+loginName+" "+customerId);
-        } else return String.format(firstName +" "+lastName +" "+ address+" "+loginName+" "+customerId);
+        if (super.getPrefix() != null){
+        return String.format(super.getFirstName() +" "+super.getPrefix() +" "+super.getLastName() +" "+ super.getAddress()+
+                " "+super.getLoginName()+" "+this.customerId);
+        } else return String.format(super.getFirstName() +" "+super.getLastName() +" "+ super.getAddress()+
+                " "+super.getLoginName()+" "+super.getCustomerId());
     }
+
+    public Set<Account> getAccounts() {
+        return accounts;
+    }
+
+    public void setAccounts(Set<Account> accounts) {
+        this.accounts = accounts;
+    }
+
 }

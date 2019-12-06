@@ -42,8 +42,7 @@ public class Factory {
 
     private Employee generateEmployee(String role){
         Customer employeeAsCustomer = generateCustomer();
-        Employee employee = new Employee(employeeAsCustomer.firstName, employeeAsCustomer.prefix,
-                employeeAsCustomer.lastName, employeeAsCustomer.address, role);
+        Employee employee = new Employee(role, employeeAsCustomer);
         return employee;
     }
 
@@ -71,9 +70,8 @@ public class Factory {
                 String street = faker.address().streetName();
                 String postcode = faker.address().zipCode();
                 for (int k = 0; k <NUMBER_OF_HOUSES ; k++) {
-                    String housenumber = String.valueOf(k+1);
-                    String addressString = String.format(street + " " + housenumber);
-                    Address address = new Address(addressString, postcode, city, country);
+                    int housenumber = k+1;
+                    Address address = new Address(street, housenumber, postcode, city, country);
                     addresses.add(address);
                 }
             }

@@ -1,11 +1,26 @@
 package nl.hava.dapaj.bankapp.model;
 
+import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
+@Entity
 public class Company {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int companyId;
+
     private String companyName;
+
+    @ManyToOne
     private Address address;
-    private List<Customer> companyEmployees;
+
+    @OneToMany
+    private List<User> companyEmployees;
+
+    @OneToMany(mappedBy = "company")
+    private Set<SMEAccount> accounts;
 
     public Company(String companyName, Address address) {
         this.companyName = companyName;
@@ -28,11 +43,11 @@ public class Company {
         this.address = address;
     }
 
-    public List<Customer> getCompanyEmployees() {
+    public List<User> getCompanyEmployees() {
         return companyEmployees;
     }
 
-    public void setCompanyEmployees(List<Customer> companyEmployees) {
+    public void setCompanyEmployees(List<User> companyEmployees) {
         this.companyEmployees = companyEmployees;
     }
 }
