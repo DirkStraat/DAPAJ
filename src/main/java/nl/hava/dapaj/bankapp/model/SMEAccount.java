@@ -13,7 +13,7 @@ public class SMEAccount extends Account {
         this.branch = branch;
         this.accountManager = accountManager;
         this.company = company;
-        super.accountName = String.format(company.companyName + company.address.getCity());
+        super.accountName = String.format(company.getCompanyName() + company.getAddress().getCity());
         this.authorizedRepresentatives = new HashSet<>();
         authorizedRepresentatives.add(customer);
     }
