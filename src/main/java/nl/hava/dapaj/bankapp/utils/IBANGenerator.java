@@ -3,6 +3,7 @@ package nl.hava.dapaj.bankapp.utils;
 import java.math.BigInteger;
 
 /**
+ * @author Pedro Esgueira
  * This class generates a sequencial (Dutch) IBAN.
  * A Dutch IBAN is composed of
  *              a two letter country code,
@@ -14,29 +15,29 @@ public class IBANGenerator {
     private static final String COUNTRY_CODE = "NL";
     private static final String dapajBankCode = "DPAJ";
     private static final int MAX_LENGTH_BANK_ACCOUNT = 10;
-    private static int incrementalID = 123456;
+    private static int incrementalID = 123456; // initial starting point to increment bank account number
 
     /**
      *
      * @return      A 10 digit numeric String composed of
      *                      a banck account number
-     *                      prefixed with zeros if necessary to that it is 10 characters long
+     *                      prefixed with zeros if necessary so that it is 10 characters long
      */
     private static String makeBBAN() {
         String temp = String.valueOf(incrementalID);
         int remainingLength = MAX_LENGTH_BANK_ACCOUNT - temp.length();
 
-        // add zeroes at the beginning of the account number, until it reached a length of 10
+        // add zeroes at the beginning of the account number, until it reaches a length of 10
         return "0".repeat(Math.max(0, remainingLength)) + (incrementalID);
     }
 
 
     /**
-     * This method follows the dutch guidelines to generating a two number control check
-     * It first takes the sequence of bank code + BBAN + country code + two zeroes at the end
-     * The proceeds to transform letters to their equivalent numeric number (A = 10, ... Z = 35)
-     * Then divides that number by the modules of 97
-     * And finally subtracts that result from 97
+     * This method follows the dutch guidelines to generating a two number control check:
+     *      It first takes the sequence of bank code + BBAN + country code + adds two zeroes at the end
+     *      Then proceeds to transform letters to their equivalent numeric number (A = 10, ... Z = 35)
+     *      And divides that number by the module of 97
+     *      And finally subtracts that result from 97
      *
      * @return      Returns the String value of the end result
      */
@@ -55,12 +56,11 @@ public class IBANGenerator {
 
     /**
      *
-     * @return     the a String of an IBAN and increments the basic account number
+     * @return     the String of an IBAN and increments the basic account number
      */
     public static String generateIBAN() {
         incrementalID++;
         return COUNTRY_CODE + makeControlNumber() + dapajBankCode + makeBBAN();
     }
-
 
 }
