@@ -1,16 +1,29 @@
 package nl.hava.dapaj.bankapp.model;
 
+import javax.persistence.*;
 import java.util.Set;
 
-public abstract class User {
+@Entity
+public class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected int customerId;
+
     protected String firstName;
     protected String prefix;
     protected String lastName;
     protected String loginName;
     protected String password;
+
+    @ManyToOne
     protected Address address;
+
+    @ManyToMany
     protected Set<Account> accounts;
+
+    public User(){
+        super();
+    }
 
     protected User(String firstName, String prefix, String lastName, Address address) {
         this.firstName = firstName;
@@ -29,4 +42,67 @@ public abstract class User {
         return userName;
     }
 
+    public int getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(int customerId) {
+        this.customerId = customerId;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getPrefix() {
+        return prefix;
+    }
+
+    public void setPrefix(String prefix) {
+        this.prefix = prefix;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getLoginName() {
+        return loginName;
+    }
+
+    public void setLoginName(String loginName) {
+        this.loginName = loginName;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+
+    public Set<Account> getAccounts() {
+        return accounts;
+    }
+
+    public void setAccounts(Set<Account> accounts) {
+        this.accounts = accounts;
+    }
 }

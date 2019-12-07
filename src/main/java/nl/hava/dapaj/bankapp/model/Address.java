@@ -1,24 +1,47 @@
 package nl.hava.dapaj.bankapp.model;
 
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import java.util.Set;
+
+@Entity
 public class Address {
-    private String address;
+    private String street;
+    private int housenumber;
+    private String suffix;
     private String postcode;
     private String city;
     private String country;
 
-    public Address(String address, String postcode, String city, String country) {
-        this.address = address;
+    @OneToMany(mappedBy = "address")
+    private Set<User> inhabitants;
+
+    @OneToMany(mappedBy = "address")
+    private Set<Company> companies;
+
+    public Address() {
+        super();
+    }
+
+    public Address (String street, int housenumber, String postcode, String city, String country) {
+        this.street = street;
+        this.housenumber = housenumber;
         this.postcode = postcode;
         this.city = city;
         this.country = country;
     }
 
-    public String getAddress() {
-        return address;
+    public Address(String street, int housenumber, String suffix, String postcode, String city, String country) {
+        this(street, housenumber, postcode, city, country);
+        this.suffix = suffix;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public String getStreet() {
+        return street;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
     }
 
     public String getPostcode() {
@@ -45,8 +68,42 @@ public class Address {
         this.country = country;
     }
 
+    public int getHousenumber() {
+        return housenumber;
+    }
+
+    public void setHousenumber(int housenumber) {
+        this.housenumber = housenumber;
+    }
+
+    public String getSuffix() {
+        return suffix;
+    }
+
+    public void setSuffix(String suffix) {
+        this.suffix = suffix;
+    }
+
+    public Set<User> getInhabitants() {
+        return inhabitants;
+    }
+
+    public void setInhabitants(Set<User> inhabitants) {
+        this.inhabitants = inhabitants;
+    }
+
+    public Set<Company> getCompanies() {
+        return companies;
+    }
+
+    public void setCompanies(Set<Company> companies) {
+        this.companies = companies;
+    }
+
     @Override
     public String toString() {
-        return String.format(address+" "+postcode+" "+city+" "+country);
-    }
+        if (suffix == null) {
+            return String.format(street + " " + housenumber + " " + postcode + " " + city + " " + country);
+        } else  return String.format(street + " " + housenumber + " " +suffix+ " "+ postcode + " " + city + " " + country);
+     }
 }

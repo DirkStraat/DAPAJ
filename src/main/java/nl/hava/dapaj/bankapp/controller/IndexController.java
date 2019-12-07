@@ -14,4 +14,40 @@ public class IndexController {
         return "login";
     }
 
+    @GetMapping("go_to_active_client_overview")
+    public String goToActiveClientOverview (){
+        return "active_client_overview";
+    }
+
+    @GetMapping("go_to_average_balance_branch")
+    public String goTOAverageBalanceBranch (){
+        return "average_balance_branch";
+    }
+
+    @GetMapping("go_to_customer_welcome")
+    public String goToCustomerWelcome (){
+        return "customer_welcome";
+    }
+
+    @GetMapping("go_to_link_terminal")
+    public String goToLinkTerminal (){
+        return "link_terminal";
+    }
+
+    @GetMapping("go_to_private_client_accountmanager_welcome")
+    public String goToPrivateClientAccountmanagerWelcome (){
+        return "private_client_accountmanager_welcome";
+    }
+
+    @GetMapping("go_to_sme_accountmanager_welcome")
+    public String goToSmeAccountmanagerWelcome (){
+        return "sme_accountmanager_welcome";
+    }
+
+    @GetMapping("go_to_transfer")
+    public String goToTransfer (){
+        return "transfer";
+    }
+
+
 }
