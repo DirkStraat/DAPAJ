@@ -5,9 +5,10 @@ import java.util.Set;
 
 @Entity
 public class Employee extends User {
-    @Id
+    //met onderstaande id werkt Hibernate niet
+    /*@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int employeeID;
+    private int employeeID;*/
 
     private String employeeLoginName;
     private String employeePassword;
@@ -15,7 +16,9 @@ public class Employee extends User {
 
     @OneToMany(mappedBy = "accountManager")
     private Set<SMEAccount> managedAccounts;
-    private Customer customer;
+
+    /*@OneToOne(mappedBy = "")
+    private Customer customer;*/
 
     public Employee(){
         super();
@@ -25,20 +28,20 @@ public class Employee extends User {
         super(customer.getFirstName(), customer.getPrefix(), customer.getLastName(), customer.getAddress());
         this.employeeLoginName = this.createEmployeeLoginName();
         this.role = role;
-        this.customer = customer;
+        //this.customer = customer;
     }
 
     private String createEmployeeLoginName() {
         return String.format("Emp$"+this.loginName);
     }
 
-    public int getEmployeeID() {
+    /*public int getEmployeeID() {
         return employeeID;
     }
 
     public void setEmployeeID(int employeeID) {
         this.employeeID = employeeID;
-    }
+    }*/
 
     public String getEmployeeLoginName() {
         return employeeLoginName;
@@ -64,13 +67,13 @@ public class Employee extends User {
         this.role = role;
     }
 
-    public Customer getCustomer() {
+    /*public Customer getCustomer() {
         return customer;
     }
 
     public void setCustomer(Customer customer) {
         this.customer = customer;
-    }
+    }*/
 
     public Set<SMEAccount> getManagedAccounts() {
         return managedAccounts;

@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public  class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
