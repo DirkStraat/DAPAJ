@@ -31,12 +31,14 @@ public class User {
         this.prefix = prefix;
         this.lastName = lastName;
         this.address = address;
+        this.loginName = this.createUserName();
+
     }
 
     protected String createUserName() {
         String part1 = this.firstName.substring(0,2);
         String part2 = this.lastName.substring(0,2);
-        String part3 = Integer.toString(this.customerId%1000);
+        String part3 = Integer.toString((int)(Math.random()*300)+1);
 
         String userName = String.format(part1+part2+part3);
 
