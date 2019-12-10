@@ -14,7 +14,7 @@ public  class Account {
     protected String accountName;
     protected String iban;
 
-    @ManyToMany(mappedBy="accounts")
+    @ManyToMany
     protected Set<Customer> customers;
 
     protected double balance;
@@ -23,16 +23,10 @@ public  class Account {
         super();
     }
 
-    public Account(String iban, Customer customer) {
-        this.accountName = String.format(customer.firstName.charAt(0) + customer.prefix + customer.lastName);
+    public Account(String iban) {
+        this.accountName = "this must be replaced";
         this.iban = iban;
         this.customers = new HashSet<>();
-        customers.add(customer);
-        this.balance = 0.0;
-    }
-
-    public Account (String iban){
-        this.iban = iban;
         this.balance = 0.0;
     }
 
@@ -74,5 +68,9 @@ public  class Account {
 
     public void setCustomers(Set<Customer> customers) {
         this.customers = customers;
+    }
+
+    public void addCustomer(Customer customer){
+        customers.add(customer);
     }
 }
