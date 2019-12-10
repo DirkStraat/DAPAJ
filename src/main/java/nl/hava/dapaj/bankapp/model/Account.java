@@ -15,7 +15,7 @@ public  class Account {
     protected String iban;
 
     @ManyToMany(mappedBy="accounts")
-    protected Set<User> authorizedRepresentatives;
+    protected Set<Customer> customers;
 
     protected double balance;
 
@@ -26,8 +26,8 @@ public  class Account {
     public Account(String iban, Customer customer) {
         this.accountName = String.format(customer.firstName.charAt(0) + customer.prefix + customer.lastName);
         this.iban = iban;
-        this.authorizedRepresentatives = new HashSet<>();
-        authorizedRepresentatives.add(customer);
+        this.customers = new HashSet<>();
+        customers.add(customer);
         this.balance = 0.0;
     }
 
@@ -60,19 +60,19 @@ public  class Account {
         this.iban = iban;
     }
 
-    public Set<User> getAuthorizedRepresentatives() {
-        return authorizedRepresentatives;
-    }
-
-    public void setAuthorizedRepresentatives(Set<User> authorizedRepresentatives) {
-        this.authorizedRepresentatives = authorizedRepresentatives;
-    }
-
     public double getBalance() {
         return balance;
     }
 
     public void setBalance(double balance) {
         this.balance = balance;
+    }
+
+    public Set<Customer> getCustomers() {
+        return customers;
+    }
+
+    public void setCustomers(Set<Customer> customers) {
+        this.customers = customers;
     }
 }

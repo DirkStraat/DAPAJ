@@ -16,11 +16,14 @@ public class Company {
     @ManyToOne
     private Address address;
 
-    @OneToMany
+    @ManyToMany (mappedBy = "companies")
     private List<User> companyEmployees;
 
     @OneToMany(mappedBy = "company")
     private Set<SMEAccount> accounts;
+
+    public Company() {
+    }
 
     public Company(String companyName, Address address) {
         this.companyName = companyName;
