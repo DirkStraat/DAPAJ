@@ -8,8 +8,6 @@ import java.util.List;
 
 @Repository
 public interface UserDao extends CrudRepository <User, Integer> {
-   /* User findUserByCustomerId(int customerId);
+    User findUserByCustomerId(int customerId);
 
-    List<User> getUserList();
-*/
 }

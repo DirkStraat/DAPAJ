@@ -1,4 +1,3 @@
-/*
 package nl.hava.dapaj.bankapp.service;
 
 import nl.hava.dapaj.bankapp.model.User;
@@ -11,24 +10,18 @@ import java.util.List;
 @Service
 public class UserService {
 
-    */
-/*//*
-/@Autowired
-    //private UserDao userDao;
+
+    @Autowired
+    private UserDao userDao;
 
 
     public User findUserByCustomerId(int customerId) {
         return userDao.findUserByCustomerId(customerId);
     }
 
-    public List<User> getUserList() {
-        return userDao.getUserList();
-    }
-
 
     public void save(User user) {
         userDao.save(user);
-    }*//*
+    }
 
 }
-*/
