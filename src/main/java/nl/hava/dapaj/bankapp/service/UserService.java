@@ -18,6 +18,10 @@ public class UserService {
         return userDao.findUserByCustomerId(customerId);
     }
 
+    public User findUserByLoginName(String name) {
+      return  userDao.findUserByLoginName(name);
+    }
+
 
     public void save(User user) {
         userDao.save(user);
