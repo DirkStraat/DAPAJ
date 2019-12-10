@@ -21,7 +21,7 @@ public class SMEAccount extends Account {
         super();
     }
 
-    public SMEAccount(String iban, String branch, Employee accountManager, Company company, Customer customer) {
+    public SMEAccount(String iban, String branch, Employee accountManager, Company company) {
         super(iban);
         this.branch = branch;
         this.accountManager = accountManager;

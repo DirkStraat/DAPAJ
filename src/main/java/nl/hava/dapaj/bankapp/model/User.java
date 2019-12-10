@@ -1,6 +1,7 @@
 package nl.hava.dapaj.bankapp.model;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.Set;
 
 @Entity
@@ -15,6 +16,9 @@ public class User {
     protected String lastName;
     protected String loginName;
     protected String password;
+    protected String socialSecurityNumber;
+    protected Date dateOfBirth;
+    protected String email;
 
     @ManyToOne
     protected Address address;
@@ -26,12 +30,16 @@ public class User {
         super();
     }
 
-    protected User(String firstName, String prefix, String lastName, Address address) {
+    protected User(String firstName, String prefix, String lastName, Address address, String socialSecurityNumber,
+                   Date dateOfBirth, String email) {
         this.firstName = firstName;
         this.prefix = prefix;
         this.lastName = lastName;
         this.address = address;
         this.loginName = this.createUserName();
+        this.socialSecurityNumber = socialSecurityNumber;
+        this.dateOfBirth = dateOfBirth;
+        this.email = email;
 
     }
 
@@ -107,5 +115,29 @@ public class User {
 
     public void setCompanies(Set<Company> companies) {
         this.companies = companies;
+    }
+
+    public String getBsn() {
+        return socialSecurityNumber;
+    }
+
+    public void setBsn(String bsn) {
+        this.socialSecurityNumber = bsn;
+    }
+
+    public Date getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public void setDateOfBirth(Date dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

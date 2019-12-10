@@ -2,6 +2,7 @@ package nl.hava.dapaj.bankapp.model;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -15,8 +16,8 @@ public class Customer extends User {
     }
 
     public Customer(String firstName, String prefix, String lastName,
-                       Address address) {
-        super(firstName, prefix, lastName, address);
+                    Address address, String socialSecurityNumber, Date dateOfBirth, String email) {
+        super(firstName, prefix, lastName, address, socialSecurityNumber, dateOfBirth, email);
         accounts = new HashSet<>();
     }
 

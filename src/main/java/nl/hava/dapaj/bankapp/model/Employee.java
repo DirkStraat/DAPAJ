@@ -25,7 +25,7 @@ public class Employee extends User {
     }
 
     public Employee(String role, Customer customer) {
-        super(customer.getFirstName(), customer.getPrefix(), customer.getLastName(), customer.getAddress());
+        super(customer.getFirstName(), customer.getPrefix(), customer.getLastName(), customer.getAddress(), customer.getBsn(), customer.getDateOfBirth(), customer.getEmail());
         this.employeeLoginName = this.createEmployeeLoginName();
         this.role = role;
         //this.customer = customer;

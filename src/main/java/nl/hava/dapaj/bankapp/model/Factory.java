@@ -43,7 +43,10 @@ public class Factory {
         String prefix = this.createPrefix();
         String lastName = faker.name().lastName();
         Address address = pickRandom(addresses);
-        Customer customer = new Customer(firstName, prefix, lastName, address);
+        String socialSecurityNumber = faker.idNumber().ssnValid();
+        Date dateOfBirth = faker.date().birthday(18, 83);
+        String email = String.format(firstName + lastName + "@example.com");
+        Customer customer = new Customer(firstName, prefix, lastName, address, socialSecurityNumber, dateOfBirth, email);
         return customer;
     }
 
@@ -112,7 +115,7 @@ public class Factory {
         String iBan = pickRandom(this.iBans);
         String sector = faker.company().industry();
         Company company = this.generateCompany();
-        SMEAccount smeAccount = new SMEAccount(iBan, sector, bankEmployees.get(1), company, new Customer());
+        SMEAccount smeAccount = new SMEAccount(iBan, sector, bankEmployees.get(1), company);
         return smeAccount;
     }
 
