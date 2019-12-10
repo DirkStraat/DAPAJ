@@ -1,4 +1,3 @@
-/*
 package nl.hava.dapaj.bankapp.service;
 
 import nl.hava.dapaj.bankapp.model.User;
@@ -12,8 +11,8 @@ public class LoginService {
     @Autowired
     private UserDao userDao;
 
-    public boolean validatePassword (String userName, String password){
-        User user = userDao.findUserByName(userName);
+    public boolean validatePassword (String loginName, String password){
+        User user = userDao.findUserByLoginName(loginName);
         if(user == null){
             return false;
         }else if (user.getPassword().equals(password)){
@@ -23,4 +22,3 @@ public class LoginService {
         }
     }
 }
-*/
