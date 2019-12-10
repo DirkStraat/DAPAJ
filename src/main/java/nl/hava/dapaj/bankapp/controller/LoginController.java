@@ -1,6 +1,7 @@
 package nl.hava.dapaj.bankapp.controller;
 
 import nl.hava.dapaj.bankapp.model.User;
+import nl.hava.dapaj.bankapp.model.dao.EmployeeDao;
 import nl.hava.dapaj.bankapp.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class LoginController {
     @Autowired
     private LoginService loginService;
+    @Autowired
+    private EmployeeDao employeeDao;
 
     @PostMapping ("join_dapaj")
     public String join_dapajHandler(Model model){
@@ -26,9 +29,19 @@ public class LoginController {
     public String doLoginHandler(@RequestParam(name = "user_name") String loginName,
                                  @RequestParam(name = "user_password") String userPassword,
                                  Model model) {
-        if (loginService.validatePassword(loginName, userPassword)){
+        if (loginService.validatePassword(loginName, userPassword)) {
             return "customer_welcome";
+        }else if(loginService.validateEmployeePassword(loginName, userPassword)){
+            if (employeeDao.findRoleByLoginName(loginName).equals("MKB")){
+                return "sme_accountmanager_welcome";
+            }else if(employeeDao.findUserByEmployeeLoginName(loginName).equals("Retail")){
+                return "private_client_accountmanager_welcome";
+            }else{
+                model.addAttribute("header_inlog","Naam/password combinatie niet bekend");
+                return "login";
+            }
         }else {
+            model.addAttribute("header_inlog","Naam/password combinatie niet bekend");
             return "login";
         }
 
