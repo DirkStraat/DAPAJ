@@ -22,8 +22,10 @@ public class Factory {
         this.faker = new Faker(new Locale("nl"));
         this.addresses = new ArrayList<>();
         this.iBans = new ArrayList<>();
+        this.bankEmployees = new ArrayList<>();
         generateAddresses();
         generateIbans();
+        generateEmployees();
     }
 
     private String createPrefix(){
@@ -38,7 +40,7 @@ public class Factory {
         }
     }
 
-    private Customer generateCustomer(){
+    public User generateUser(){
         String firstName = faker.name().firstName();
         String prefix = this.createPrefix();
         String lastName = faker.name().lastName();
@@ -46,7 +48,14 @@ public class Factory {
         String socialSecurityNumber = faker.idNumber().ssnValid();
         Date dateOfBirth = faker.date().birthday(18, 83);
         String email = String.format(firstName + lastName + "@example.com");
-        Customer customer = new Customer(firstName, prefix, lastName, address, socialSecurityNumber, dateOfBirth, email);
+        User user = new User(firstName, prefix, lastName, address, socialSecurityNumber, dateOfBirth, email);
+        return user;
+    }
+
+    private Customer generateCustomer(){
+        User user = generateUser();
+        Customer customer = new Customer(user.firstName, user.prefix, user.lastName, user.address,
+                user.socialSecurityNumber, user.dateOfBirth, user.email);
         return customer;
     }
 
@@ -67,7 +76,7 @@ public class Factory {
         return customers;
     }
 
-    public void generateAddresses(){
+    private void generateAddresses(){
         String country = "Nederland";
 
         for (int i = 0; i <NUMBER_OF_CITIES ; i++) {
@@ -106,15 +115,14 @@ public class Factory {
         }
     }
 
-    private Account generateRetailAccount(Customer customer){
+    public Account generateRetailAccount(Customer customer){
         String iBan = pickRandom(this.iBans);
         return new Account(iBan, customer);
     }
 
-    private SMEAccount generateSMEAccount(){
+    public SMEAccount generateSMEAccount(Company company){
         String iBan = pickRandom(this.iBans);
         String sector = faker.company().industry();
-        Company company = this.generateCompany();
         SMEAccount smeAccount = new SMEAccount(iBan, sector, bankEmployees.get(1), company);
         return smeAccount;
     }
@@ -131,6 +139,7 @@ public class Factory {
         bankEmployees.add(managerSME);
     }
 
-
-
+    public List<Address> getAddresses() {
+        return addresses;
+    }
 }
