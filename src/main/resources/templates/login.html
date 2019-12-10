@@ -85,6 +85,18 @@ h1 {
     font-size: 24px;
     line-height: 1.4;
 }
+h4{
+    background-color: rgba(250, 205, 136, 0.8);
+    border: 1px solid rgba(250, 205, 136, .8);
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+    font-size: 24px;
+    line-height: 1.4;
+    padding: 5px 0;
+    margin-right: 95px;
+    margin-bottom: -1px;
+
+}
 
 .login {
     background-color: rgba(250, 205, 136, .8);
@@ -126,6 +138,7 @@ input[type="password"] {
 <body>
     <h1> Welkom bij de Dapaj Bank</h1>
     <h2></h2>
+    <h4><span th:text="${header_inlog}"/></h4>
         <form class="login" action="#" th:action="@{do_login}" method="post">
             <table>
                 <tr>
