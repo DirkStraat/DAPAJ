@@ -9,5 +9,7 @@ public class Main {
         for (Customer customer: customers) {
             System.out.println(customer);
         }
+
+        SMEAccount smeAccount = fabriekje.generateSMEAccount(fabriekje.generateCompany());
     }
 }
