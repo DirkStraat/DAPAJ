@@ -8,5 +8,5 @@ import org.springframework.stereotype.Repository;
 public interface UserDao extends CrudRepository <User, Integer> {
 
   User findUserByCustomerId(int customerId);
-
+  User findUserByName(String userName);
 }

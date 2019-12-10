@@ -1,3 +1,4 @@
+/*
 package nl.hava.dapaj.bankapp.service;
 
 import nl.hava.dapaj.bankapp.model.User;
@@ -24,3 +25,4 @@ public class UserService {
     }
 
 }
+*/
