@@ -1,5 +1,6 @@
 package nl.hava.dapaj.bankapp.controller;
 
+import nl.hava.dapaj.bankapp.model.Employee;
 import nl.hava.dapaj.bankapp.model.User;
 import nl.hava.dapaj.bankapp.model.dao.EmployeeDao;
 import nl.hava.dapaj.bankapp.service.LoginService;
@@ -17,6 +18,8 @@ public class LoginController {
     @Autowired
     private EmployeeDao employeeDao;
 
+    Employee employee;
+
     @PostMapping ("join_dapaj")
     public String join_dapajHandler(Model model){
         return "join_dapaj";
@@ -31,10 +34,12 @@ public class LoginController {
                                  Model model) {
         if (loginService.validatePassword(loginName, userPassword)) {
             return "customer_welcome";
+
         }else if(loginService.validateEmployeePassword(loginName, userPassword)){
-            if (employeeDao.findRoleByLoginName(loginName).equals("MKB")){
+            Employee rol = employeeDao.findUserByEmployeeLoginName(loginName);
+            if (rol.getRole().equals("MKB")){
                 return "sme_accountmanager_welcome";
-            }else if(employeeDao.findUserByEmployeeLoginName(loginName).equals("Retail")){
+            }else if(rol.getRole().equals("Retail")){
                 return "private_client_accountmanager_welcome";
             }else{
                 model.addAttribute("header_inlog","Naam/password combinatie niet bekend");
