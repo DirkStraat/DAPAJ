@@ -13,6 +13,10 @@ import java.util.Set;
 
 @Controller
 public class FillDatabaseController {
+    final static int AANTAL_KLANTEN = 40;
+    final static int AANTAL_BEDRIJVEN = 10;
+    final static int AANTAL_GEBRUIKERS = 20;
+
 
     @Autowired
     AccountDao accountDao;
@@ -37,26 +41,29 @@ public class FillDatabaseController {
 
     @GetMapping("fdb")
     public String fillDatabase(){
+
+
         Factory fabriekje = new Factory();
         Set<Customer> customers = new HashSet<>();
         ArrayList<Account> accounts = new ArrayList<>();
         ArrayList<Company> companies = new ArrayList<>();
         ArrayList<SMEAccount> smeAccounts = new ArrayList<>();
+        List<Employee> bankEmployees = fabriekje.getBankEmployees();
         int companyEmployeesIndex = 0;
         ArrayList<User> users = new ArrayList<>();
 
-        customers = fabriekje.generateCustomers(4000);
+        customers = fabriekje.generateCustomers(AANTAL_KLANTEN);
 
         for (Customer customer : customers) {
             Account account = fabriekje.generateRetailAccount(customer);
             accounts.add(account);
         }
 
-        for (int i = 0; i <1000 ; i++) {
+        for (int i = 0; i <AANTAL_BEDRIJVEN ; i++) {
             companies.add(fabriekje.generateCompany());
         }
 
-        for (int i = 0; i <2000 ; i++) {
+        for (int i = 0; i <AANTAL_GEBRUIKERS ; i++) {
             users.add(fabriekje.generateUser());
         }
 
@@ -66,10 +73,6 @@ public class FillDatabaseController {
             companyEmployees.add(users.get(companyEmployeesIndex++));
             company.setCompanyEmployees(companyEmployees);
             smeAccounts.add(fabriekje.generateSMEAccount(company));
-        }
-
-        for (Address address : fabriekje.getAddresses()) {
-            addressDao.save(address);
         }
 
         for (Customer customer : customers) {
@@ -82,11 +85,18 @@ public class FillDatabaseController {
         }
 
         for (User user : users) {
+            addressDao.save(user.getAddress());
             userDao.save(user);
         }
 
         for (Company company : companies) {
+            addressDao.save(company.getAddress());
             companyDao.save(company);
+        }
+
+        for (Employee employee: bankEmployees) {
+            addressDao.save(employee.getAddress());
+            employeeDao.save(employee);
         }
 
         for (SMEAccount smeAccount : smeAccounts) {
