@@ -2,7 +2,9 @@ package nl.hava.dapaj.bankapp.model;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 
 @Entity
 public class SMEAccount extends Account {
@@ -25,8 +27,7 @@ public class SMEAccount extends Account {
         this.accountManager = accountManager;
         this.company = company;
         super.accountName = String.format(company.getCompanyName() + company.getAddress().getCity());
-        this.authorizedRepresentatives = new HashSet<>();
-        authorizedRepresentatives.add(customer);
+
     }
 
     public String getBranch() {

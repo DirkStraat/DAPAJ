@@ -20,7 +20,7 @@ public class User {
     protected Address address;
 
     @ManyToMany
-    protected Set<Account> accounts;
+    protected Set<Company> companies;
 
     public User(){
         super();
@@ -99,11 +99,11 @@ public class User {
         this.address = address;
     }
 
-    public Set<Account> getAccounts() {
-        return accounts;
+    public Set<Company> getCompanies() {
+        return companies;
     }
 
-    public void setAccounts(Set<Account> accounts) {
-        this.accounts = accounts;
+    public void setCompanies(Set<Company> companies) {
+        this.companies = companies;
     }
 }
