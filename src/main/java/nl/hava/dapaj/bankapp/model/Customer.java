@@ -17,7 +17,6 @@ public class Customer extends User {
     public Customer(String firstName, String prefix, String lastName,
                        Address address) {
         super(firstName, prefix, lastName, address);
-        super.setLoginName(this.createUserName());
         accounts = new HashSet<>();
     }
 

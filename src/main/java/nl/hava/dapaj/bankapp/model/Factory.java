@@ -1,6 +1,7 @@
 package nl.hava.dapaj.bankapp.model;
 
 import com.github.javafaker.Faker;
+import nl.hava.dapaj.bankapp.utils.IBANGenerator;
 
 import java.util.*;
 
@@ -9,14 +10,20 @@ public class Factory {
     static final int NUMBER_OF_CITIES = 10;
     static final int NUMBER_OF_STREETS = 20;
     static final int NUMBER_OF_HOUSES = 50;
+    static final int NUMBER_OF_IBANS = 10000;
 
     private Faker faker;
     private List<Address> addresses;
+    private List<String> iBans;
+    private List<Employee> bankEmployees;
+
 
     public Factory(){
         this.faker = new Faker(new Locale("nl"));
         this.addresses = new ArrayList<>();
+        this.iBans = new ArrayList<>();
         generateAddresses();
+        generateIbans();
     }
 
     private String createPrefix(){
@@ -35,7 +42,7 @@ public class Factory {
         String firstName = faker.name().firstName();
         String prefix = this.createPrefix();
         String lastName = faker.name().lastName();
-        Address address = pickRandomAddress();
+        Address address = pickRandom(addresses);
         Customer customer = new Customer(firstName, prefix, lastName, address);
         return customer;
     }
@@ -52,10 +59,6 @@ public class Factory {
         for (int i = 0; i <amount ; i++) {
             Customer customer = this.generateCustomer();
             customers.add(customer);
-        }
-
-        for (Customer customer : customers) {
-            System.out.println(customer);
         }
 
         return customers;
@@ -80,16 +83,51 @@ public class Factory {
 
     public Company generateCompany(){
         String companyName = faker.company().name();
-        Address address = pickRandomAddress();
+        Address address = pickRandom(addresses);
         Company company = new Company(companyName, address);
         return company;
     }
 
-    private Address pickRandomAddress(){
-        int addressessSize = addresses.size();
-        int randomAddressIndex = (int)(Math.random()*addressessSize);
-        Address address = addresses.get(randomAddressIndex);
-        addresses.remove(randomAddressIndex);
-        return address;
+    private <T> T pickRandom(List<T> list){
+        int size = list.size();
+        int randomIndex = (int)(Math.random()*size);
+        T t = list.get(randomIndex);
+        list.remove(randomIndex);
+        return t;
     }
+
+    private void generateIbans(){
+        iBans = new ArrayList<>();
+        for (int i = 0; i <NUMBER_OF_IBANS ; i++) {
+            iBans.add(IBANGenerator.generateIBAN());
+        }
+    }
+
+    private Account generateRetailAccount(Customer customer){
+        String iBan = pickRandom(this.iBans);
+        return new Account(iBan, customer);
+    }
+
+    private SMEAccount generateSMEAccount(){
+        String iBan = pickRandom(this.iBans);
+        String sector = faker.company().industry();
+        Company company = this.generateCompany();
+        SMEAccount smeAccount = new SMEAccount(iBan, sector, bankEmployees.get(1), company, new Customer());
+        return smeAccount;
+    }
+
+
+    private void generateEmployees(){
+        bankEmployees = new ArrayList<>();
+        Set<Customer> customers = generateCustomers(2);
+        List<Customer> customerList = new ArrayList<>();
+        customerList.addAll(customers);
+        Employee managerRetail = new Employee("Manager Retail", customerList.get(0));
+        Employee managerSME = new Employee("Manager SME", customerList.get(1));
+        bankEmployees.add(managerRetail);
+        bankEmployees.add(managerSME);
+    }
+
+
+
 }
