@@ -9,9 +9,8 @@
 <body>
     <h1>DAPAJ Bank | Invest In Your Future. Join Today.</h1>
 
-    <form action="set_password.html" method="post">
+    <form action="#" th:action="@{/join_dapaj}" th:object="${user}" method="post">
         <table>
-
             <tr>
                 <td>First Name:</td>
                 <td><input type="text" placeholder="First Name" name="name"></td>
@@ -20,12 +19,13 @@
             <tr>
                 <td>Insert:</td>
                 <td><select>
-                    <option></option>
-                    <option>van</option>
-                    <option>van der</option>
-                    <option>den</option>
-                    <option>van den</option>
-                </select></td>
+                            <option></option>
+                            <option>van</option>
+                            <option>van der</option>
+                            <option>den</option>
+                            <option>van den</option>
+                    </select>
+                </td>
             </tr>
 
             <tr>
