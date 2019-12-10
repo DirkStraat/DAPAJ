@@ -1,11 +1,14 @@
 package nl.hava.dapaj.bankapp.model;
 
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.Set;
 
 @Entity
 public class Address {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int adressId;
+
     private String street;
     private int housenumber;
     private String suffix;

@@ -1,9 +1,6 @@
 package nl.hava.dapaj.bankapp.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
@@ -12,9 +9,15 @@ public class Transaction {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int transactionID;
 
+    @OneToOne
     private Account debitAccount;
+
+    @OneToOne
     private Account creditAccount;
+
+    @OneToOne
     private Account suspenseAccount;
+
     private double amount;
     private String description;
     private LocalDateTime dateTimeTransaction;
