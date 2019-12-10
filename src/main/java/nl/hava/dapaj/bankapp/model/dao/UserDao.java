@@ -7,9 +7,9 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface UserDao extends CrudRepository <User, Integer> {
-   /* User findUserByCustomerId(int customerId);
+public interface UserDAO extends CrudRepository<User, Integer> {
 
-    List<User> getUserList();
-*/
+  User findUserByCustomerId(int customerId);
+
+  List<User> getUserList();
 }
