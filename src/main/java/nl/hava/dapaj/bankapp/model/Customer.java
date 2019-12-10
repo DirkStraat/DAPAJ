@@ -14,10 +14,11 @@ public class Customer extends User {
     public Customer(){
         super();
     }
-
+    
     public Customer(String firstName, String prefix, String lastName,
                     Address address, String socialSecurityNumber, Date dateOfBirth, String email) {
         super(firstName, prefix, lastName, address, socialSecurityNumber, dateOfBirth, email);
+
         accounts = new HashSet<>();
     }
 
