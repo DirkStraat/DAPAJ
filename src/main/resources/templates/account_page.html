@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>account_page</title>
+</head>
+<body>
+    <p>
+        <div>Welkom <!--<span th:text="${user.name}"/> -->het is nu: <span th:text="${#dates.format(#dates.createNow(), 'dd MMMMMMMMM yyyy HH:mm')}"/></div>
+        <div>Dit is de overzichtspagina voor rekening met nummer: <!--<span th:text="${account.iban}"/>--></div>
+        <div>Deze pagina is gesteld op naam van: <!--<span th:text="${account.accountName}"/>--></div>
+        <div>De gemachtigde voor deze rekening zijn: </div>
+
+    <!--<tr th:each="user, iter: ${authorizedRepresentatives}">
+        <td><span th:text="${user.firstName}"/></td>
+        <td><span th:text="${user.prefix}"/></td>
+        <td><span th:text="${user.lastName}"/> </td>
+    </tr>-->
+
+    </p>
+    <h3>Overzicht van transacties</h3>
+    <table>
+        <tr>
+            <td>Datum</td><td>Tegenrekening</td><td>Omschrijving</td>
+        </tr>
+       <!-- <tr th:each="transaction, iter: ${transactions}">
+            <td><span th:text="${transaction.dateTimeTransaction}"/></td>
+            <td><span th:text="${transaction.debitAccount}"/></td>
+            <td><span th:text="${transaction.description}"/> </td>
+        </tr>-->
+    </table>
+
+</body>
+</html>
