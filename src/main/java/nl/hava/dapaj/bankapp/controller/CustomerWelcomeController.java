@@ -13,7 +13,7 @@ public class CustomerWelcomeController {
     @GetMapping("do_select_account")
     public String doSelectAccountHandler(Model model) {
         User user = (User)model.getAttribute("user");
-        return "test";
+        return "account_page";
     }
 
     @PostMapping("do_link_account")
