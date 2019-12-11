@@ -1,7 +1,9 @@
 package nl.hava.dapaj.bankapp.model;
 
 import javax.persistence.*;
+import java.nio.charset.CoderMalfunctionError;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -115,6 +117,11 @@ public class User {
 
     public void setCompanies(Set<Company> companies) {
         this.companies = companies;
+    }
+
+    public void addCompany(Company company){
+        companies = new HashSet<>();
+        this.companies.add(company);
     }
 
     public String getBsn() {
