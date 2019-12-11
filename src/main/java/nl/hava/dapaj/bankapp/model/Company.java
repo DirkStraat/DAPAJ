@@ -50,6 +50,10 @@ public class Company {
         return companyEmployees;
     }
 
+    public void addCompanyEmployee(User user){
+        this.companyEmployees.add(user);
+    }
+
     public void setCompanyEmployees(List<User> companyEmployees) {
         this.companyEmployees = companyEmployees;
     }
