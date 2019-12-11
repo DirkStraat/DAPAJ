@@ -7,10 +7,10 @@ import java.util.*;
 
 
 public class Factory {
-    static final int NUMBER_OF_CITIES = 10;
+    static final int NUMBER_OF_CITIES = 1;
     static final int NUMBER_OF_STREETS = 20;
-    static final int NUMBER_OF_HOUSES = 50;
-    static final int NUMBER_OF_IBANS = 10000;
+    static final int NUMBER_OF_HOUSES = 20;
+    static final int NUMBER_OF_IBANS = 100;
 
     private Faker faker;
     private List<Address> addresses;
@@ -117,7 +117,11 @@ public class Factory {
 
     public Account generateRetailAccount(Customer customer){
         String iBan = pickRandom(this.iBans);
-        return new Account(iBan, customer);
+        Account account = new Account(iBan);
+        account.setAccountName(String.format(customer.getFirstName()+customer.getLastName()));
+        account.addCustomer(customer);
+        customer.addAccount(account);
+        return account;
     }
 
     public SMEAccount generateSMEAccount(Company company){
@@ -141,5 +145,9 @@ public class Factory {
 
     public List<Address> getAddresses() {
         return addresses;
+    }
+
+    public List<Employee> getBankEmployees() {
+        return bankEmployees;
     }
 }

@@ -8,7 +8,7 @@ import java.util.Set;
 
 @Entity
 public class Customer extends User {
-    @ManyToMany
+    @ManyToMany(mappedBy = "customers")
     private Set<Account> accounts;
 
     public Customer(){
@@ -18,6 +18,7 @@ public class Customer extends User {
     public Customer(String firstName, String prefix, String lastName,
                     Address address, String socialSecurityNumber, Date dateOfBirth, String email) {
         super(firstName, prefix, lastName, address, socialSecurityNumber, dateOfBirth, email);
+
         accounts = new HashSet<>();
     }
 
@@ -36,6 +37,10 @@ public class Customer extends User {
 
     public void setAccounts(Set<Account> accounts) {
         this.accounts = accounts;
+    }
+
+    public void addAccount(Account account){
+        accounts.add(account);
     }
 
 }
