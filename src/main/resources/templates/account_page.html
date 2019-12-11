@@ -6,10 +6,11 @@
 </head>
 <body>
     <p>
-        <div>Welkom <!--<span th:text="${user.name}"/> -->het is nu: <span th:text="${#dates.format(#dates.createNow(), 'dd MMMMMMMMM yyyy HH:mm')}"/></div>
+        <div>Welkom <span th:text="${user.firstName}"/>, het is nu: <span th:text="${#dates.format(#dates.createNow(), 'dd MMMMMMMMM yyyy HH:mm')}"/>.</div>
         <div>Dit is de overzichtspagina voor rekening met nummer: <!--<span th:text="${account.iban}"/>--></div>
-        <div>Deze pagina is gesteld op naam van: <!--<span th:text="${account.accountName}"/>--></div>
-        <div>De gemachtigde voor deze rekening zijn: </div>
+        <div>Deze rekening is gesteld op naam van: <!--<span th:text="${account.accountName}"/>--></div>
+        <div>Het huidige saldo op deze rekening is: <!--<span th:text="${account.balance}"/>--></div>
+        <div>Wie is er gemachtigd over deze rekening te beschikken? </div>
 
     <!--<tr th:each="user, iter: ${authorizedRepresentatives}">
         <td><span th:text="${user.firstName}"/></td>
@@ -23,16 +24,22 @@
         <tr>
             <td>Datum</td><td>Tegenrekening</td><td>Omschrijving</td>
         </tr>
-       <!-- <tr th:each="transaction, iter: ${transactions}">
+       <!-- <tr th:each="transaction, iter: ${transactions}" th:unless="${iter.count > 10}">
             <td><span th:text="${transaction.dateTimeTransaction}"/></td>
             <td><span th:text="${transaction.debitAccount}"/></td>
             <td><span th:text="${transaction.description}"/> </td>
         </tr>-->
     </table>
 
-    <input type="button" name="do_add_representative" value="Rekeninghouder toevoegen (NYI)">
-    <input type="button" name="do_transfer" value="overboeking starten (NYI)">
-
+    <form action="add_representative" method="post">
+        <input type="submit"  value="Rekeninghouder toevoegen"><br/>
+    </form>
+    <form action="transfer" method="post">
+        <input type="submit"  value="Geld overmaken"><br/>
+    </form>
+    <form action="customer_welcome" method="post">
+        <input type="submit"  value="terug naar het rekeningoverzicht"><br/>
+    </form>
 
 
 </body>
