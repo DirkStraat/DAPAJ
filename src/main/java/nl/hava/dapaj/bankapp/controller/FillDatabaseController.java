@@ -69,19 +69,23 @@ public class FillDatabaseController {
 
         for (Company company : companies) {
             List<User> companyEmployees = new ArrayList<>();
-            companyEmployees.add(users.get(companyEmployeesIndex++));
-            companyEmployees.add(users.get(companyEmployeesIndex++));
+            User companyEmployee = users.get(companyEmployeesIndex++);
+            User companyEmployee2 = users.get(companyEmployeesIndex++);
+            companyEmployee.addCompany(company);
+            companyEmployee2.addCompany(company);
+            companyEmployees.add(companyEmployee);
+            companyEmployees.add(companyEmployee2);
             company.setCompanyEmployees(companyEmployees);
             smeAccounts.add(fabriekje.generateSMEAccount(company));
         }
 
-        for (Customer customer : customers) {
-            addressDao.save(customer.getAddress());
-            customerDao.save(customer);
-        }
-
-        for (Account account : accounts){
-            accountDao.save(account);
+        for (Company company : companies) {
+            addressDao.save(company.getAddress());
+            companyDao.save(company);
+            for (User user : company.getCompanyEmployees()) {
+                addressDao.save(user.getAddress());
+                userDao.save(user);
+            }
         }
 
         for (User user : users) {
@@ -89,9 +93,13 @@ public class FillDatabaseController {
             userDao.save(user);
         }
 
-        for (Company company : companies) {
-            addressDao.save(company.getAddress());
-            companyDao.save(company);
+        for (Customer customer : customers) {
+            addressDao.save(customer.getAddress());
+            customerDao.save(customer);
+        }
+
+        for (Account account : accounts) {
+            accountDao.save(account);
         }
 
         for (Employee employee: bankEmployees) {
