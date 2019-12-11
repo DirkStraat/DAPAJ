@@ -10,7 +10,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
+@SessionAttributes("user")
 @Controller
 public class LoginController {
     @Autowired
@@ -34,7 +36,6 @@ public class LoginController {
                                  Model model) {
         if (loginService.validatePassword(loginName, userPassword)) {
             return "customer_welcome";
-
         }else if(loginService.validateEmployeePassword(loginName, userPassword)){
             Employee rol = employeeDao.findUserByEmployeeLoginName(loginName);
             if (rol.getRole().equals("MKB")){
