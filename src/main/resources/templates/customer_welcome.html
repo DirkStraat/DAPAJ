@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Welkom</title>
+    <h2>Welkom <span th:text="${user.getFirstName()}"/></h2>
 </head>
 <body>
 <table>
