@@ -20,4 +20,8 @@ public class AccountService {
     public void save(Account account) {
         accountDAO.save(account);
     }
+
+    public Account getAccountByAccountId(int accountId){
+        return accountDAO.findAccountByAccountID(accountId);
+    }
 }
