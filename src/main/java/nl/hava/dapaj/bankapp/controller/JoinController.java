@@ -1,6 +1,8 @@
 package nl.hava.dapaj.bankapp.controller;
 
+import nl.hava.dapaj.bankapp.model.User;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -8,7 +10,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class JoinController {
 
     @GetMapping("join_dapaj")
-    public String joinForm() {
+    public String joinForm(Model model) {
+        model.addAttribute("user", new User());
         return "join_dapaj";
     }
 
