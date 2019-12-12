@@ -49,5 +49,10 @@ public class IndexController {
         return "transfer";
     }
 
+    @GetMapping("go_to_account_page")
+    public String goToAccountPage (){
+        return "account_page";
+    }
+
 
 }

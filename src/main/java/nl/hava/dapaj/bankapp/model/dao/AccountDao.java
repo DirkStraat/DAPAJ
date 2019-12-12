@@ -5,7 +5,9 @@ import nl.hava.dapaj.bankapp.model.User;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface AccountDao extends CrudRepository<Account, Integer> {
-
+    List<Account> getAccountByCustomersCustomerId(int customerId);
 }
