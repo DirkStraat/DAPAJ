@@ -1,7 +1,9 @@
 package nl.hava.dapaj.bankapp.model;
 
+import org.hibernate.validator.constraints.Length;
+import javax.validation.constraints.*;
+
 import javax.persistence.*;
-import java.nio.charset.CoderMalfunctionError;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -13,13 +15,27 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected int customerId;
 
+    @NotNull
+    @Length(min = 2)
     protected String firstName;
     protected String prefix;
+
+    @NotNull
+    @Length(min = 2)
     protected String lastName;
+
+    @Length(min = 3) //for simplicity now to do checks, but it should be longer for security reasons
     protected String loginName;
+
+    @Length(min = 3) //for simplicity now to do checks, but it should be at least 12 chars for security reasons
     protected String password;
+
+    @NotNull
+    @Size(min = 8)
     protected String socialSecurityNumber;
     protected Date dateOfBirth;
+
+    @Email
     protected String email;
 
     @ManyToOne
