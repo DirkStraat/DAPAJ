@@ -1,9 +1,13 @@
 package nl.hava.dapaj.bankapp.service;
 
+import nl.hava.dapaj.bankapp.model.Account;
+import nl.hava.dapaj.bankapp.model.Customer;
 import nl.hava.dapaj.bankapp.model.User;
 import nl.hava.dapaj.bankapp.model.dao.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 
 @Service
@@ -22,6 +26,9 @@ public class UserService {
       return  userDao.findUserByLoginName(name);
     }
 
+    public List<Customer> findCustomersByAccountId(Account id){
+        return userDao.findCustomerByaccounts(id);
+    }
 
     public void save(User user) {
         userDao.save(user);
