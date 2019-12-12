@@ -26,6 +26,14 @@ public class Transaction {
         super();
     }
 
+    public Transaction(Account debitAccount, Account creditAccount, double amount, String description){
+        super();
+        this.debitAccount = debitAccount;
+        this.creditAccount = creditAccount;
+        this.amount = amount;
+        this.description = description;
+    }
+
     public int getTransactionID() {
         return transactionID;
     }

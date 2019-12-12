@@ -12,7 +12,6 @@
         <div>Het huidige saldo op deze rekening is: <span th:text="${account.balance}"/></div>
         <div>Wie is er gemachtigd over deze rekening te beschikken? </div>
 
-
     <tr th:each="user, iter: ${customers}">
         <td><span th:text="${user.firstName}"/></td>
         <td><span th:text="${user.prefix}"/></td>

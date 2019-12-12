@@ -1,10 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>add_representative</title>
 </head>
 <body>
-<div>dit is de add_representative pagina</div>
+<form action="#" th:action="@{do_add_representative}" method="post">
+    <table>
+        <tr>
+            <td>Gebruikersnaam nieuwe gemachtigde:</td>
+            <td><input type="text" name="user_name"></td>
+        </tr>
+        <tr>
+            <td>Koppelcode (vijf cijfers):</td>
+            <td><input type="password" name="keycode"></td>
+        </tr>
+        <td></td>
+        <td><input type="submit" value="Stuur koppelverzoek."></td>
+    </table>
+</form>
 </body>
 </html>
