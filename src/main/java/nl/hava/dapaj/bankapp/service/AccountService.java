@@ -17,6 +17,10 @@ public class AccountService {
         return accountDAO.getAccountByCustomersCustomerId(customerId);
     }
 
+    public Account getAccountByIban(String iBan){
+        return accountDAO.getAccountByIban(iBan);
+    }
+
     public void save(Account account) {
         accountDAO.save(account);
     }

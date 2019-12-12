@@ -12,6 +12,8 @@ public  class Account {
     protected int accountID;
 
     protected String accountName;
+
+    @Column(unique = true)
     protected String iban;
 
     @ManyToMany

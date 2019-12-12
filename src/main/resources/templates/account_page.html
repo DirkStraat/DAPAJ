@@ -7,12 +7,12 @@
 <body>
     <p>
         <div>Welkom <span th:text="${user.firstName}"/>, het is nu: <span th:text="${#dates.format(#dates.createNow(), 'dd MMMMMMMMM yyyy HH:mm')}"/>.</div>
-        <div>Dit is de overzichtspagina voor rekening met nummer: <!--<span th:text="${account.iban}"/>--></div>
-        <div>Deze rekening is gesteld op naam van: <!--<span th:text="${account.accountName}"/>--></div>
-        <div>Het huidige saldo op deze rekening is: <!--<span th:text="${account.balance}"/>--></div>
+        <div>Dit is de overzichtspagina voor rekening met nummer: <span th:text="${account.iban}"/></div>
+        <div>Deze rekening is gesteld op naam van: <span th:text="${account.accountName}"/></div>
+        <div>Het huidige saldo op deze rekening is: <span th:text="${account.balance}"/></div>
         <div>Wie is er gemachtigd over deze rekening te beschikken? </div>
 
-    <!--<tr th:each="user, iter: ${authorizedRepresentatives}">
+    <!--<tr th:each="customer, iter: ${customer.authorizedRepresentatives}">
         <td><span th:text="${user.firstName}"/></td>
         <td><span th:text="${user.prefix}"/></td>
         <td><span th:text="${user.lastName}"/> </td>
