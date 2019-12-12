@@ -44,7 +44,7 @@ public class FillDatabaseController {
 
 
         Factory fabriekje = new Factory();
-        Set<Customer> customers = new HashSet<>();
+        Set<Customer> customers;
         ArrayList<Account> accounts = new ArrayList<>();
         ArrayList<Company> companies = new ArrayList<>();
         ArrayList<SMEAccount> smeAccounts = new ArrayList<>();
@@ -110,6 +110,8 @@ public class FillDatabaseController {
         for (SMEAccount smeAccount : smeAccounts) {
             smeAccountDao.save(smeAccount);
         }
+
+        //fabriekje.transactionfactory(300, accounts);
 
         return "login";
     }

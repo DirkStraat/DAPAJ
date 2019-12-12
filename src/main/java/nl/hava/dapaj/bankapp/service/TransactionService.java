@@ -2,7 +2,7 @@ package nl.hava.dapaj.bankapp.service;
 
 import nl.hava.dapaj.bankapp.model.Account;
 import nl.hava.dapaj.bankapp.model.Transaction;
-import nl.hava.dapaj.bankapp.model.TransactionComparator;
+import nl.hava.dapaj.bankapp.model.dao.AccountDao;
 import nl.hava.dapaj.bankapp.model.dao.TransactionDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +17,9 @@ public class TransactionService {
     @Autowired
     TransactionDao transactionDao;
 
+    @Autowired
+    AccountDao accountDao;
+
     public List<Transaction> getSortedListOfTransactionsByAccountId(Account account){
         List<Transaction> transactionsDebit = transactionDao.getTransactionsByDebitAccount(account);
         List<Transaction> transactionsCredit = transactionDao.getTransactionsByCreditAccount(account);
@@ -30,12 +33,23 @@ public class TransactionService {
             allTransactions.add(transaction);
         }
 
-        for (Transaction tr : allTransactions) {
-            System.out.println(tr);
-        }
-
         Collections.sort(allTransactions);
         return allTransactions;
+    }
+
+    public void doTransAction(Account debitAccount, Account creditAccount, double amount, String description){
+        double debitBalance = debitAccount.getBalance();
+        double creditBalance = creditAccount.getBalance();
+
+        if(debitBalance-amount> -1000){
+            debitBalance -= amount;
+            creditBalance += amount;
+            debitAccount.setBalance(debitBalance);
+            creditAccount.setBalance(creditBalance);
+            accountDao.save(debitAccount);
+            accountDao.save(creditAccount);
+            transactionDao.save(new Transaction(debitAccount, creditAccount, amount, description));
+        }
     }
 
 }
