@@ -12,20 +12,19 @@
 <h3>Rekening overzicht:</h3>
 <table>
     <tr>
-       <td>Naam rekeninghouder:</td>
+        <td>Naam rekeninghouder:</td>
         <td>Rekeningnummer:</td>
         <td>Saldo:</td>
     </tr>
     <tr>
-        <a th:href="@{do_select_account}">
-    <tr th:each="account, iter: ${accounts}">
-    <td><span th:text="${account.getAccountName()}"/> </a> </td>
-    <td><a th:href="@{do_select_account}"><span th:text="${account.getIban()}"/> </a> </td>
-    <td><span th:text="${account.getBalance()}"/> </a> </td>
-
+    <tr th:each="account: ${accounts}">
+        <td><span th:text="${account.getAccountName()}"/> </a> </td>
+        <td><a th:href="@{/do_select_account(account_id=${account.getAccountID()})}"><span th:text="${account.getIban()}"/> </a></td>
+        <td><span th:text="${account.getBalance()}"/> </a> </td>
     </tr>
-</table><br/>
-    <input type="button" name="do_select_account" value="Selecteer rekening (NYI)">
-    <input type="button" name="do_link_account" value="koppel rekening (NYI)">
+</table>
+<br/>
+<input type="button" name="do_select_account" value="Selecteer rekening (NYI)">
+<input type="button" name="do_link_account" value="koppel rekening (NYI)">
 </body>
 </html>
