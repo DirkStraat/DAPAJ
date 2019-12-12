@@ -17,9 +17,10 @@ public class SetPasswordController {
     @PostMapping("change_password")
     public String changePasswordHandler(@RequestParam(name = "user_name") String name,
                                          @RequestParam(name="user_password") String password,
+                                        @RequestParam(name="bsn") String bsn,
                                          Model model) {
         User user = userService.findUserByLoginName(name);
-        if (user != null) {
+        if (user != null && bsn.equals(user.getBsn())) {
             user.setPassword(password);
             userService.save(user);
             model.addAttribute("header_inlog", "Wachtwoord succesvol gewijzigd");

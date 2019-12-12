@@ -12,6 +12,8 @@ public  class Account {
     protected int accountID;
 
     protected String accountName;
+
+    @Column(unique = true)
     protected String iban;
 
     @ManyToMany
@@ -72,5 +74,10 @@ public  class Account {
 
     public void addCustomer(Customer customer){
         customers.add(customer);
+    }
+
+    @Override
+    public String toString() {
+        return String.format(iban);
     }
 }
