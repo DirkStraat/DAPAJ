@@ -78,6 +78,7 @@ h1 {
     padding: 10px;
     font-size: 24px;
     line-height: 1.4;
+    text-align: center;
 }
 h4{
     background-color: rgba(250, 205, 136, 0.8);
@@ -127,8 +128,9 @@ input[type="password"] {
 }
 
 h4 {
-    margin-top: 0;
-    margin-bottom: 5px;
+    margin: 0 auto;
     border: none;
     background-color: rgba(250, 205, 136, 0);
+    text-align: center;
 }
+

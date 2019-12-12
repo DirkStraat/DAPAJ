@@ -4,13 +4,19 @@
 <head>
     <meta charset="UTF-8">
     <title>Grow your savings. Join DAPAJ today.</title>
+    <link rel="stylesheet" type="text/css" href="join_dapaj.css">
+
 </head>
 
 <body>
-    <h1>DAPAJ Bank | Invest In Your Future. Join Today.</h1>
 
+<div class="slogan">
+    <h1>DAPAJ Bank | Invest In Your Future. Join Today.</h1>
+</div>
+
+<div class="divform">
     <form action="#" th:action="@{/join_dapaj}" th:object="${user}" method="post">
-        <table>
+        <table >
             <tr>
                 <td>First Name:</td>
                 <td><input type="text" placeholder="First Name" name="name"></td>
@@ -19,12 +25,12 @@
             <tr>
                 <td>Insert:</td>
                 <td><select>
-                            <option></option>
-                            <option>van</option>
-                            <option>van der</option>
-                            <option>den</option>
-                            <option>van den</option>
-                    </select>
+                    <option></option>
+                    <option>van</option>
+                    <option>van der</option>
+                    <option>den</option>
+                    <option>van den</option>
+                </select>
                 </td>
             </tr>
 
@@ -81,18 +87,21 @@
 
             <tr>
                 <td>Client Type:</td>
-                <td><input type="radio" name="Client Type">Particular</td>
-                <td><input type="radio" name="Client Type">Company</td>
+                <td><select>
+                    <option>Particular</option>
+                    <option>Company</option>
+                </select>
             </tr>
 
             <tr>
                 <td>Submit:</td>
                 <td><input type="submit" value="Submit" name="submit"></td>
             </tr>
-
-
         </table>
     </form>
+</div>
+
+
 
 </body>
 </html>

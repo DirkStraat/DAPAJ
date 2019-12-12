@@ -1,0 +1,43 @@
+* {
+    box-sizing: border-box;
+}
+
+html {
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    height: 100%;
+}
+
+body {
+    min-height: 100%;
+    padding-top: 20%;
+}
+
+.slogan {
+    height: 90%;
+    margin-bottom: 20%;
+}
+.divform {
+    background-color: lightsalmon;
+    border: 3px solid darkorange;
+}
+
+h1 {
+    text-align: center;
+}
+
+input, select {
+    min-width: 170px;
+}
+
+th, td {
+    padding: 5px;
+}
+
+table {
+    margin: auto;
+    padding-bottom: 100px;
+
+}
