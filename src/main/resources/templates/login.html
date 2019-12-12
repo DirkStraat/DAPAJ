@@ -9,10 +9,14 @@
 
 
 <body>
+
     <h1> Welkom bij de Dapaj Bank</h1>
     <h2></h2>
-    <h4><span th:text="${header_inlog}"/></h4>
+
         <form class="login" action="#" th:action="@{do_login}" method="post">
+            <TH COLSPAN="2">
+                <h4><span th:text="${header_inlog}"></span></h4>
+            </TH>
             <table>
                 <tr>
                     <td>Gebruikersnaam:</td>
