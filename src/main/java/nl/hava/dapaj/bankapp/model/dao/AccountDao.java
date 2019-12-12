@@ -10,4 +10,5 @@ import java.util.List;
 @Repository
 public interface AccountDao extends CrudRepository<Account, Integer> {
     List<Account> getAccountByCustomersCustomerId(int customerId);
+    Account getAccountByIban(String iban);
 }
