@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-public class Transaction {
+public class Transaction implements Comparable<Transaction> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int transactionID;
@@ -88,5 +88,10 @@ public class Transaction {
 
     public void setDateTimeTransaction(LocalDateTime dateTimeTransaction) {
         this.dateTimeTransaction = dateTimeTransaction;
+    }
+
+    @Override
+    public int compareTo(Transaction t){
+        return t.getDateTimeTransaction().compareTo(this.getDateTimeTransaction());
     }
 }

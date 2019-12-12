@@ -75,4 +75,9 @@ public  class Account {
     public void addCustomer(Customer customer){
         customers.add(customer);
     }
+
+    @Override
+    public String toString() {
+        return String.format(iban);
+    }
 }

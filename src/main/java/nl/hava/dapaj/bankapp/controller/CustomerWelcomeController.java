@@ -2,8 +2,10 @@ package nl.hava.dapaj.bankapp.controller;
 
 import nl.hava.dapaj.bankapp.model.Account;
 import nl.hava.dapaj.bankapp.model.Customer;
+import nl.hava.dapaj.bankapp.model.Transaction;
 import nl.hava.dapaj.bankapp.model.User;
 import nl.hava.dapaj.bankapp.service.AccountService;
+import nl.hava.dapaj.bankapp.service.TransactionService;
 import nl.hava.dapaj.bankapp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,6 +27,9 @@ public class CustomerWelcomeController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private TransactionService transactionService;
+
 
     @GetMapping("do_select_account")
     public String doSelectAccountHandler(@RequestParam(name = "account_id") int id,
@@ -35,7 +40,8 @@ public class CustomerWelcomeController {
         model.addAttribute("account", account);
         List<Customer> userList = userService.findCustomersByAccountId(account);
         model.addAttribute("customers", userList);
-        System.out.println(userList);
+        List<Transaction> transactions = transactionService.getSortedListOfTransactionsByAccountId(account);
+        model.addAttribute("transactions", transactions);
 
         return "account_page";
     }

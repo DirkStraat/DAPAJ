@@ -50,8 +50,9 @@ public class IBANGenerator {
         BigInteger divisor = new BigInteger("97");
         BigInteger numMod = numRef.mod(divisor);
         BigInteger controlNumber = divisor.subtract(numMod);
-
-        return String.valueOf(controlNumber);
+        if (String.valueOf(controlNumber).length() == 1){
+            return String.format("0"+String.valueOf(controlNumber));
+        } else return String.valueOf(controlNumber);
     }
 
     /**

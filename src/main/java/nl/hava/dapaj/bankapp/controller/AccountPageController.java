@@ -20,18 +20,18 @@ public class AccountPageController {
     private AccountService accountService;
 
     @PostMapping("add_representative")
-    public String addRepresentativeHandler(@RequestParam(name = "account_id") int id,Model model) {
+    public String addRepresentativeHandler(Model model) {
         User user = (User)model.getAttribute("user");
-        Account account = accountService.getAccountByAccountId(id);
+        Account account = (Account)model.getAttribute("account");
         model.addAttribute("user", user);
         model.addAttribute("account", account);
         return "add_representative";
     }
 
     @PostMapping("transfer")
-    public String transferHandler(@RequestParam(name = "account_id") int id, Model model) {
+    public String transferHandler(Model model) {
         User user = (User)model.getAttribute("user");
-        Account account = accountService.getAccountByAccountId(id);
+        Account account = (Account)model.getAttribute("account");
         model.addAttribute("user", user);
         model.addAttribute("account", account);
         return "transfer";
