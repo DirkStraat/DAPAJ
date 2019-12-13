@@ -29,8 +29,8 @@
             <td>Datum</td><td>Bedrag</td><td>Tegenrekening</td><td>Af/Bij</td><td>Omschrijving</td>
         </tr>
        <tr th:each="transaction, iter: ${transactions}" th:unless="${iter.count > 10}">
-            <td><span th:text="${#temporals.format(transaction.dateTimeTransaction, 'dd-MM-yyyy')}"/></td>
-            <td><span th:text="${transaction.amount}"/></td>
+            <td><span th:text="${#temporals.format(transaction.date, 'dd-MM-yyyy')}"/></td>
+            <td><span th:text="${#numbers.formatCurrency(transaction.amount)}"/></td>
             <td><span th:if="${transaction.debitAccount.getAccountID() == account.getAccountID()}" th:text="${transaction.creditAccount}"/>
                 <span th:unless="${transaction.debitAccount.getAccountID() == account.getAccountID()}" th:text="${transaction.debitAccount}"/>
             </td>

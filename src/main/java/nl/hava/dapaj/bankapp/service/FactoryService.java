@@ -14,7 +14,7 @@ import java.util.Set;
 public class FactoryService {
     final static int AANTAL_KLANTEN = 40;
     final static int AANTAL_BEDRIJVEN = 10;
-    final static int AANTAL_GEBRUIKERS = 20;
+    final static int AANTAL_GEBRUIKERS = 30;
     final static int NUMBER_OF_TRANSACTIONS = 500;
     private int companyEmployeesIndex = 0;
     private Factory fabriekje;
@@ -111,14 +111,16 @@ public class FactoryService {
     }
 
     private void addEmployeesToCompany(Company company, List<User> users) {
-        List<User> companyEmployees = new ArrayList<>();
-        User companyEmployee = users.get(companyEmployeesIndex++);
-        User companyEmployee2 = users.get(companyEmployeesIndex++);
-        companyEmployee.addCompany(company);
-        companyEmployee2.addCompany(company);
-        companyEmployees.add(companyEmployee);
-        companyEmployees.add(companyEmployee2);
-        company.setCompanyEmployees(companyEmployees);
+       if (users.size()>companyEmployeesIndex+1) {
+           List<User> companyEmployees = new ArrayList<>();
+           User companyEmployee = users.get(companyEmployeesIndex++);
+           User companyEmployee2 = users.get(companyEmployeesIndex++);
+           companyEmployee.addCompany(company);
+           companyEmployee2.addCompany(company);
+           companyEmployees.add(companyEmployee);
+           companyEmployees.add(companyEmployee2);
+           company.setCompanyEmployees(companyEmployees);
+       }
     }
 
     private List<SMEAccount> addCompanyToSMEAccount(List<SMEAccount> smeAccounts, Company company, List<Employee> bankEmployees){
