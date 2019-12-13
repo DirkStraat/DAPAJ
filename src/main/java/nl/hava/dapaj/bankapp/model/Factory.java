@@ -1,6 +1,7 @@
 package nl.hava.dapaj.bankapp.model;
 
 import com.github.javafaker.Faker;
+import nl.hava.dapaj.bankapp.service.TransactionService;
 import nl.hava.dapaj.bankapp.utils.IBANGenerator;
 
 import java.util.*;
@@ -13,6 +14,7 @@ public class Factory {
     static final int NUMBER_OF_IBANS = 100;
 
     private Faker faker;
+    private TransactionService transactionService;
     private List<Address> addresses;
     private List<String> iBans;
     private List<Employee> bankEmployees;
@@ -20,6 +22,7 @@ public class Factory {
 
     public Factory(){
         this.faker = new Faker(new Locale("nl"));
+        this.transactionService = new TransactionService();
         this.addresses = new ArrayList<>();
         this.iBans = new ArrayList<>();
         this.bankEmployees = new ArrayList<>();
@@ -49,6 +52,7 @@ public class Factory {
         Date dateOfBirth = faker.date().birthday(18, 83);
         String email = String.format(firstName + lastName + "@example.com");
         User user = new User(firstName, prefix, lastName, address, socialSecurityNumber, dateOfBirth, email);
+        user.setPassword(faker.funnyName().name());
         return user;
     }
 
@@ -56,6 +60,7 @@ public class Factory {
         User user = generateUser();
         Customer customer = new Customer(user.firstName, user.prefix, user.lastName, user.address,
                 user.socialSecurityNumber, user.dateOfBirth, user.email);
+        customer.setPassword(user.getPassword());
         return customer;
     }
 
@@ -149,5 +154,17 @@ public class Factory {
 
     public List<Employee> getBankEmployees() {
         return bankEmployees;
+    }
+
+    public void transactionfactory(int numberOfTransactions, List<Account> accounts){
+        Account debitAccount = accounts.get((int)(Math.random()*accounts.size()));
+        Account creditAccount = accounts.get((int)(Math.random()*accounts.size()));
+        if (creditAccount.getAccountID() == debitAccount.getAccountID()){
+            creditAccount = accounts.get((int)(Math.random()*accounts.size()));
+        }
+        double amount =  (Math.random()*10000)/100;
+        String description = faker.funnyName().name();
+
+        transactionService.doTransAction(debitAccount, creditAccount, amount, description);
     }
 }
