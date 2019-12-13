@@ -10,4 +10,5 @@ import java.util.List;
 public interface SMEAccountDao extends CrudRepository <SMEAccount, Integer> {
 
     SMEAccount findSMEAccountByCompanyCompanyId(int companyId);
+
 }

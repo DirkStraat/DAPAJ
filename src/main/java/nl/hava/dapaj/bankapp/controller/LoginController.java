@@ -55,8 +55,9 @@ public class LoginController {
             User user = userService.findUserByLoginName(loginName);
             List<Account> accountList = accountService.getAccountByUserId(user.getCustomerId());
             Company company = companyService.findCompanyIdCompanyName(user);
-            System.out.println(smeAccountDao.findSMEAccountByCompanyCompanyId(company.getCompanyId()));
-            
+            SMEAccount accountList1 = smeAccountDao.findSMEAccountByCompanyCompanyId(company.getCompanyId());
+            accountList.add(accountList1);
+
 
 
             ///System.out.println("company=: "+ companyDao.getCompaniesByCompanyEmployees(user.getCompanies()));

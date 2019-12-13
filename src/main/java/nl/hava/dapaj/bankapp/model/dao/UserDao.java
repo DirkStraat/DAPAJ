@@ -15,5 +15,4 @@ public interface UserDao extends CrudRepository <User, Integer> {
   User findUserByCustomerId(int customerId);
   User findUserByLoginName(String loginName);
   List<Customer> findCustomerByaccounts(Account accountId);
-  List<Company> findCompanyIdByCustomerId(int customer_id);
 }
