@@ -1,6 +1,7 @@
 package nl.hava.dapaj.bankapp.model.dao;
 
 import nl.hava.dapaj.bankapp.model.Account;
+import nl.hava.dapaj.bankapp.model.Company;
 import nl.hava.dapaj.bankapp.model.Customer;
 import nl.hava.dapaj.bankapp.model.User;
 import org.springframework.data.repository.CrudRepository;
@@ -14,4 +15,5 @@ public interface UserDao extends CrudRepository <User, Integer> {
   User findUserByCustomerId(int customerId);
   User findUserByLoginName(String loginName);
   List<Customer> findCustomerByaccounts(Account accountId);
+  List<Company> findCompanyIdByCustomerId(int customer_id);
 }

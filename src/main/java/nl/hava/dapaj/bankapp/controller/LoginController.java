@@ -1,11 +1,9 @@
 package nl.hava.dapaj.bankapp.controller;
 
-import nl.hava.dapaj.bankapp.model.Account;
-import nl.hava.dapaj.bankapp.model.Employee;
-import nl.hava.dapaj.bankapp.model.User;
-import nl.hava.dapaj.bankapp.model.dao.EmployeeDao;
-import nl.hava.dapaj.bankapp.model.dao.UserDao;
+import nl.hava.dapaj.bankapp.model.*;
+import nl.hava.dapaj.bankapp.model.dao.*;
 import nl.hava.dapaj.bankapp.service.AccountService;
+import nl.hava.dapaj.bankapp.service.CompanyService;
 import nl.hava.dapaj.bankapp.service.LoginService;
 import nl.hava.dapaj.bankapp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +29,12 @@ public class LoginController {
     private UserService userService;
     @Autowired
     private AccountService accountService;
+    @Autowired
+    private CompanyService companyService;
+    @Autowired
+    private CompanyDao companyDao;
+    @Autowired
+    private SMEAccountDao smeAccountDao;
 
 
     Employee employee;
@@ -50,6 +54,12 @@ public class LoginController {
         if (loginService.validatePassword(loginName, userPassword)) {
             User user = userService.findUserByLoginName(loginName);
             List<Account> accountList = accountService.getAccountByUserId(user.getCustomerId());
+            Company company = companyService.findCompanyIdCompanyName(user);
+            System.out.println(smeAccountDao.findSMEAccountByCompanyCompanyId(company.getCompanyId()));
+            
+
+
+            ///System.out.println("company=: "+ companyDao.getCompaniesByCompanyEmployees(user.getCompanies()));
             model.addAttribute("user", user);
             model.addAttribute("accounts", accountList);
             return "customer_welcome";
