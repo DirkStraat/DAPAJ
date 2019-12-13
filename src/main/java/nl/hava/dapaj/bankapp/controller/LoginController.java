@@ -55,9 +55,9 @@ public class LoginController {
             return "customer_welcome";
         }else if(loginService.validateEmployeePassword(loginName, userPassword)){
             Employee rol = employeeDao.findUserByEmployeeLoginName(loginName);
-            if (rol.getRole().equals("MKB")){
+            if (rol.getRole().equals("Manager SME")){
                 return "sme_accountmanager_welcome";
-            }else if(rol.getRole().equals("Retail")){
+            }else if(rol.getRole().equals("Manager Retail")){
                 return "private_client_accountmanager_welcome";
             }else{
                 model.addAttribute("header_inlog","Naam/password combinatie niet bekend");
