@@ -13,12 +13,17 @@ import java.util.List;
 
 @Service
 public class TransactionService {
+    final static double CREDIT_LIMIT = -1000.0;
 
     @Autowired
     TransactionDao transactionDao;
 
     @Autowired
     AccountDao accountDao;
+
+    public TransactionService(){
+        super();
+    }
 
     public List<Transaction> getSortedListOfTransactionsByAccountId(Account account){
         List<Transaction> transactionsDebit = transactionDao.getTransactionsByDebitAccount(account);
@@ -37,18 +42,20 @@ public class TransactionService {
         return allTransactions;
     }
 
-    public void doTransAction(Account debitAccount, Account creditAccount, double amount, String description){
+    public void doTransAction(Transaction transaction){
+        Account debitAccount = transaction.getDebitAccount();
+        Account creditAccount = transaction.getCreditAccount();
         double debitBalance = debitAccount.getBalance();
         double creditBalance = creditAccount.getBalance();
 
-        if(debitBalance-amount> -1000){
-            debitBalance -= amount;
-            creditBalance += amount;
+        if(debitBalance-transaction.getAmount() > CREDIT_LIMIT){
+            debitBalance = debitBalance - transaction.getAmount();
+            creditBalance = creditBalance + transaction.getAmount();
             debitAccount.setBalance(debitBalance);
             creditAccount.setBalance(creditBalance);
             accountDao.save(debitAccount);
             accountDao.save(creditAccount);
-            transactionDao.save(new Transaction(debitAccount, creditAccount, amount, description));
+            transactionDao.save(transaction);
         }
     }
 

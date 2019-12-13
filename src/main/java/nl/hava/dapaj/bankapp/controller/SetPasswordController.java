@@ -1,7 +1,6 @@
 
 package nl.hava.dapaj.bankapp.controller;
 
-        import nl.hava.dapaj.bankapp.model.Customer;
         import nl.hava.dapaj.bankapp.model.User;
         import nl.hava.dapaj.bankapp.service.UserService;
         import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +19,7 @@ public class SetPasswordController {
                                         @RequestParam(name="bsn") String bsn,
                                          Model model) {
         User user = userService.findUserByLoginName(name);
-        if (user != null && bsn.equals(user.getBsn())) {
+        if (user != null && bsn.equals(user.getSocialSecurityNumber())) {
             user.setPassword(password);
             userService.save(user);
             model.addAttribute("header_inlog", "Wachtwoord succesvol gewijzigd");

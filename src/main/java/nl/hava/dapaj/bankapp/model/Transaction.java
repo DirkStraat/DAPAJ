@@ -3,6 +3,7 @@ package nl.hava.dapaj.bankapp.model;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+
 @Entity
 public class Transaction implements Comparable<Transaction> {
     @Id
@@ -32,6 +33,7 @@ public class Transaction implements Comparable<Transaction> {
         this.creditAccount = creditAccount;
         this.amount = amount;
         this.description = description;
+        //this.dateTimeTransaction = LocalDateTime.now();
     }
 
     public int getTransactionID() {
