@@ -1,7 +1,11 @@
 package nl.hava.dapaj.bankapp.model;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+
 
 @Entity
 public class Transaction implements Comparable<Transaction> {
@@ -20,7 +24,11 @@ public class Transaction implements Comparable<Transaction> {
 
     private double amount;
     private String description;
-    private LocalDateTime dateTimeTransaction;
+
+    private LocalDate date;
+
+    private LocalTime time;
+
 
     public Transaction(){
         super();
@@ -32,6 +40,8 @@ public class Transaction implements Comparable<Transaction> {
         this.creditAccount = creditAccount;
         this.amount = amount;
         this.description = description;
+        this.date = LocalDate.now();
+        this.time = LocalTime.now();
     }
 
     public int getTransactionID() {
@@ -82,16 +92,26 @@ public class Transaction implements Comparable<Transaction> {
         this.description = description;
     }
 
-    public LocalDateTime getDateTimeTransaction() {
-        return dateTimeTransaction;
+    public LocalDate getDate() {
+        return date;
     }
 
-    public void setDateTimeTransaction(LocalDateTime dateTimeTransaction) {
-        this.dateTimeTransaction = dateTimeTransaction;
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
+    public LocalTime getTime() {
+        return time;
+    }
+
+    public void setTime(LocalTime time) {
+        this.time = time;
     }
 
     @Override
     public int compareTo(Transaction t){
-        return t.getDateTimeTransaction().compareTo(this.getDateTimeTransaction());
+        if (t.getDate().compareTo(this.getDate()) != 0){
+            return t.getDate().compareTo(this.getDate());
+        } else  return t.getTime().compareTo(this.getTime());
     }
 }

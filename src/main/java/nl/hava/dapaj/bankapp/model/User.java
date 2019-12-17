@@ -48,7 +48,7 @@ public class User {
         super();
     }
 
-    protected User(String firstName, String prefix, String lastName, Address address, String socialSecurityNumber,
+    public User(String firstName, String prefix, String lastName, Address address, String socialSecurityNumber,
                    Date dateOfBirth, String email) {
         this.firstName = firstName;
         this.prefix = prefix;
@@ -140,11 +140,11 @@ public class User {
         this.companies.add(company);
     }
 
-    public String getBsn() {
+    public String getSocialSecurityNumber() {
         return socialSecurityNumber;
     }
 
-    public void setBsn(String bsn) {
+    public void setSocialSecurityNumber(String bsn) {
         this.socialSecurityNumber = bsn;
     }
 
@@ -163,4 +163,6 @@ public class User {
     public void setEmail(String email) {
         this.email = email;
     }
+
+
 }

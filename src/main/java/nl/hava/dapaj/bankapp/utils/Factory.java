@@ -1,8 +1,10 @@
-package nl.hava.dapaj.bankapp.model;
+package nl.hava.dapaj.bankapp.utils;
 
 import com.github.javafaker.Faker;
+import nl.hava.dapaj.bankapp.model.*;
+import nl.hava.dapaj.bankapp.service.AccountService;
 import nl.hava.dapaj.bankapp.service.TransactionService;
-import nl.hava.dapaj.bankapp.utils.IBANGenerator;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.*;
 
@@ -11,24 +13,25 @@ public class Factory {
     static final int NUMBER_OF_CITIES = 1;
     static final int NUMBER_OF_STREETS = 20;
     static final int NUMBER_OF_HOUSES = 20;
-    static final int NUMBER_OF_IBANS = 100;
+    static final int NUMBER_OF_IBANS = 400;
+
+    @Autowired
+    TransactionService transactionService;
+
+    @Autowired
+    AccountService accountService = new AccountService();
 
     private Faker faker;
-    private TransactionService transactionService;
     private List<Address> addresses;
     private List<String> iBans;
-    private List<Employee> bankEmployees;
 
 
     public Factory(){
         this.faker = new Faker(new Locale("nl"));
-        this.transactionService = new TransactionService();
         this.addresses = new ArrayList<>();
         this.iBans = new ArrayList<>();
-        this.bankEmployees = new ArrayList<>();
         generateAddresses();
         generateIbans();
-        generateEmployees();
     }
 
     private String createPrefix(){
@@ -58,8 +61,8 @@ public class Factory {
 
     private Customer generateCustomer(){
         User user = generateUser();
-        Customer customer = new Customer(user.firstName, user.prefix, user.lastName, user.address,
-                user.socialSecurityNumber, user.dateOfBirth, user.email);
+        Customer customer = new Customer(user.getFirstName(), user.getPrefix(), user.getLastName(), user.getAddress(),
+                user.getSocialSecurityNumber(), user.getDateOfBirth(), user.getEmail());
         customer.setPassword(user.getPassword());
         return customer;
     }
@@ -129,7 +132,7 @@ public class Factory {
         return account;
     }
 
-    public SMEAccount generateSMEAccount(Company company){
+    public SMEAccount generateSMEAccount(Company company, List<Employee> bankEmployees){
         String iBan = pickRandom(this.iBans);
         String sector = faker.company().industry();
         SMEAccount smeAccount = new SMEAccount(iBan, sector, bankEmployees.get(1), company);
@@ -137,8 +140,8 @@ public class Factory {
     }
 
 
-    private void generateEmployees(){
-        bankEmployees = new ArrayList<>();
+    public List<Employee> generateBankEmployees(){
+        List<Employee> bankEmployees = new ArrayList<>();
         Set<Customer> customers = generateCustomers(2);
         List<Customer> customerList = new ArrayList<>();
         customerList.addAll(customers);
@@ -146,25 +149,74 @@ public class Factory {
         Employee managerSME = new Employee("Manager SME", customerList.get(1));
         bankEmployees.add(managerRetail);
         bankEmployees.add(managerSME);
+        return bankEmployees;
     }
 
     public List<Address> getAddresses() {
         return addresses;
     }
 
-    public List<Employee> getBankEmployees() {
-        return bankEmployees;
-    }
-
-    public void transactionfactory(int numberOfTransactions, List<Account> accounts){
+    public Transaction transactionfactory(List<Account> accounts){
         Account debitAccount = accounts.get((int)(Math.random()*accounts.size()));
         Account creditAccount = accounts.get((int)(Math.random()*accounts.size()));
-        if (creditAccount.getAccountID() == debitAccount.getAccountID()){
+       if (creditAccount.getAccountID() == debitAccount.getAccountID()){
             creditAccount = accounts.get((int)(Math.random()*accounts.size()));
         }
         double amount =  (Math.random()*10000)/100;
         String description = faker.funnyName().name();
 
-        transactionService.doTransAction(debitAccount, creditAccount, amount, description);
+       return new Transaction(debitAccount, creditAccount, amount, description);
+    }
+
+    public static int getNumberOfCities() {
+        return NUMBER_OF_CITIES;
+    }
+
+    public static int getNumberOfStreets() {
+        return NUMBER_OF_STREETS;
+    }
+
+    public static int getNumberOfHouses() {
+        return NUMBER_OF_HOUSES;
+    }
+
+    public static int getNumberOfIbans() {
+        return NUMBER_OF_IBANS;
+    }
+
+    public TransactionService getTransactionService() {
+        return transactionService;
+    }
+
+    public void setTransactionService(TransactionService transactionService) {
+        this.transactionService = transactionService;
+    }
+
+    public AccountService getAccountService() {
+        return accountService;
+    }
+
+    public void setAccountService(AccountService accountService) {
+        this.accountService = accountService;
+    }
+
+    public Faker getFaker() {
+        return faker;
+    }
+
+    public void setFaker(Faker faker) {
+        this.faker = faker;
+    }
+
+    public void setAddresses(List<Address> addresses) {
+        this.addresses = addresses;
+    }
+
+    public List<String> getiBans() {
+        return iBans;
+    }
+
+    public void setiBans(List<String> iBans) {
+        this.iBans = iBans;
     }
 }

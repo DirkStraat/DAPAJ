@@ -37,7 +37,7 @@ public class JoinController {
         User user = new User();
         user.setLastName(lastName);
         user.setFirstName(firstName);
-        user.setBsn(BSN);
+        user.setSocialSecurityNumber(BSN);
         user.setDateOfBirth(dateOfBirth);
         user.setAddress(address);
         user.setEmail(email);
