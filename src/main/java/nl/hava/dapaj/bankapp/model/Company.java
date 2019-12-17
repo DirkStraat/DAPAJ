@@ -30,6 +30,14 @@ public class Company {
         this.address = address;
     }
 
+    public int getCompanyId() {
+        return companyId;
+    }
+
+    public void setCompanyId(int companyId) {
+        this.companyId = companyId;
+    }
+
     public String getCompanyName() {
         return companyName;
     }
@@ -56,5 +64,13 @@ public class Company {
 
     public void setCompanyEmployees(List<User> companyEmployees) {
         this.companyEmployees = companyEmployees;
+    }
+
+    public Set<SMEAccount> getAccounts() {
+        return accounts;
+    }
+
+    public void setAccounts(Set<SMEAccount> accounts) {
+        this.accounts = accounts;
     }
 }

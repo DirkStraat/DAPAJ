@@ -40,7 +40,11 @@ public class AccountPageController {
     @PostMapping("customer_welcome")
     public String customerWelcomeHandler(Model model){
         User user = (User)model.getAttribute("user");
-        List<Account> accountList = accountService.getAccountByUserId(user.getCustomerId());
+        List<Account> accountList = accountService.getAccountByUser(user);
+        List<Account> accountList1 = accountService.getAccountByCompany(user);  // verkrijgt company rekeningen
+        for(Account account: accountList1){                                     // voegt de lijsten samen
+            accountList.add(account);
+        }
         model.addAttribute("accounts", accountList );
         return "customer_welcome";
     }
