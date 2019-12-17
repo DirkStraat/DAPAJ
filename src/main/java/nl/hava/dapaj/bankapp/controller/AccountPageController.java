@@ -21,27 +21,36 @@ public class AccountPageController {
 
     @PostMapping("add_representative")
     public String addRepresentativeHandler(Model model) {
+
         User user = (User)model.getAttribute("user");
-        Account account = (Account)model.getAttribute("account");
         model.addAttribute("user", user);
+
+        Account account = (Account)model.getAttribute("account");
         model.addAttribute("account", account);
+
         return "add_representative";
     }
 
     @PostMapping("transfer")
     public String transferHandler(Model model) {
+
         User user = (User)model.getAttribute("user");
-        Account account = (Account)model.getAttribute("account");
         model.addAttribute("user", user);
+
+        Account account = (Account)model.getAttribute("account");
         model.addAttribute("account", account);
+
         return "transfer";
     }
 
     @PostMapping("customer_welcome")
     public String customerWelcomeHandler(Model model){
+
         User user = (User)model.getAttribute("user");
+
         List<Account> accountList = accountService.getAccountByUserId(user.getCustomerId());
         model.addAttribute("accounts", accountList );
+
         return "customer_welcome";
     }
 }

@@ -26,6 +26,10 @@ public class UserService {
       return  userDao.findUserByLoginName(name);
     }
 
+    public User findUserBySocialSecurityNumber(String socialSecurityNumber) {
+        return userDao.findUserBySocialSecurityNumber(socialSecurityNumber);
+    }
+
     public List<Customer> findCustomersByAccountId(Account id){
         return userDao.findCustomerByaccounts(id);
     }
