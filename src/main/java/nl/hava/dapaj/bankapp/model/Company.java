@@ -65,4 +65,12 @@ public class Company {
     public void setCompanyEmployees(List<User> companyEmployees) {
         this.companyEmployees = companyEmployees;
     }
+
+    public Set<SMEAccount> getAccounts() {
+        return accounts;
+    }
+
+    public void setAccounts(Set<SMEAccount> accounts) {
+        this.accounts = accounts;
+    }
 }
