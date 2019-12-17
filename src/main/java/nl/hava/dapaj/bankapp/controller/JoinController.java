@@ -31,16 +31,36 @@ public class JoinController {
                                   @RequestParam(name ="name") String firstName,
                                   @RequestParam(name ="BSN") String BSN,
                                   @RequestParam(name = "birthday") Date dateOfBirth,
-                                  @RequestParam(name = "address") Address address,
-                                  @RequestParam(name = "email") String email
-                                  ) {
+                                  @RequestParam(name = "email") String email,
+
+                                  //now the requestparam for the address
+                                  @RequestParam(name = "street") String street,
+                                  @RequestParam(name = "house_number") int housenumber,
+                                  @RequestParam(name = "insert") String suffix,
+                                  @RequestParam(name = "postcode") String postcode,
+                                  @RequestParam(name = "city") String city,
+                                  @RequestParam(name = "country") String country
+                                ) {
+
+        //create the user with the form info
         User user = new User();
         user.setLastName(lastName);
         user.setFirstName(firstName);
         user.setSocialSecurityNumber(BSN);
         user.setDateOfBirth(dateOfBirth);
-        user.setAddress(address);
         user.setEmail(email);
+
+            //now make the user sub-object Address
+            Address address = new Address();
+            address.setStreet(street);
+            address.setHousenumber(housenumber);
+            address.setSuffix(suffix);
+            address.setPostcode(postcode);
+            address.setCity(city);
+            address.setCountry(country);
+            user.setAddress(address);
+
+        //save the user in the database
         userService.save(user);
         return "redirect:/set_password";
     }
