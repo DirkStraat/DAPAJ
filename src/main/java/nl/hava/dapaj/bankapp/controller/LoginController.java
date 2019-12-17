@@ -2,10 +2,7 @@ package nl.hava.dapaj.bankapp.controller;
 
 import nl.hava.dapaj.bankapp.model.*;
 import nl.hava.dapaj.bankapp.model.dao.*;
-import nl.hava.dapaj.bankapp.service.AccountService;
-import nl.hava.dapaj.bankapp.service.CompanyService;
-import nl.hava.dapaj.bankapp.service.LoginService;
-import nl.hava.dapaj.bankapp.service.UserService;
+import nl.hava.dapaj.bankapp.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,7 +21,7 @@ public class LoginController {
     @Autowired
     private LoginService loginService;
     @Autowired
-    private EmployeeDao employeeDao;
+    private EmpoyeeService empoyeeService;
     @Autowired
     private UserService userService;
     @Autowired
@@ -54,7 +51,7 @@ public class LoginController {
             model.addAttribute("accounts", accountList);
             return "customer_welcome";
         }else if(loginService.validateEmployeePassword(loginName, userPassword)){
-            Employee rol = employeeDao.findUserByEmployeeLoginName(loginName);
+            Employee rol = empoyeeService.findUserByEmployeeLoginName(loginName);
             if (rol.getRole().equals("Manager SME")){
                 return "sme_accountmanager_welcome";
             }else if(rol.getRole().equals("Manager Retail")){
