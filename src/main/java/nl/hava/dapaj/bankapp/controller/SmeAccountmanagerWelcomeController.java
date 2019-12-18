@@ -28,5 +28,13 @@ public class SmeAccountmanagerWelcomeController {
     @GetMapping ("link_terminal")
     public String link_terminalHandler (Model model){
         return "link_terminal"; }
+
+    @GetMapping("sme_accountmanager_welcome")
+    public String smeAccountManagerWelcomeHandler(Model model) {
+        User user = (User) model.getAttribute("user");
+        model.addAttribute("welcome", user.getFirstName());
+        model.addAttribute("user", user);
+        return "sme_accountmanager_welcome";
+    }
         
 }

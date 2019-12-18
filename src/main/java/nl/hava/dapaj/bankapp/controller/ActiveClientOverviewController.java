@@ -36,4 +36,5 @@ public class ActiveClientOverviewController {
         model.addAttribute("accounts", accountList);
         return "customer_welcome";
     }
+
 }
