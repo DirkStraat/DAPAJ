@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.3.0">
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>430</x>
+      <y>320</y>
+      <w>260</w>
+      <h>150</h>
+    </coordinates>
+    <panel_attributes>Klant
+--
+_-klantId_
+-inlognaam: String
+-wachtwoord: String
+-lening: double
+-bankrekening: Set&lt;Bankrekening&gt;</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>820</x>
+      <y>340</y>
+      <w>260</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>Bankrekening
+--
+-acountId: int
+-tenaamstelling: String
+-rekeninghouder: List
+-iBan: String
+-saldo: double
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>820</x>
+      <y>120</y>
+      <w>250</w>
+      <h>170</h>
+    </coordinates>
+    <panel_attributes>Transactie
+--
+_-transactieId: int_
+-debetRekening: Bankrekening
+-creditRekening: Bankrekening
+-tussenrekening: Bankrekening
+-bedrag: double
+-omschrijving: String
+-datumTijdTransactie: DateTime
+
+ </panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>100</x>
+      <y>30</y>
+      <w>240</w>
+      <h>140</h>
+    </coordinates>
+    <panel_attributes>AdresWoonplaats
+--
+-straat: String
+-huisnr: int
+-toevoeging: String
+-postcode: String
+-woonplaats: String
+-land: String
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>110</x>
+      <y>340</y>
+      <w>210</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>Medewerker
+--
+_-medewerkerId_
+werkInlog: String
+werkWachtwoord: String
+rol: String
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>430</x>
+      <y>50</y>
+      <w>240</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>/user/
+--
+-adres: AdresWoonplaats
+-naam: String</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>310</x>
+      <y>390</y>
+      <w>140</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>lt=-</panel_attributes>
+    <additional_attributes>120.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>330</x>
+      <y>90</y>
+      <w>120</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>100.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>680</x>
+      <y>380</y>
+      <w>160</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>140.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>820</x>
+      <y>530</y>
+      <w>260</w>
+      <h>170</h>
+    </coordinates>
+    <panel_attributes>ZakelijkeRekening
+--
+-sector: String
+-accountManager: Medewerker
+-pinkoppeling: boolean
+-bedrijf: Bedrijf
+
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>950</x>
+      <y>450</y>
+      <w>30</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;80.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>940</x>
+      <y>280</y>
+      <w>50</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+m1=0..n</panel_attributes>
+    <additional_attributes>10.0;60.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1140</x>
+      <y>570</y>
+      <w>240</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>Bedrijf
+--
+-naam: String
+-adres: AdresWoonplaats
+-medewerkers: List&lt;Klant&gt;</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1070</x>
+      <y>610</y>
+      <w>90</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>70.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>550</x>
+      <y>140</y>
+      <w>30</w>
+      <h>200</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;180.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>230</x>
+      <y>140</y>
+      <w>270</w>
+      <h>220</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>250.0;10.0;10.0;200.0</additional_attributes>
+  </element>
+</diagram>

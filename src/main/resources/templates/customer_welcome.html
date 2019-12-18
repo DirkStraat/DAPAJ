@@ -18,9 +18,11 @@
     </tr>
     <tr>
     <tr th:each="account: ${accounts}">
-        <td><span th:text="${account.getAccountName()}"></span> </a> </td>
-        <td><a th:href="@{/do_select_account(account_id=${account.getAccountID()})}"><span th:text="${account.getIban()}"></span> </a></td>
-        <td><span th:text="${account.getBalance()}"></span> </a> </td>
+
+        <td><span th:text="${account.getAccountName()}"/> </a> </td>
+        <td><a th:href="@{/do_select_account(account_id=${account.getAccountID()})}"><span th:text="${account.getIban()}"/> </a></td>
+        <td><span th:text="${account.getBalance()}"/> </a> </td>
+        <td><span th:text="${account.getBalance()}"/> </a> </td>
     </tr>
 </table>
 <br/>

@@ -12,13 +12,4 @@ public class CompanyService {
     @Autowired
     CompanyDao companyDao;
 
-    public Company findCompanyIdCompanyName(User user){
-        String companyName ="";
-        for (Company company:user.getCompanies()) {
-            System.out.println(company.getCompanyName());
-            companyName=company.getCompanyName();
-        }
-
-        return companyDao.findCompanyByCompanyName(companyName);
-    }
 }

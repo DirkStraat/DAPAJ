@@ -2,10 +2,7 @@ package nl.hava.dapaj.bankapp.controller;
 
 import nl.hava.dapaj.bankapp.model.*;
 import nl.hava.dapaj.bankapp.model.dao.*;
-import nl.hava.dapaj.bankapp.service.AccountService;
-import nl.hava.dapaj.bankapp.service.CompanyService;
-import nl.hava.dapaj.bankapp.service.LoginService;
-import nl.hava.dapaj.bankapp.service.UserService;
+import nl.hava.dapaj.bankapp.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,7 +11,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @SessionAttributes("user")
 @Controller
@@ -22,22 +21,12 @@ public class LoginController {
     @Autowired
     private LoginService loginService;
     @Autowired
-    private EmployeeDao employeeDao;
-    @Autowired
-    private UserDao userDao;
+    private EmpoyeeService empoyeeService;
     @Autowired
     private UserService userService;
     @Autowired
     private AccountService accountService;
-    @Autowired
-    private CompanyService companyService;
-    @Autowired
-    private CompanyDao companyDao;
-    @Autowired
-    private SMEAccountDao smeAccountDao;
 
-
-    Employee employee;
 
     @PostMapping ("join_dapaj")
     public String join_dapajHandler(Model model){
@@ -53,19 +42,16 @@ public class LoginController {
                                  Model model) {
         if (loginService.validatePassword(loginName, userPassword)) {
             User user = userService.findUserByLoginName(loginName);
-            List<Account> accountList = accountService.getAccountByUserId(user.getCustomerId());
-            Company company = companyService.findCompanyIdCompanyName(user);
-            SMEAccount accountList1 = smeAccountDao.findSMEAccountByCompanyCompanyId(company.getCompanyId());
-            accountList.add(accountList1);
-
-
-
-            ///System.out.println("company=: "+ companyDao.getCompaniesByCompanyEmployees(user.getCompanies()));
+            List<Account> accountList = accountService.getAccountByUser(user);      // verkrijgt user rekeningen
+            List<Account> accountList1 = accountService.getAccountByCompany(user);  // verkrijgt company rekeningen
+            for(Account account: accountList1){                                     // voegt de lijsten samen
+                accountList.add(account);
+            }
             model.addAttribute("user", user);
             model.addAttribute("accounts", accountList);
             return "customer_welcome";
         }else if(loginService.validateEmployeePassword(loginName, userPassword)){
-            Employee rol = employeeDao.findUserByEmployeeLoginName(loginName);
+            Employee rol = empoyeeService.findUserByEmployeeLoginName(loginName);
             if (rol.getRole().equals("Manager SME")){
                 return "sme_accountmanager_welcome";
             }else if(rol.getRole().equals("Manager Retail")){
@@ -77,20 +63,11 @@ public class LoginController {
         }else {
             model.addAttribute("header_inlog","Naam/password combinatie niet bekend");
             return "login";
+
         }
-
-
-        /*if (loginName.equals("NaamMKB") && userPassword.equals("geheim")) {
-            model.addAttribute("welcome", loginName);
-            return "sme_accountmanager_welcome";
-        }else if (loginName.equals("NaamParticulieren")&& userPassword.equals("geheim")) {
-            return "private_client_accountmanager_welcome";
-        }else if (loginName.equals("NaamRetail")&& userPassword.equals("geheim")){
-            return "customer_welcome";
-        } else {
-            model.addAttribute("header_inlog", "Naam/password combinatie niet bekend.");
-            return "login";
-        }*/
     }
-
+    @GetMapping("logout")
+    public String logoutHandler(){
+        return "login";
+    }
 }
