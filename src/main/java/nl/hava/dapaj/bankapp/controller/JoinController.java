@@ -3,8 +3,10 @@ package nl.hava.dapaj.bankapp.controller;
 import nl.hava.dapaj.bankapp.model.Address;
 import nl.hava.dapaj.bankapp.model.User;
 import nl.hava.dapaj.bankapp.model.dao.UserDao;
+import nl.hava.dapaj.bankapp.service.AddressService;
 import nl.hava.dapaj.bankapp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +22,9 @@ public class JoinController {
     @Autowired
     UserService userService;
 
+    @Autowired
+    AddressService addressService;
+
     @GetMapping("join_dapaj")
     public String joinForm(Model model) {
         model.addAttribute("user", new User());
@@ -30,7 +35,7 @@ public class JoinController {
     public String processJoinForm(@RequestParam(name ="last name") String lastName,
                                   @RequestParam(name ="name") String firstName,
                                   @RequestParam(name ="BSN") String BSN,
-                                  @RequestParam(name = "birthday") Date dateOfBirth,
+                                  //@RequestParam(name = "birthday") /*@DateTimeFormat(pattern = "yyyy.MM.dd")*/ Date dateOfBirth,
                                   @RequestParam(name = "email") String email,
 
                                   //now the requestparam for the address
@@ -47,7 +52,8 @@ public class JoinController {
         user.setLastName(lastName);
         user.setFirstName(firstName);
         user.setSocialSecurityNumber(BSN);
-        user.setDateOfBirth(dateOfBirth);
+            Date date = new Date();
+        user.setDateOfBirth(date);
         user.setEmail(email);
 
             //now make the user sub-object Address
@@ -59,6 +65,9 @@ public class JoinController {
             address.setCity(city);
             address.setCountry(country);
             user.setAddress(address);
+            addressService.save(address);
+
+
 
         //save the user in the database
         userService.save(user);
