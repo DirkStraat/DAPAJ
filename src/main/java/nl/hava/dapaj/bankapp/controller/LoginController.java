@@ -26,6 +26,7 @@ public class LoginController {
     private UserService userService;
     @Autowired
     private AccountService accountService;
+    CustomerWelcomeController customerWelcomeController;
 
 
     @PostMapping ("join_dapaj")
