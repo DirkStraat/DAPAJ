@@ -1,6 +1,7 @@
 package nl.hava.dapaj.bankapp.service;
 
 import nl.hava.dapaj.bankapp.model.Account;
+import nl.hava.dapaj.bankapp.model.AuthorizationInvitation;
 import nl.hava.dapaj.bankapp.model.Customer;
 import nl.hava.dapaj.bankapp.model.User;
 import nl.hava.dapaj.bankapp.model.dao.UserDao;

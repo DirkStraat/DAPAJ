@@ -1,6 +1,7 @@
 package nl.hava.dapaj.bankapp.service;
 
 import nl.hava.dapaj.bankapp.model.Account;
+import nl.hava.dapaj.bankapp.model.User;
 import nl.hava.dapaj.bankapp.model.dao.AccountDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,4 +29,5 @@ public class AccountService {
     public Account getAccountByAccountId(int accountId){
         return accountDAO.findAccountByAccountID(accountId);
     }
+
 }

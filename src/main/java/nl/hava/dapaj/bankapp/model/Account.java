@@ -1,8 +1,7 @@
 package nl.hava.dapaj.bankapp.model;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -21,6 +20,9 @@ public  class Account {
 
     protected double balance;
 
+    @OneToMany (fetch = FetchType.EAGER)
+    protected List<AuthorizationInvitation> aRInvitations;
+
     public Account(){
         super();
     }
@@ -30,6 +32,8 @@ public  class Account {
         this.iban = iban;
         this.customers = new HashSet<>();
         this.balance = 0.0;
+        this.aRInvitations = new ArrayList<>();
+
     }
 
     public int getAccountID() {
@@ -74,6 +78,14 @@ public  class Account {
 
     public void addCustomer(Customer customer){
         customers.add(customer);
+    }
+
+    public List<AuthorizationInvitation> getaRInvitations() {
+        return aRInvitations;
+    }
+
+    public void setaRInvitations(List<AuthorizationInvitation> aRInvitations) {
+        this.aRInvitations = aRInvitations;
     }
 
     @Override
