@@ -15,7 +15,7 @@
 </div>
 
 <div class="divform">
-    <form action="#" th:action="@{/join_dapaj}" th:object="${user}" method="post">
+    <form action="#" th:action="@{/create_user}" th:object="${user}" method="post">
         <table >
             <tr>
                 <td>First Name:</td>
@@ -24,7 +24,7 @@
 
             <tr>
                 <td>Insert:</td>
-                <td><select>
+                <td><select name="insert">
                     <option></option>
                     <option>van</option>
                     <option>van der</option>
@@ -41,7 +41,7 @@
 
             <tr>
                 <td>Date of Birth:</td>
-                <td><input type="date" placeholder="Your Birthday" name="birthday"></td>
+                <td><input type="date"  placeholder="Your Birthday" name="birthday"></td>
             </tr>
 
 
@@ -52,12 +52,12 @@
 
             <tr>
                 <td>Address:</td>
-                <td><input type="text" placeholder="Street and number" name="address"></td>
+                <td><input type="text" placeholder="Street" name="street"></td>
             </tr> <br/>
 
             <tr>
-                <td>Floor/Anex:</td>
-                <td><input type="text" placeholder="Floor or anex" name="anexation"></td>
+                <td>House number:</td>
+                <td><input type="text" placeholder="House number" name="house_number"></td>
             </tr> <br/>
 
             <tr>
@@ -87,11 +87,20 @@
 
             <tr>
                 <td>Client Type:</td>
-                <td><select>
+                <td><select name="typeUser">
                     <option>Particular</option>
                     <option>Company</option>
                 </select>
             </tr>
+
+            <tr>
+                <td>Open an account?</td>
+                <td><select name="typeUser">
+                    <option>Yes</option>
+                    <option>No</option>
+                </select>
+            </tr>
+
 
             <tr>
                 <td>Submit:</td>

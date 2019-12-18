@@ -32,14 +32,17 @@ public class CustomerWelcomeController {
 
 
     @GetMapping("do_select_account")
-    public String doSelectAccountHandler(@RequestParam(name = "account_id") int id,
-            Model model) {
+    public String doSelectAccountHandler(@RequestParam(name = "account_id") int id, Model model) {
+
         User user = (User)model.getAttribute("user");
         model.addAttribute("user", user);
+
         Account account = accountService.getAccountByAccountId(id);
         model.addAttribute("account", account);
+
         List<Customer> userList = userService.findCustomersByAccountId(account);
         model.addAttribute("customers", userList);
+
         List<Transaction> transactions = transactionService.getSortedListOfTransactionsByAccountId(account);
         model.addAttribute("transactions", transactions);
 

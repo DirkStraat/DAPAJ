@@ -24,6 +24,11 @@ public class SetPasswordController {
             userService.save(user);
             model.addAttribute("header_inlog", "Wachtwoord succesvol gewijzigd");
             return "login";
+        } else {
+            User newUser = userService.findUserBySocialSecurityNumber(bsn);
+            newUser.setLoginName(name);
+            newUser.setPassword(password);
+            userService.save(newUser);
         }
              model.addAttribute("header_inlog", "Wachtwoord kan niet gewijzigd worden");
              return "login";
