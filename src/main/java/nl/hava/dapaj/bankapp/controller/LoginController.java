@@ -63,6 +63,11 @@ public class LoginController {
         }else {
             model.addAttribute("header_inlog","Naam/password combinatie niet bekend");
             return "login";
+
         }
+    }
+    @GetMapping("logout")
+    public String logoutHandler(){
+        return "login";
     }
 }
