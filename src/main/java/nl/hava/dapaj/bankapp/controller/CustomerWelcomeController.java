@@ -51,5 +51,4 @@ public class CustomerWelcomeController {
         return "link_terminal.html";
     }
 
-
 }

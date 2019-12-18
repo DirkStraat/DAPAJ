@@ -41,7 +41,7 @@ public class User {
     @ManyToOne
     protected Address address;
 
-    @ManyToMany
+    @ManyToMany (fetch = FetchType.EAGER)
     protected Set<Company> companies;
 
     public User(){

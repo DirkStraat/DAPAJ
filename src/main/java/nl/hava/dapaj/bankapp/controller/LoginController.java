@@ -51,10 +51,12 @@ public class LoginController {
             model.addAttribute("accounts", accountList);
             return "customer_welcome";
         }else if(loginService.validateEmployeePassword(loginName, userPassword)){
-            Employee rol = empoyeeService.findUserByEmployeeLoginName(loginName);
-            if (rol.getRole().equals("Manager SME")){
+            User user = empoyeeService.findUserByEmployeeLoginName(loginName);
+            if (((Employee) user).getRole().equals("Manager SME")){
+                model.addAttribute("welcome", user.getFirstName());
+                model.addAttribute("user", user);
                 return "sme_accountmanager_welcome";
-            }else if(rol.getRole().equals("Manager Retail")){
+            }else if(((Employee) user).getRole().equals("Manager Retail")){
                 return "private_client_accountmanager_welcome";
             }else{
                 model.addAttribute("header_inlog","Naam/password combinatie niet bekend");
