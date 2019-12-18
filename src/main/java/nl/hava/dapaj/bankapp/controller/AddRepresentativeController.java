@@ -13,8 +13,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 @Controller
-@SessionAttributes({"user", "account"})
+@SessionAttributes({"user", "account", "motd"})
 public class AddRepresentativeController {
+    final static int LENGTE_KOPPELCODE = 5;
 
     @Autowired
     UserService userService;
@@ -26,9 +27,19 @@ public class AddRepresentativeController {
     public String inviteRepresentativeHandler(@RequestParam(name = "user_name") String userName,
                                               @RequestParam(name = "keycode") String keycode , Model model) {
         User newRepresentative = userService.findUserByLoginName(userName);
+        if (newRepresentative == null){
+            model.addAttribute("motd", "Deze gebruikersnaam is niet bekend in het systeem.");
+            return "add_representative";
+        }
+        if (keycode.length() != LENGTE_KOPPELCODE){
+            model.addAttribute("motd", "Aantal tekens van koppelcode is niet juist.");
+            return "add_representative";
+        }
+
         Account account = (Account)model.getAttribute("account");
         authorizationInvitationService.inviteAuthorizedRepresentative(newRepresentative, account, keycode);
-        //hier nog code om account_page te vullen
+        model.addAttribute("motd", "Uitnodiging naar gemachtigde verstuurd. Deze kan de rekening koppelen met de koppelcode.");
+
         return "account_page";
     }
 }

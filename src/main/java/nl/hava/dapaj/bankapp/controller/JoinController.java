@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Controller
@@ -52,7 +53,7 @@ public class JoinController {
         user.setLastName(lastName);
         user.setFirstName(firstName);
         user.setSocialSecurityNumber(BSN);
-            Date date = new Date();
+            LocalDate date = LocalDate.now();
         user.setDateOfBirth(date);
         user.setEmail(email);
 

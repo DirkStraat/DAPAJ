@@ -8,6 +8,7 @@
 <body>
 
     <H1>Welkom <span th:text="${user.firstName}"></span></H1>
+    <h1><span th:text="${motd}"/></h1>
     <p>
         <div>Het is nu: <span th:text="${#dates.format(#dates.createNow(), 'dd MMMMMMMMM yyyy HH:mm')}"></span>.</div>
         <div>Dit is de overzichtspagina voor rekening met nummer: <span th:text="${account.iban}"></span></div>
