@@ -14,12 +14,4 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 @SessionAttributes("user")
 public class AverageBalanceBranchController {
 
-    LoginController loginController;
-    ActiveClientOverviewController activeClientOverviewController;
-
-    @PostMapping("keuze_pagina")
-    public String keuzePaginaHandler(Model model){
-        User user = (User)model.getAttribute("user");;
-        return activeClientOverviewController.activeClientOverviewHandler(model.addAttribute(user));
-    }
 }

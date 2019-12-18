@@ -17,24 +17,6 @@ import java.util.List;
 @Controller
 public class ActiveClientOverviewController {
 
-    @Autowired
-    private AccountService accountService;
 
-    @GetMapping("customerWelcome")
-    public String activeClientOverviewHandler(Model model){
-        User user = (User)model.getAttribute("user");
-        System.out.println("user 1"+ user.getLoginName());
-        System.out.println("user 1"+ user.getFirstName());
-        List<Account> accountList = accountService.getAccountByUser(user);      // verkrijgt user rekeningen
-        List<Account> accountList1 = accountService.getAccountByCompany(user);  // verkrijgt company rekeningen
-        for(Account account: accountList1){                                     // voegt de lijsten samen
-            accountList.add(account);
-        }
-        System.out.println("user 2"+ user);
-        model.addAttribute("user", user);
-        System.out.println("user 3"+ user);
-        model.addAttribute("accounts", accountList);
-        return "customer_welcome";
-    }
 
 }
