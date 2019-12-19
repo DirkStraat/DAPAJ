@@ -1,10 +1,7 @@
 package nl.hava.dapaj.bankapp.controller;
 
 import nl.hava.dapaj.bankapp.model.*;
-import nl.hava.dapaj.bankapp.service.AccountService;
-import nl.hava.dapaj.bankapp.service.AuthorizationInvitationService;
-import nl.hava.dapaj.bankapp.service.TransactionService;
-import nl.hava.dapaj.bankapp.service.UserService;
+import nl.hava.dapaj.bankapp.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,6 +27,8 @@ public class CustomerWelcomeController {
 
     @Autowired
     private AuthorizationInvitationService authorizationInvitationService;
+
+
 
 
 
@@ -77,5 +76,6 @@ public class CustomerWelcomeController {
         model.addAttribute("accounts", accountList);
         return "customer_welcome";
     }
+
 
 }

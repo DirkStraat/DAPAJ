@@ -26,7 +26,8 @@ public class LoginController {
     private UserService userService;
     @Autowired
     private AccountService accountService;
-    CustomerWelcomeController customerWelcomeController;
+    @Autowired
+    private SmeAccountmanagerWelcomeController smeAccountmanagerWelcomeController;
 
 
     @PostMapping ("join_dapaj")
@@ -37,25 +38,18 @@ public class LoginController {
     public String set_passwordHandler (Model model){
         return "set_password";
     }
+
     @PostMapping("do_login")
     public String doLoginHandler(@RequestParam(name = "user_name") String loginName,
                                  @RequestParam(name = "user_password") String userPassword,
                                  Model model) {
         if (loginService.validatePassword(loginName, userPassword)) {
-            User user = userService.findUserByLoginName(loginName);
-            List<Account> accountList = accountService.getAccountByUser(user);      // verkrijgt user rekeningen
-            List<Account> accountList1 = accountService.getAccountByCompany(user);  // verkrijgt company rekeningen
-            for(Account account: accountList1){                                     // voegt de lijsten samen
-                accountList.add(account);
-            }
-            model.addAttribute("user", user);
-            model.addAttribute("accounts", accountList);
+            enterCustomerWelcome(loginName, model);
             return "customer_welcome";
         }else if(loginService.validateEmployeePassword(loginName, userPassword)){
             User user = empoyeeService.findUserByEmployeeLoginName(loginName);
             if (((Employee) user).getRole().equals("Manager SME")){
-                model.addAttribute("welcome", user.getFirstName());
-                model.addAttribute("user", user);
+                smeAccountmanagerWelcomeController.enterSmeAccountManagerWelcome(model, user);
                 return "sme_accountmanager_welcome";
             }else if(((Employee) user).getRole().equals("Manager Retail")){
                 return "private_client_accountmanager_welcome";
@@ -69,6 +63,20 @@ public class LoginController {
 
         }
     }
+
+
+
+    public void enterCustomerWelcome(@RequestParam(name = "user_name") String loginName, Model model) {
+        User user = userService.findUserByLoginName(loginName);
+        List<Account> accountList = accountService.getAccountByUser(user);      // verkrijgt user rekeningen
+        List<Account> accountList1 = accountService.getAccountByCompany(user);  // verkrijgt company rekeningen
+        for(Account account: accountList1){                                     // voegt de lijsten samen
+            accountList.add(account);
+        }
+        model.addAttribute("user", user);
+        model.addAttribute("accounts", accountList);
+    }
+
     @GetMapping("logout")
     public String logoutHandler(){
         return "login";
