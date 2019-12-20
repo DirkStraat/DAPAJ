@@ -22,15 +22,30 @@ public class AuthorizationInvitationService {
     @Autowired
     AccountDao accountDao;
 
-    public void inviteAuthorizedRepresentative(User newRepresentative, Account account, String keycode){
-        AuthorizationInvitation authorizationInvitation = new AuthorizationInvitation(account, newRepresentative, keycode);
-        newRepresentative.getAuthorizedRepresentativeInvitations().add(authorizationInvitation);
-        account.getaRInvitations().add(authorizationInvitation);
+    public void inviteAuthorizedRepresentative(AuthorizationInvitation authorizationInvitation){
+        //save invite in db
         authorizationInvitationDao.save(authorizationInvitation);
+        //add invite to list of invites in user and save in db
+        User user = authorizationInvitation.getUser();
+        userDao.save(user);
+        //add invite to list of invites in account and save in db
+        authorizationInvitation.getAccount().getaRInvitations().add(authorizationInvitation);
+        accountDao.save(authorizationInvitation.getAccount());
     }
 
     public List<AuthorizationInvitation> getInvitationsByUser(User user){
-        return authorizationInvitationDao.getAuthorizationInvitationsByUser(user);
+        return authorizationInvitationDao.getAuthorizationInvitationsByUserAndInvitationAcceptedFalse(user);
     }
 
+    public List<AuthorizationInvitation> getAuthorizationInvitationsByAccountAndUser(Account account, User user) {
+        return authorizationInvitationDao.getAuthorizationInvitationsByAccountAndUserAndInvitationAcceptedFalse(account, user);
+    }
+
+    public void removeAuthorizationInvitation(int authorizationInvitationId){
+        authorizationInvitationDao.removeAuthorizationInvitationByInvitationId(authorizationInvitationId);
+    }
+
+    public void save(AuthorizationInvitation authorizationInvitation){
+        authorizationInvitationDao.save(authorizationInvitation);
+    }
 }

@@ -6,7 +6,7 @@ import javax.persistence.*;
 public class AuthorizationInvitation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int InvitationId;
+    private int invitationId;
 
     @ManyToOne
     private Account account;
@@ -16,6 +16,8 @@ public class AuthorizationInvitation {
 
     private String keycode;
 
+    private boolean invitationAccepted;
+
     public AuthorizationInvitation() {
         super();
     }
@@ -24,14 +26,15 @@ public class AuthorizationInvitation {
         this.account = account;
         this.user = user;
         this.keycode = keycode;
+        this.invitationAccepted = false;
     }
 
     public int getInvitationId() {
-        return InvitationId;
+        return invitationId;
     }
 
     public void setInvitationId(int invitationId) {
-        this.InvitationId = invitationId;
+        this.invitationId = invitationId;
     }
 
     public Account getAccount() {
@@ -56,5 +59,25 @@ public class AuthorizationInvitation {
 
     public void setKeycode(String keycode) {
         this.keycode = keycode;
+    }
+
+    private boolean checkKeycodeLength(String keycode){
+        if (keycode.length() == 5){
+            return true;
+        } else return false;
+    }
+
+    private boolean checkKeycode(String keycode){
+        if(this.keycode.equals(keycode)){
+            return true;
+        } else return false;
+    }
+
+    public boolean isInvitationAccepted() {
+        return invitationAccepted;
+    }
+
+    public void setInvitationAccepted(boolean invitationAccepted) {
+        this.invitationAccepted = invitationAccepted;
     }
 }

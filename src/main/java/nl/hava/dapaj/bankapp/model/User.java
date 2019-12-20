@@ -34,7 +34,7 @@ public class User {
     protected String socialSecurityNumber;
     protected LocalDate dateOfBirth;
 
-    @Email
+    //@Email
     protected String email;
 
     @ManyToOne

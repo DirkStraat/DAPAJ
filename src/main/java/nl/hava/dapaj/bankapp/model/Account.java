@@ -15,7 +15,7 @@ public  class Account {
     @Column(unique = true)
     protected String iban;
 
-    @ManyToMany
+    @ManyToMany (fetch = FetchType.EAGER)
     protected Set<Customer> customers;
 
     protected double balance;
