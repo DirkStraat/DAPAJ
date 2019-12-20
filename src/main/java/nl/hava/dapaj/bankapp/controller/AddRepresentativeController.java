@@ -1,6 +1,7 @@
 package nl.hava.dapaj.bankapp.controller;
 
 import nl.hava.dapaj.bankapp.model.Account;
+import nl.hava.dapaj.bankapp.model.AuthorizationInvitation;
 import nl.hava.dapaj.bankapp.model.User;
 import nl.hava.dapaj.bankapp.service.AccountService;
 import nl.hava.dapaj.bankapp.service.AuthorizationInvitationService;
@@ -37,7 +38,8 @@ public class AddRepresentativeController {
         }
 
         Account account = (Account)model.getAttribute("account");
-        authorizationInvitationService.inviteAuthorizedRepresentative(newRepresentative, account, keycode);
+        AuthorizationInvitation authorizationInvitation = new AuthorizationInvitation(account, newRepresentative, keycode);
+        authorizationInvitationService.inviteAuthorizedRepresentative(authorizationInvitation);
         model.addAttribute("motd", "Uitnodiging naar gemachtigde verstuurd. Deze kan de rekening koppelen met de koppelcode.");
 
         return "account_page";
