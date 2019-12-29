@@ -35,7 +35,7 @@ public class JoinController {
     public String processJoinForm(@RequestParam(name ="last name") String lastName,
                                   @RequestParam(name ="name") String firstName,
                                   @RequestParam(name ="BSN") String BSN,
-                                  //@RequestParam(name = "birthday") /*@DateTimeFormat(pattern = "yyyy.MM.dd")*/ Date dateOfBirth,
+                                  @RequestParam(name = "birthday") @DateTimeFormat(pattern = "yyyy-MM-dd") Date dateOfBirth,
                                   @RequestParam(name = "email") String email,
 
                                   //now the requestparam for the address
@@ -44,16 +44,26 @@ public class JoinController {
                                   @RequestParam(name = "insert") String suffix,
                                   @RequestParam(name = "postcode") String postcode,
                                   @RequestParam(name = "city") String city,
-                                  @RequestParam(name = "country") String country
-                                ) {
+                                  @RequestParam(name = "country") String country,
+
+                                  //now check if the user wants to open an accout
+                                  @RequestParam(name = "open_private_account") boolean privateAccount,
+                                  @RequestParam(name = "open_corporate_account") boolean corporateAccount
+
+                                  ) {
+
+/*        if (privateAccount) { //if visitor chooses to open a private account
+            //then call Customer constructor
+        } else if (corporateAccount) {
+            //in this case call ...
+        }*/
 
         //create the user with the form info
         User user = new User();
         user.setLastName(lastName);
         user.setFirstName(firstName);
         user.setSocialSecurityNumber(BSN);
-            Date date = new Date();
-        user.setDateOfBirth(date);
+        user.setDateOfBirth(dateOfBirth);
         user.setEmail(email);
 
             //now make the user sub-object Address
@@ -67,11 +77,8 @@ public class JoinController {
             user.setAddress(address);
             addressService.save(address);
 
-
-
         //save the user in the database
         userService.save(user);
         return "redirect:/set_password";
     }
-
 }

@@ -10,6 +10,26 @@
 
 <body>
 
+<script type="text/javascript">
+    function yesnoCheck(that) {
+        if (that.value == "corporate") {
+            alert("You will now be redirected to provide more information about your company");
+            // document.getElementsByClassName("ifCorporate").style.display = "inline";
+            var els = document.getElementsByClassName("ifCorporate");
+            [].forEach.call(els, function (el)  {
+                el.style.display = "table-row";
+            })
+        } else {
+            // document.getElementsByClassName("ifCorporate").forEach.style.display = "none";
+            var els = document.getElementsByClassName("ifCorporate");
+            [].forEach.call(els, function (el)  {
+                el.style.display = "none";
+            })
+        }
+    }
+</script>
+
+
 <div class="slogan">
     <h1>DAPAJ Bank | Invest In Your Future. Join Today.</h1>
 </div>
@@ -39,6 +59,7 @@
                 <td><input type="text" placeholder="Last Name" name="last name"></td>
             </tr>
 
+
             <tr>
                 <td>Date of Birth:</td>
                 <td><input type="date"  placeholder="Your Birthday" name="birthday"></td>
@@ -51,7 +72,7 @@
             </tr> <br/>
 
             <tr>
-                <td>Address:</td>
+                <td>Street:</td>
                 <td><input type="text" placeholder="Street" name="street"></td>
             </tr> <br/>
 
@@ -86,20 +107,45 @@
             </tr>
 
             <tr>
-                <td>Client Type:</td>
-                <td><select name="typeUser">
-                    <option>Particular</option>
-                    <option>Company</option>
-                </select>
+                <td>Open an account?</td>
+                <td><select multiple onchange="yesnoCheck(this);">
+                    <option name="open_private_account" value="private">Private</option>
+                    <option name="open_corporate_account" value="corporate">Corporate</option>
+                </select><br></td>
             </tr>
 
-            <tr>
-                <td>Open an account?</td>
-                <td><select name="typeUser">
-                    <option>Yes</option>
-                    <option>No</option>
-                </select>
+<!--            This part below of the questionnaire only shows up if the visitor selects to open a company account-->
+
+            <tr class="ifCorporate" style="display: none;">
+                <td>Company:</td>
+                <td><input type="text" placeholder="Company Name" name="company_name"></td>
+
+            <tr class="ifCorporate" style="display: none;">
+                <td>Street:</td>
+                <td><input type="text" placeholder="Street" name="company_street"></td>
+            </tr> <br/>
+
+            <tr class="ifCorporate" style="display: none;">
+                <td>Number:</td>
+                <td><input type="text" placeholder="Company number" name="company_number"></td>
+            </tr> <br/>
+
+            <tr class="ifCorporate" style="display: none;">
+                <td>Postcode:</td>
+                <td><input type="text" placeholder="Company postcode" name="company_postcode"></td>
+            </tr> <br/>
+
+            <tr class="ifCorporate" style="display: none;">
+                <td>City:</td>
+                <td><input type="text" placeholder="City" name="company_city"></td>
+            </tr> <br/>
+
+            <tr class="ifCorporate" style="display: none;">
+                <td>Country:</td>
+                <td><input type="text" value="Netherlands" name="company_country"></td>
+            </tr> <br/>
             </tr>
+
 
 
             <tr>
