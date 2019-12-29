@@ -12,4 +12,12 @@ public class CompanyService {
     @Autowired
     CompanyDao companyDao;
 
+    public Company getCompanyByCompanyId(int companyId){
+        return companyDao.getCompanyByCompanyId(companyId);
+    }
+
+    public void saveCompany(Company company){
+        companyDao.save(company);
+    }
+
 }

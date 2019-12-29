@@ -5,11 +5,18 @@
     <title>Saldo per Sector</title>
 </head>
 <body>
+<nav>
+    <ul>
+        <li><a href="/sme_accountmanager_welcome">Keuze pagina</a></li>
+        <li><a href="/logout">Uitloggen</a></li>
+
+    </ul>
+</nav>
 <h1> Hier vindt u het gemiddelde saldo per sector</h1>
+<h2>Welkom <span th:text="${welcome}"/></h2>
 <table >
     <tr>
         <th>Gemiddelde saldo per sector</th>
-
     </tr>
     <tr>
         <td data-th="sector">sector</td>

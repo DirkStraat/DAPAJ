@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>link_account</title>
+</head>
+<body>
+<div>U kunt gemachtigde worden voor de rekening met nummer: <span th:text= "${linkAccount.getIban()}"/></div>
+<div>Deze rekening is op naam gesteld van: <span th:text= "${linkAccount.getAccountName()}"/></div>
+
+<form action="#" th:action="@{link_account}" method="post">
+    <table>
+        <tr>
+            <td>Voer hier de koppelcode in (vijf cijfers):</td>
+            <td><input type="password" name="keycode"></td>
+        </tr>
+        <td></td>
+        <td><input type="submit" value="Stuur koppelverzoek."></td>
+    </table>
+</form>
+</body>
+</html>

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Controller
@@ -63,7 +64,10 @@ public class JoinController {
         user.setLastName(lastName);
         user.setFirstName(firstName);
         user.setSocialSecurityNumber(BSN);
-        user.setDateOfBirth(dateOfBirth);
+
+        //user.setDateOfBirth(dateOfBirth);
+            LocalDate date = LocalDate.now();
+        user.setDateOfBirth(date);
         user.setEmail(email);
 
             //now make the user sub-object Address

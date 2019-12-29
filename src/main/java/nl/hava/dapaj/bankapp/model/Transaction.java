@@ -13,10 +13,10 @@ public class Transaction implements Comparable<Transaction> {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int transactionID;
 
-    @OneToOne
+    @ManyToOne
     private Account debitAccount;
 
-    @OneToOne
+    @ManyToOne
     private Account creditAccount;
 
     @OneToOne
