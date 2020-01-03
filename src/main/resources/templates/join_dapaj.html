@@ -13,7 +13,7 @@
 <script type="text/javascript">
     function yesnoCheck(that) {
         if (that.value == "corporate") {
-            alert("You will now be redirected to provide more information about your company");
+            alert("Please provide more information about your company");
             // document.getElementsByClassName("ifCorporate").style.display = "inline";
             var els = document.getElementsByClassName("ifCorporate");
             [].forEach.call(els, function (el)  {
@@ -114,7 +114,7 @@
                 </select><br></td>
             </tr>
 
-<!--            This part below of the questionnaire only shows up if the visitor selects to open a company account-->
+<!--            This part below of the questionnaire only pops up if the visitor selects to open a company account-->
 
             <tr class="ifCorporate" style="display: none;">
                 <td>Company:</td>
