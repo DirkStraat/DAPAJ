@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Controller
 public class JoinController {
@@ -59,13 +60,12 @@ public class JoinController {
                                   @RequestParam(name = "company_postcode") String companyPostcode,
                                   @RequestParam(name = "company_city") String companyCity,
                                   @RequestParam(name = "company_country") String companyCountry
-
                                   ) {
 
-/*        if (privateAccount) { //if visitor chooses to open a private account
-            //then call Customer constructor
+/*        if (privateAccount) {
+
         } else if (corporateAccount) {
-            //in this case call ...
+
         }*/
 
         //create the user with the form info
@@ -77,7 +77,6 @@ public class JoinController {
         user.setDateOfBirth(dateOfBirth);
         user.setDateOfBirth(dateOfBirth);
         user.setEmail(email);
-
             //now make the user sub-object Address
             Address address = new Address();
             address.setStreet(street);
@@ -88,7 +87,6 @@ public class JoinController {
             address.setCountry(country);
             user.setAddress(address);
             addressService.save(address);
-
         //save the user in the database
         userService.save(user);
 
@@ -106,6 +104,12 @@ public class JoinController {
             company.setAddress(companyAddress);
             addressService.save(companyAddress);
         companyService.saveCompany(company);
+
+        //save user as an employee to the company
+        List<User> companyEmployees = null;
+        assert false;
+        companyEmployees.add(user);
+        company.setCompanyEmployees(companyEmployees);
 
         return "redirect:/set_password";
     }

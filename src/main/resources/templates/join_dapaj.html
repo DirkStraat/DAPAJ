@@ -12,9 +12,9 @@
 
 <script type="text/javascript">
     function yesnoCheck(that) {
-        if (that.value == "corporate") {
+        if (that.value === "corporate") {
             alert("Please provide more information about your company");
-            // document.getElementsByClassName("ifCorporate").style.display = "inline";
+            // document.getElementsByClassName("ifCorporate").style.display = "table-row";
             var els = document.getElementsByClassName("ifCorporate");
             [].forEach.call(els, function (el)  {
                 el.style.display = "table-row";
