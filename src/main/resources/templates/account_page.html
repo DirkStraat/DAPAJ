@@ -9,6 +9,7 @@
 
     <H1>Welkom <span th:text="${user.firstName}"/></H1>
     <p>
+        <div><span th:text="${transfer_message}"/></div>
         <div>Het is nu: <span th:text="${#dates.format(#dates.createNow(), 'dd MMMMMMMMM yyyy HH:mm')}"/>.</div>
         <div>Dit is de overzichtspagina voor rekening met nummer: <span th:text="${account.iban}"/></div>
         <div>Deze rekening is gesteld op naam van: <span th:text="${account.accountName}"/></div>
@@ -29,10 +30,11 @@
             <td>Datum</td><td>Bedrag</td><td>Tegenrekening</td><td>Af/Bij</td><td>Omschrijving</td>
         </tr>
        <tr th:each="transaction, iter: ${transactions}" th:unless="${iter.count > 10}">
-            <td><span th:text="${#temporals.format(transaction.date, 'dd-MM-yyyy')}"/></td>
+           <td><span th:text="${#temporals.format(transaction.date, 'dd-MM-yyyy')}"/></td>
             <td><span th:text="${#numbers.formatCurrency(transaction.amount)}"/></td>
             <td><span th:if="${transaction.debitAccount.getAccountID() == account.getAccountID()}" th:text="${transaction.creditAccount}"/>
                 <span th:unless="${transaction.debitAccount.getAccountID() == account.getAccountID()}" th:text="${transaction.debitAccount}"/>
+
             </td>
            <td><span th:if="${transaction.debitAccount.getAccountID() == account.getAccountID()}">Afschrijving</span>
                <span th:unless="${transaction.debitAccount.getAccountID() == account.getAccountID()}">Bijschrijving</span>

@@ -1,10 +1,35 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Overboekingen</title>
 </head>
 <body>
-    <input type="button" name="do_transaction" value="Bevestig transactie">
+<form action="#" th:action="@{do_transfer}" method="post" >
+    <table>
+        <tr>
+            <td>Rekening</td>
+            <td><input id = "Iban" type="text"  name="yourCreditAccount" required></td>
+
+            </td>        </tr>
+        <tr>
+            <td>Bedrag</td>
+            <td><input id = "amount" type="text" name="amount" required ></td>
+
+        </tr>
+        <tr>
+            <td>Omschrijving</td>
+            <td><input type="text" name = "description"></td>
+        </tr>
+        <tr>
+            <td><input type="submit" value="Bevestig transactie"></td>
+
+        </tr>
+    </table>
+</form>
+<p class="info"></p>
+<script>
+
+</script>
 </body>
 </html>

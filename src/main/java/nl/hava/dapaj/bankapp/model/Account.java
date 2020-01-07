@@ -1,6 +1,7 @@
 package nl.hava.dapaj.bankapp.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -14,6 +15,7 @@ public  class Account {
     protected String accountName;
 
     @Column(unique = true)
+
     protected String iban;
 
     @ManyToMany
