@@ -15,8 +15,9 @@ public class SMEAccountService {
     public SMEAccount getSMEAccountByAccountId(int accountId){
         return smeAccountDao.getSMEAccountByAccountID(accountId);
     }
-
     public List<SMEAccount> findAllSmeAccounts() {
         return smeAccountDao.findAll();
+    }
+    public List<SMEAccount> findsSmeAccountbyBranch(String branch) { return smeAccountDao.findSMEAccountsByBranch(branch);
     }
 }
