@@ -47,10 +47,9 @@ public class AverageBalanceBranchController {
         double totalSaldo = 0;
         for (SMEAccount account: accountsByBranch){
             if(account.getBranch().equals(sector))
-                System.out.println(account.getBalance());
             totalSaldo += account.getBalance();
         }
-        double averageSaldo = totalSaldo/((int)accountsByBranch.size());
+        double averageSaldo = totalSaldo/accountsByBranch.size();
         List<String> branches = fillBranchList();
         model.addAttribute("branch_list", branches);
         model.addAttribute("selected_branch", sector );
