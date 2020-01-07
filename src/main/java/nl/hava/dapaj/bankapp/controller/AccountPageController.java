@@ -28,6 +28,7 @@ public class AccountPageController {
         Account account = (Account)model.getAttribute("account");
         model.addAttribute("account", account);
 
+
         return "add_representative";
     }
 
