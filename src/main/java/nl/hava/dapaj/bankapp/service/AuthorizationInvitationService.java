@@ -48,4 +48,8 @@ public class AuthorizationInvitationService {
     public void save(AuthorizationInvitation authorizationInvitation){
         authorizationInvitationDao.save(authorizationInvitation);
     }
+
+    public AuthorizationInvitation getInvitationByInvitationId(int invitationId){
+        return authorizationInvitationDao.getAuthorizationInvitationByInvitationId(invitationId);
+    }
 }

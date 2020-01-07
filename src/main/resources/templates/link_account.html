@@ -3,20 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <title>link_account</title>
+    <script src="jquery-3.4.1.min kopie.js"></script>
+    <script type="text/javascript" src="jscode.js"></script>
 </head>
 <body>
-<div>U kunt gemachtigde worden voor de rekening met nummer: <span th:text= "${linkAccount.getIban()}"/></div>
-<div>Deze rekening is op naam gesteld van: <span th:text= "${linkAccount.getAccountName()}"/></div>
+<h1><span th:text="${motd}"></span></h1>
 
-<form action="#" th:action="@{link_account}" method="post">
-    <table>
-        <tr>
-            <td>Voer hier de koppelcode in (vijf cijfers):</td>
-            <td><input type="password" name="keycode"></td>
-        </tr>
-        <td></td>
-        <td><input type="submit" value="Stuur koppelverzoek."></td>
-    </table>
+<form action="link_account" method="get">
+    <select th:id="invitationId" th:name="invitationId">
+        <option th:each="invitation : ${invitations}" th:text="${invitation.getAccount().getAccountName()}" th:value="*{invitation.getInvitationId()}">
+        </option>
+    </select>
+    <input type="password" th:name="keycode" th:id="tekstveld">
+    <input type="submit" value="Stuur koppelverzoek.">
 </form>
+
+<div th:id="divResult"></div>
 </body>
 </html>
