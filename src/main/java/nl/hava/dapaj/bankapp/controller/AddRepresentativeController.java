@@ -38,10 +38,14 @@ public class AddRepresentativeController {
         }
 
         Account account = (Account)model.getAttribute("account");
-        AuthorizationInvitation authorizationInvitation = new AuthorizationInvitation(account, newRepresentative, keycode);
-        authorizationInvitationService.inviteAuthorizedRepresentative(authorizationInvitation);
-        model.addAttribute("motd", "Uitnodiging naar gemachtigde verstuurd. Deze kan de rekening koppelen met de koppelcode.");
-
+        AuthorizationInvitation invitation = authorizationInvitationService.getInvitationByUserAndAccount(newRepresentative, account);
+        if (invitation != null){
+            model.addAttribute("motd", "Deze uitnodiging is al eerder naar gemachtigde verstuurd.");
+        } else {
+            AuthorizationInvitation authorizationInvitation = new AuthorizationInvitation(account, newRepresentative, keycode);
+            authorizationInvitationService.inviteAuthorizedRepresentative(authorizationInvitation);
+            model.addAttribute("motd", "Uitnodiging naar gemachtigde verstuurd. Deze kan de rekening koppelen met de koppelcode.");
+        }
         return "account_page";
     }
 }
