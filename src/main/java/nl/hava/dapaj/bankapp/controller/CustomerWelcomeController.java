@@ -1,12 +1,7 @@
 package nl.hava.dapaj.bankapp.controller;
 
-import nl.hava.dapaj.bankapp.model.Account;
-import nl.hava.dapaj.bankapp.model.Customer;
-import nl.hava.dapaj.bankapp.model.Transaction;
-import nl.hava.dapaj.bankapp.model.User;
-import nl.hava.dapaj.bankapp.service.AccountService;
-import nl.hava.dapaj.bankapp.service.TransactionService;
-import nl.hava.dapaj.bankapp.service.UserService;
+import nl.hava.dapaj.bankapp.model.*;
+import nl.hava.dapaj.bankapp.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,7 +13,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import java.util.List;
 
 @Controller
-@SessionAttributes({"user", "account", "customer"})
+@SessionAttributes({"user", "account", "customer", "linkAccount"})
 public class CustomerWelcomeController {
 
     @Autowired
@@ -29,6 +24,12 @@ public class CustomerWelcomeController {
 
     @Autowired
     private TransactionService transactionService;
+
+    @Autowired
+    private AuthorizationInvitationService authorizationInvitationService;
+
+
+
 
 
     @GetMapping("do_select_account")
@@ -51,7 +52,29 @@ public class CustomerWelcomeController {
 
     @PostMapping("do_link_account")
     public String doLinkAccountHandler(Model model) {
-        return "link_terminal.html";
+        User user = (User)model.getAttribute("user");
+        List<AuthorizationInvitation> invitations = authorizationInvitationService.getInvitationsByUser(user);
+        Account linkAccount = invitations.get(0).getAccount();
+        model.addAttribute("linkAccount", linkAccount);
+
+        return "link_account";
+    }
+
+    @GetMapping("customerWelcome") // te gebruiken voor redirect naar de customer_welcome pagina
+    public String customerWelcomeHandler(Model model){
+        User user = (User)model.getAttribute("user");
+        System.out.println("user 1"+ user.getLoginName());
+        System.out.println("user 1"+ user.getFirstName());
+        List<Account> accountList = accountService.getAccountByUser(user);      // verkrijgt user rekeningen
+        List<Account> accountList1 = accountService.getAccountByCompany(user);  // verkrijgt company rekeningen
+        for(Account account: accountList1){                                     // voegt de lijsten samen
+            accountList.add(account);
+        }
+        System.out.println("user 2"+ user);
+        model.addAttribute("user", user);
+        System.out.println("user 3"+ user);
+        model.addAttribute("accounts", accountList);
+        return "customer_welcome";
     }
 
 

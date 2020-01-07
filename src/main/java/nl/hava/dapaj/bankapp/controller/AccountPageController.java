@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import java.util.List;
 
 @Controller
-@SessionAttributes("user")
+@SessionAttributes({"user", "account"})
 public class AccountPageController {
 
     @Autowired

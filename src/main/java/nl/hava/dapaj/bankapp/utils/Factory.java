@@ -6,6 +6,8 @@ import nl.hava.dapaj.bankapp.service.AccountService;
 import nl.hava.dapaj.bankapp.service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.*;
 
 
@@ -52,7 +54,7 @@ public class Factory {
         String lastName = faker.name().lastName();
         Address address = pickRandom(addresses);
         String socialSecurityNumber = faker.idNumber().ssnValid();
-        Date dateOfBirth = faker.date().birthday(18, 83);
+        LocalDate dateOfBirth = faker.date().birthday(18, 83).toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         String email = String.format(firstName + lastName + "@example.com");
         User user = new User(firstName, prefix, lastName, address, socialSecurityNumber, dateOfBirth, email);
         user.setPassword(faker.funnyName().name());
