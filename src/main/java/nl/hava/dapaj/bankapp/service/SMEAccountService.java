@@ -5,6 +5,8 @@ import nl.hava.dapaj.bankapp.model.dao.SMEAccountDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class SMEAccountService {
     @Autowired
@@ -14,4 +16,7 @@ public class SMEAccountService {
         return smeAccountDao.getSMEAccountByAccountID(accountId);
     }
 
+    public List<SMEAccount> findAllSmeAccounts() {
+        return smeAccountDao.findAll();
+    }
 }

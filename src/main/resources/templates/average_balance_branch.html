@@ -16,14 +16,19 @@
 <h2>Welkom <span th:text="${welcome}"/></h2>
 <table >
     <tr>
-        <th>Gemiddelde saldo per sector</th>
-    </tr>
-    <tr>
         <td data-th="sector">sector</td>
         <td data-th="saldo">saldo</td>
     </tr>
+    </tr>
+    <td><select name="sector">
+        <option th:each="branch, iter: ${branch_list}"
+                th:text="${branch}"></option>
+    </select>
+        <form action="/averageSaldo" method="get">
+            <input type="submit"  value="sector"><br/>
+        </form>
+    </td>
     <tr>
-        <td data-th="">Industrie </td>
         <td data-th="">€100.12348,78</td>
     </tr>
 
