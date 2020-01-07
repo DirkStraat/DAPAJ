@@ -7,6 +7,7 @@ import nl.hava.dapaj.bankapp.model.User;
 import nl.hava.dapaj.bankapp.service.SMEAccountService;
 import org.dom4j.rule.Mode;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.converter.json.GsonBuilderUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
