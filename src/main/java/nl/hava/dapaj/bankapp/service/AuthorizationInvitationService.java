@@ -52,4 +52,8 @@ public class AuthorizationInvitationService {
     public AuthorizationInvitation getInvitationByInvitationId(int invitationId){
         return authorizationInvitationDao.getAuthorizationInvitationByInvitationId(invitationId);
     }
+
+    public AuthorizationInvitation getInvitationByUserAndAccount(User user, Account account){
+        return authorizationInvitationDao.getInvitationByUserAndAccount(user, account);
+    }
 }

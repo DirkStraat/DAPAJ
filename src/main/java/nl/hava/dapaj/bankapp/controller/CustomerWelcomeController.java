@@ -29,10 +29,6 @@ public class CustomerWelcomeController {
     @Autowired
     private AuthorizationInvitationService authorizationInvitationService;
 
-
-
-
-
     @GetMapping("do_select_account")
     public String doSelectAccountHandler(@RequestParam(name = "account_id") int id, Model model, HttpServletRequest request) {
 

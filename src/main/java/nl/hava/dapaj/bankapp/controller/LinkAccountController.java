@@ -59,7 +59,7 @@ public class LinkAccountController {
         SMEAccount smeLinkAccount = smeAccountService.getSMEAccountByAccountId(authorizationInvitation.getAccount().getAccountID());
         if (smeLinkAccount != null){
             //als sme voeg gebruiker toe aan Company Employees
-            smeAddEmployeeToCompany(model, user, smeLinkAccount);
+            addUserToCompany(model, user, smeLinkAccount);
 
         } else {
             //als retail voeg gebruiker toe aan account
@@ -92,7 +92,7 @@ public class LinkAccountController {
         model.addAttribute("motd", "Rekening is succesvol gekoppeld.");
     }
 
-    private void smeAddEmployeeToCompany(Model model, User user, SMEAccount smeLinkAccount) {
+    private void addUserToCompany(Model model, User user, SMEAccount smeLinkAccount) {
         Company company = smeLinkAccount.getCompany();
         company.getCompanyEmployees().add(user);
         companyService.saveCompany(company);

@@ -16,5 +16,6 @@ public interface AuthorizationInvitationDao extends CrudRepository<Authorization
     List<AuthorizationInvitation> getAuthorizationInvitationsByAccountAndUserAndInvitationAcceptedFalse(Account account, User user);
     void removeAuthorizationInvitationByInvitationId(int authorizationInvitationId);
     AuthorizationInvitation getAuthorizationInvitationByInvitationId(int authorizationInvitationId);
+    AuthorizationInvitation getInvitationByUserAndAccount(User user, Account account);
 
 }
