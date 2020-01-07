@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 @SessionAttributes("user")
 public class SmeAccountmanagerWelcomeController {
 
-    @Autowired
-    LoginController loginController;
+    /*@Autowired
+    LoginController loginController;*/
 
     @GetMapping("average_balance_branch")
     public String average_balance_branchHandler (Model model) {
