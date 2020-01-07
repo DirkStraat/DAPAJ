@@ -17,11 +17,11 @@ public class SmeAccountmanagerWelcomeController {
     /*@Autowired
     LoginController loginController;*/
 
-    @GetMapping("average_balance_branch")
+/*    @GetMapping("average_balance_branch")
     public String average_balance_branchHandler (Model model) {
         User user = (User)model.getAttribute("user");
         model.addAttribute("welcome", user.getFirstName());
-        return "average_balance_branch"; }
+        return "average_balance_branch"; }*/
 
     @GetMapping ("10_highest_balance_smec")
     public String highest_balace_smecHandler (Model model){

@@ -11,5 +11,6 @@ public interface SMEAccountDao extends CrudRepository <SMEAccount, Integer> {
 
     SMEAccount findSMEAccountByCompanyCompanyId(int companyId);
     SMEAccount getSMEAccountByAccountID(int accountId);
-
+    List<SMEAccount> findSMEAccountsByBranch (String Branch);
+    List <SMEAccount> findAll();
 }
