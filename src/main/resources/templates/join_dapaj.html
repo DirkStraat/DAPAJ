@@ -14,13 +14,11 @@
     function yesnoCheck(that) {
         if (that.value === "corporate") {
             alert("Please provide more information about your company");
-            // document.getElementsByClassName("ifCorporate").style.display = "table-row";
             var els = document.getElementsByClassName("ifCorporate");
             [].forEach.call(els, function (el)  {
                 el.style.display = "table-row";
             })
         } else {
-            // document.getElementsByClassName("ifCorporate").forEach.style.display = "none";
             var els = document.getElementsByClassName("ifCorporate");
             [].forEach.call(els, function (el)  {
                 el.style.display = "none";
@@ -108,17 +106,33 @@
 
             <tr>
                 <td>Open an account?</td>
-                <td><select multiple onchange="yesnoCheck(this);">
+                <td><select name="account_type" multiple onchange="yesnoCheck(this);">
                     <option name="open_private_account" value="private">Private</option>
                     <option name="open_corporate_account" value="corporate">Corporate</option>
                 </select><br></td>
             </tr>
+
+<!--            <tr>
+                <td>Open an account?:</td>
+                <td><select name="account_type">
+                    <option></option>
+                    <option>Private</option>
+                    <option>Corporate</option>
+                </select>
+                </td>
+            </tr>-->
 
 <!--            This part below of the questionnaire only pops up if the visitor selects to open a company account-->
 
             <tr class="ifCorporate" style="display: none;">
                 <td>Company:</td>
                 <td><input type="text" placeholder="Company Name" name="company_name"></td>
+            </tr>
+
+            <tr class="ifCorporate" style="display: none;">
+                <td>Activity Sector:</td>
+                <td><input type="text" placeholder="Activity Sector" name="company_sector"></td>
+            </tr>
 
             <tr class="ifCorporate" style="display: none;">
                 <td>Street:</td>
@@ -144,9 +158,6 @@
                 <td>Country:</td>
                 <td><input type="text" value="Netherlands" name="company_country"></td>
             </tr> <br/>
-            </tr>
-
-
 
             <tr>
                 <td>Submit:</td>

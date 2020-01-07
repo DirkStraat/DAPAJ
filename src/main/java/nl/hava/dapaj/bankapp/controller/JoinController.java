@@ -1,11 +1,8 @@
 package nl.hava.dapaj.bankapp.controller;
 
-import nl.hava.dapaj.bankapp.model.Address;
-import nl.hava.dapaj.bankapp.model.Company;
-import nl.hava.dapaj.bankapp.model.User;
-import nl.hava.dapaj.bankapp.service.AddressService;
-import nl.hava.dapaj.bankapp.service.CompanyService;
-import nl.hava.dapaj.bankapp.service.UserService;
+import nl.hava.dapaj.bankapp.model.*;
+import nl.hava.dapaj.bankapp.service.*;
+import nl.hava.dapaj.bankapp.utils.IBANGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
@@ -26,6 +23,12 @@ public class JoinController {
 
     @Autowired
     AddressService addressService;
+
+    @Autowired
+    AccountService accountService;
+
+    @Autowired
+    SMEAccountService smeAccountService;
 
     @GetMapping("join_dapaj")
     public String joinForm(Model model) {
@@ -49,24 +52,18 @@ public class JoinController {
                                   @RequestParam(name = "city") String city,
                                   @RequestParam(name = "country") String country,
 
-                                  //now check if the user wants to open an account
-                                  //@RequestParam(name = "open_private_account") String privateAccount,
-                                  //@RequestParam(name = "open_corporate_account") String corporateAccount
+                                  //now check if the user wants to open an account, and what type of account
+                                  @RequestParam(name = "account_type") String accountType,
 
                                   //company info
                                   @RequestParam(name = "company_name") String companyName,
+                                  //@RequestParam(name = "company_sector") String companySector, //do we want this, or is branch another thing?
                                   @RequestParam(name = "company_street") String companyStreet,
                                   @RequestParam(name = "company_number") int companyNumber,
                                   @RequestParam(name = "company_postcode") String companyPostcode,
                                   @RequestParam(name = "company_city") String companyCity,
                                   @RequestParam(name = "company_country") String companyCountry
                                   ) {
-
-/*        if (privateAccount) {
-
-        } else if (corporateAccount) {
-
-        }*/
 
         //create the user with the form info
         User user = new User();
@@ -110,6 +107,19 @@ public class JoinController {
         assert false;
         companyEmployees.add(user);
         company.setCompanyEmployees(companyEmployees);
+
+        if (accountType.equals("Private")) { //create an Account
+            String privateIban = IBANGenerator.generateIBAN();
+            Account privateAccount = new Account(privateIban);
+                privateAccount.setAccountName(firstName + lastName);
+            accountService.save(privateAccount);
+
+        } else if (accountType.equals("Corporate")) { //create an SMEAccount
+            String corporateIban = IBANGenerator.generateIBAN();
+            SMEAccount corporateAccount = new SMEAccount(corporateIban, "branch", new Employee(), company);
+            smeAccountService.save(corporateAccount);
+        }
+
 
         return "redirect:/set_password";
     }
