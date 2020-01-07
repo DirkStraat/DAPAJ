@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import java.util.List;
 
 @Controller
-@SessionAttributes("user")
+@SessionAttributes({"user", "account"})
 public class AccountPageController {
 
     @Autowired
@@ -21,27 +21,41 @@ public class AccountPageController {
 
     @PostMapping("add_representative")
     public String addRepresentativeHandler(Model model) {
+
         User user = (User)model.getAttribute("user");
-        Account account = (Account)model.getAttribute("account");
         model.addAttribute("user", user);
+
+        Account account = (Account)model.getAttribute("account");
         model.addAttribute("account", account);
+
+
         return "add_representative";
     }
 
     @PostMapping("transfer")
     public String transferHandler(Model model) {
+
         User user = (User)model.getAttribute("user");
-        Account account = (Account)model.getAttribute("account");
         model.addAttribute("user", user);
+
+        Account account = (Account)model.getAttribute("account");
         model.addAttribute("account", account);
+
         return "transfer";
     }
 
     @PostMapping("customer_welcome")
     public String customerWelcomeHandler(Model model){
+
         User user = (User)model.getAttribute("user");
-        List<Account> accountList = accountService.getAccountByUserId(user.getCustomerId());
+
+        List<Account> accountList = accountService.getAccountByUser(user);
+        List<Account> accountList1 = accountService.getAccountByCompany(user);  // verkrijgt company rekeningen
+        for(Account account: accountList1){                                     // voegt de lijsten samen
+            accountList.add(account);
+        }
         model.addAttribute("accounts", accountList );
+
         return "customer_welcome";
     }
 }

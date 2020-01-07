@@ -7,7 +7,7 @@
     <title>Welkom</title>
 </head>
 <body>
-<h1>Welkom <span th:text="${user.getFirstName()}"/></h1>
+<h1>Welkom <span th:text="${user.getFirstName()}"></span></h1>
 <br>
 <h3>Rekening overzicht:</h3>
 <table>
@@ -16,7 +16,6 @@
         <td>Rekeningnummer:</td>
         <td>Saldo:</td>
     </tr>
-    <tr>
     <tr th:each="account: ${accounts}">
         <td><span th:text="${account.getAccountName()}"/> </a> </td>
         <td><a th:href="@{/do_select_account(account_id=${account.getAccountID()})}"><span th:text="${account.getIban()}"/> </a></td>
@@ -24,7 +23,10 @@
     </tr>
 </table>
 <br/>
-<input type="button" name="do_select_account" value="Selecteer rekening (NYI)">
-<input type="button" name="do_link_account" value="koppel rekening (NYI)">
+<!--<input type="button" name="do_select_account" value="Selecteer rekening (NYI)">-->
+<form action="do_link_account" method="post">
+    <input type="submit"  value="koppel rekening"><br/>
+</form>
+<!--<input th:action="do_link_account" th:method="post" type="button" name="do_link_account" value="koppel rekening (NYI)">-->
 </body>
 </html>

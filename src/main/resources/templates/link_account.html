@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>link_account</title>
+    <script src="jquery-3.4.1.min kopie.js"></script>
+    <script type="text/javascript" src="jscode.js"></script>
+</head>
+<body>
+<h1><span th:text="${motd}"></span></h1>
+
+<form action="link_account" method="get">
+    <select th:id="invitationId" th:name="invitationId">
+        <option th:each="invitation : ${invitations}" th:text="${invitation.getAccount().getAccountName()}" th:value="*{invitation.getInvitationId()}">
+        </option>
+    </select>
+    <input type="password" th:name="keycode" th:id="tekstveld">
+    <input type="submit" value="Stuur koppelverzoek.">
+</form>
+
+<div th:id="divResult"></div>
+</body>
+</html>

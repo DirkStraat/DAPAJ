@@ -4,9 +4,8 @@ import org.hibernate.validator.constraints.Length;
 import javax.validation.constraints.*;
 
 import javax.persistence.*;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.time.LocalDate;
+import java.util.*;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -33,23 +32,27 @@ public class User {
     @NotNull
     @Size(min = 8)
     protected String socialSecurityNumber;
-    protected Date dateOfBirth;
+    protected LocalDate dateOfBirth;
 
-    @Email
+    //@Email
     protected String email;
 
     @ManyToOne
     protected Address address;
 
-    @ManyToMany
+    @ManyToMany (fetch = FetchType.EAGER)
     protected Set<Company> companies;
+
+    @OneToMany
+    protected List<AuthorizationInvitation> aRInvitations;
 
     public User(){
         super();
     }
 
+
     public User(String firstName, String prefix, String lastName, Address address, String socialSecurityNumber,
-                   Date dateOfBirth, String email) {
+                   LocalDate dateOfBirth, String email) {
         this.firstName = firstName;
         this.prefix = prefix;
         this.lastName = lastName;
@@ -58,6 +61,7 @@ public class User {
         this.socialSecurityNumber = socialSecurityNumber;
         this.dateOfBirth = dateOfBirth;
         this.email = email;
+        this.aRInvitations = new ArrayList<>();
 
     }
 
@@ -148,11 +152,11 @@ public class User {
         this.socialSecurityNumber = bsn;
     }
 
-    public Date getDateOfBirth() {
+    public LocalDate getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(Date dateOfBirth) {
+    public void setDateOfBirth(LocalDate dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 
@@ -162,5 +166,13 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public List<AuthorizationInvitation> getAuthorizedRepresentativeInvitations() {
+        return aRInvitations;
+    }
+
+    public void setAuthorizedRepresentativeInvitations(List<AuthorizationInvitation> authorizedRepresentativeInvitations) {
+        this.aRInvitations = authorizedRepresentativeInvitations;
     }
 }
