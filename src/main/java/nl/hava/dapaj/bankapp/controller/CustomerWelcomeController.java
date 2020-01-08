@@ -29,21 +29,12 @@ public class CustomerWelcomeController {
     @Autowired
     private AuthorizationInvitationService authorizationInvitationService;
 
+    @Autowired
+    private AccountPageController accountPageController;
+
     @GetMapping("do_select_account")
-    public String doSelectAccountHandler(@RequestParam(name = "account_id") int id, Model model, HttpServletRequest request) {
-
-        User user = (User)request.getSession().getAttribute("user");//(User)model.getAttribute("user");
-        model.addAttribute("user", user);
-
-        Account account = accountService.getAccountByAccountId(id);
-        model.addAttribute("account", account);
-
-        List<Customer> userList = userService.findCustomersByAccountId(account);
-        model.addAttribute("customers", userList);
-
-        List<Transaction> transactions = transactionService.getSortedListOfTransactionsByAccountId(account);
-        model.addAttribute("transactions", transactions);
-
+    public String doSelectAccountHandler(@RequestParam(name = "account_id") int id, Model model) {
+        accountPageController.enterAccountPage(id, model);
         return "account_page";
     }
 
@@ -51,7 +42,6 @@ public class CustomerWelcomeController {
     public String doLinkAccountHandler(Model model) {
         User user = (User)model.getAttribute("user");
         List<AuthorizationInvitation> invitations = authorizationInvitationService.getInvitationsByUser(user);
-        //Account linkAccount = invitations.get(0).getAccount();
         model.addAttribute("motd", "Kies hier de rekening die u wilt koppelen en voer de vijfcijferige koppelcode in.");
         model.addAttribute("invitations", invitations);
 
