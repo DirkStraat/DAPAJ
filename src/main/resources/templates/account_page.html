@@ -2,61 +2,127 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>account_page</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <style>
+        .content {
+            margin-left : 30px;
+            margin-right: 30px;
+        }
 
+        .container-fluid{
+            margin-top: 10px;
+        }
+
+        .afschrijving{
+            color: red;
+        }
+
+        #addRepresentative{
+            display: none;
+        }
+
+
+    </style>
+    <title>account_page</title>
+    <script>
+        function showAddRepresentative() {
+            var x = document.getElementById("addRepresentative");
+            if (x.style.display === "none") {
+                x.style.display = "block";
+            } else {
+                x.style.display = "none";
+            }
+        }
+    </script>
 </head>
 <body>
-<nav>
-    <ul>
-        <li><a href="/logout">Uitloggen</a></li>
-    </ul>
-</nav>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">DAPAJ</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="/customer_welcome">jouw rekeningen<span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/transfer">geld overmaken</a>
+                </li>
+                <li class="nav-item">
+<!--                    <a class="nav-link" href="/add_representative">rekeninghouder toevoegen</a>-->
+                    <a class="nav-link" href="#" onclick="showAddRepresentative();">rekeninghouder toevoegen</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/logout">uitloggen</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#"><div><span th:text="${#dates.format(#dates.createNow(), 'dd MMMMMMMMM yyyy HH:mm')}"></span></div></a>
+                </li>
+            </ul>
+        </div>
+    </nav>
 
-    <H1>Welkom <span th:text="${user.firstName}"></span></H1>
-    <h1><span th:text="${motd}"/></h1>
-    <p>
-        <div>Het is nu: <span th:text="${#dates.format(#dates.createNow(), 'dd MMMMMMMMM yyyy HH:mm')}"></span>.</div>
-        <div>Dit is de overzichtspagina voor rekening met nummer: <span th:text="${account.iban}"></span></div>
-        <div>Deze rekening is gesteld op naam van: <span th:text="${account.accountName}"></span></div>
-        <div>Het huidige saldo op deze rekening is: <span th:text="${account.balance}"></span></div>
-        <div>Wie is er gemachtigd over deze rekening te beschikken? </div>
+    <div class="content" id="addRepresentative" style="display: none">
+        <form action="#" th:action="@{invite_representative}" method="post" class="container-fluid border border-secondary">
+<!--            <h1 id="addRepresentativeMessage"><span th:text="${motd}"/></h1>-->
+            <table>
+                <tr>
+                    <td>Gebruikersnaam nieuwe gemachtigde:</td>
+                    <td><input type="text" name="user_name"></td>
+                </tr>
+                <tr>
+                    <td>Koppelcode (vijf cijfers):</td>
+                    <td><input id="keyCode" type="password" name="keycode"></td>
+                </tr>
+                <td></td>
+                <td><input type="submit" value="Stuur koppelverzoek."></td>
+            </table>
+        </form>
 
-    <table>
-        <tr th:each="user, iter: ${customers}" th:unless="${user == null}">
-            <td><span th:text="${user.firstName}"></span></td>
-            <td><span th:text="${user.prefix}"></span></td>
-            <td><span th:text="${user.lastName}"></span> </td>
-        </tr>
-    </table>
-    </p>
-    <h3>Overzicht van transacties</h3>
-    <table>
-        <tr>
-            <td>Datum</td><td>Bedrag</td><td>Tegenrekening</td><td>Af/Bij</td><td>Omschrijving</td>
-        </tr>
-       <tr th:each="transaction, iter: ${transactions}" th:unless="${iter.count > 10}">
-            <td><span th:text="${#temporals.format(transaction.date, 'dd-MM-yyyy')}"/></td>
-            <td><span th:text="${#numbers.formatCurrency(transaction.amount)}"/></td>
-            <td><span th:if="${transaction.debitAccount.getAccountID() == account.getAccountID()}" th:text="${transaction.creditAccount}"/>
-                <span th:unless="${transaction.debitAccount.getAccountID() == account.getAccountID()}" th:text="${transaction.debitAccount}"/>
-            </td>
-           <td><span th:if="${transaction.debitAccount.getAccountID() == account.getAccountID()}">Afschrijving</span>
-               <span th:unless="${transaction.debitAccount.getAccountID() == account.getAccountID()}">Bijschrijving</span>
-           </td>
-           <td><span th:text="${transaction.description}"></span> </td>
-        </tr>
-    </table>
-    <br/>
-    <form action="add_representative" method="post">
-        <input type="submit"  value="Rekeninghouder toevoegen"><br/>
-    </form>
-    <form action="transfer" method="post">
-        <input type="submit"  value="Geld overmaken"><br/>
-    </form>
-    <form action="customer_welcome" method="post">
-        <input type="submit"  value="terug naar het rekeningoverzicht"><br/>
-    </form>
+    </div>
 
+    <div class="content">
+        <div  th:if="${motd != null}" id="welkom" class="container-fluid border border-secondary">
+<!--        <h2>Welkom <span th:text="${user.firstName}"></span></h2>-->
+            <h3><span th:text="${motd}"/></h3>
+        </div>
+
+        <div class="container-fluid border border-secondary">
+            <div>Dit is de overzichtspagina voor rekening met nummer: <span th:text="${account.iban}"></span></div>
+            <div>Deze rekening is gesteld op naam van: <span th:text="${account.accountName}"></span></div>
+            <div>Het huidige saldo op deze rekening is: <span th:text="${#numbers.formatCurrency(account.balance)}"></span></div>
+        </div>
+
+        <h3 class="container-fluid">Overzicht van transacties</h3>
+        <table id="overzicht_transacties" class="container-fluid border border-secondary">
+            <tr>
+                <td>Datum</td><td>Bedrag</td><td>Tegenrekening</td><td>Af/Bij</td><td>Omschrijving</td>
+            </tr>
+            <tr th:each="transaction, iter: ${transactions}" th:unless="${iter.count > 10}">
+                <td><span th:text="${#temporals.format(transaction.date, 'dd-MM-yyyy')}"/></td>
+                <td><span th:class="${transaction.debitAccount.getAccountID() == account.getAccountID()} ? afschrijving" th:text="${#numbers.formatCurrency(transaction.amount)}"/></td>
+                <td><span th:text="${transaction.debitAccount.getAccountID() == account.getAccountID()} ? ${transaction.creditAccount} : ${transaction.debitAccount}"/></td>
+                <td><span th:text="${transaction.debitAccount.getAccountID() == account.getAccountID()} ? 'Afschrijving' : 'Bijschrijving'"></span>
+                </td>
+                <td><span th:text="${transaction.description}"></span> </td>
+            </tr>
+        </table>
+        <div class="container-fluid border border-secondary">
+            <div>Wie is er gemachtigd over deze rekening te beschikken? </div>
+            <table>
+                <tr th:each="user, iter: ${customers}" th:unless="${user == null}">
+                    <td><span th:text="${user.firstName} + ' '"></span><span th:text="${user.prefix != null} ? ${user.prefix} + ' ' : ''"></span><span th:text="${user.lastName}"></span></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 
 </body>
 </html>

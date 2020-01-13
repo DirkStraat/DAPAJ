@@ -1,5 +1,6 @@
 package nl.hava.dapaj.bankapp.controller;
 
+import com.sun.javafx.binding.StringFormatter;
 import nl.hava.dapaj.bankapp.model.*;
 import nl.hava.dapaj.bankapp.model.dao.*;
 import nl.hava.dapaj.bankapp.service.*;
@@ -15,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-@SessionAttributes("user")
+@SessionAttributes({"user"})
 @Controller
 public class LoginController {
     @Autowired
@@ -28,7 +29,8 @@ public class LoginController {
     private AccountService accountService;
     @Autowired
     private SmeAccountmanagerWelcomeController smeAccountmanagerWelcomeController;
-
+    @Autowired
+    private AuthorizationInvitationService authorizationInvitationService;
 
     @PostMapping ("join_dapaj")
     public String join_dapajHandler(Model model){
@@ -54,27 +56,36 @@ public class LoginController {
             }else if(((Employee) user).getRole().equals("Manager Retail")){
                 return "private_client_accountmanager_welcome";
             }else{
-                model.addAttribute("header_inlog","Naam/password combinatie niet bekend");
+                enterLogin(model);
                 return "login";
             }
         }else {
-            model.addAttribute("header_inlog","Naam/password combinatie niet bekend");
+            enterLogin(model);
             return "login";
 
         }
     }
 
+    private void enterLogin(Model model) {
+        model.addAttribute("header_inlog", "Naam/password combinatie niet bekend");
+    }
 
 
     public void enterCustomerWelcome(@RequestParam(name = "user_name") String loginName, Model model) {
         User user = userService.findUserByLoginName(loginName);
+        List<AuthorizationInvitation> invitations = authorizationInvitationService.getInvitationsByUser(user);
         List<Account> accountList = accountService.getAccountByUser(user);      // verkrijgt user rekeningen
         List<Account> accountList1 = accountService.getAccountByCompany(user);  // verkrijgt company rekeningen
         for(Account account: accountList1){                                     // voegt de lijsten samen
             accountList.add(account);
         }
         model.addAttribute("user", user);
+        if (model.getAttribute("motd") == null){
+            String motd = String.format("Welkom %s.", user.getFirstName());
+            model.addAttribute("motd", motd);
+        }
         model.addAttribute("accounts", accountList);
+        model.addAttribute("invitations", invitations);
     }
 
     @GetMapping("logout")

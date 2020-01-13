@@ -24,24 +24,28 @@ public class AddRepresentativeController {
     @Autowired
     AuthorizationInvitationService authorizationInvitationService;
 
+    @Autowired
+    AccountPageController accountPageController;
+
     @PostMapping("invite_representative")
     public String inviteRepresentativeHandler(@RequestParam(name = "user_name") String userName,
                                               @RequestParam(name = "keycode") String keycode , Model model) {
         User newRepresentative = userService.findUserByLoginName(userName);
+        Account account = (Account)model.getAttribute("account");
+        AuthorizationInvitation invitation = authorizationInvitationService.getInvitationByUserAndAccount(newRepresentative, account);
+
         if (newRepresentative == null){
             model.addAttribute("motd", "Deze gebruikersnaam is niet bekend in het systeem.");
-            return "add_representative";
-        }
-        if (keycode.length() != LENGTE_KOPPELCODE){
+        } else if (keycode.length() != LENGTE_KOPPELCODE){
             model.addAttribute("motd", "Aantal tekens van koppelcode is niet juist.");
-            return "add_representative";
+        } else if (invitation != null){
+            model.addAttribute("motd", "Deze uitnodiging is al eerder naar gemachtigde verstuurd.");
+        } else {
+            AuthorizationInvitation authorizationInvitation = new AuthorizationInvitation(account, newRepresentative, keycode);
+            authorizationInvitationService.inviteAuthorizedRepresentative(authorizationInvitation);
+            model.addAttribute("motd", "Uitnodiging naar gemachtigde verstuurd. Deze kan de rekening koppelen met de koppelcode.");
         }
-
-        Account account = (Account)model.getAttribute("account");
-        AuthorizationInvitation authorizationInvitation = new AuthorizationInvitation(account, newRepresentative, keycode);
-        authorizationInvitationService.inviteAuthorizedRepresentative(authorizationInvitation);
-        model.addAttribute("motd", "Uitnodiging naar gemachtigde verstuurd. Deze kan de rekening koppelen met de koppelcode.");
-
+        accountPageController.enterAccountPage(account.getAccountID(), model);
         return "account_page";
     }
 }

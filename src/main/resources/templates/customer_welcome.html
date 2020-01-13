@@ -16,20 +16,21 @@
         <td>Rekeningnummer:</td>
         <td>Saldo:</td>
     </tr>
-    <tr>
     <tr th:each="account: ${accounts}">
-
         <td><span th:text="${account.getAccountName()}"/> </a> </td>
         <td><a th:href="@{/do_select_account(account_id=${account.getAccountID()})}"><span th:text="${account.getIban()}"/> </a></td>
-        <td><span th:text="${account.getBalance()}"/> </a> </td>
         <td><span th:text="${account.getBalance()}"/> </a> </td>
     </tr>
 </table>
 <br/>
-<input type="button" name="do_select_account" value="Selecteer rekening (NYI)">
+
+<form action="do_open_new_account" method="post">
+    <input type="submit" value="open rekening">
+</form>
+
 <form action="do_link_account" method="post">
     <input type="submit"  value="koppel rekening"><br/>
 </form>
-<input th:action="do_link_account" th:method="post" type="button" name="do_link_account" value="koppel rekening (NYI)">
+
 </body>
 </html>

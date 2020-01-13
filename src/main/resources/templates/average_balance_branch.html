@@ -5,28 +5,41 @@
     <title>Saldo per Sector</title>
 </head>
 <body>
-<nav>
-    <ul>
-        <li><a href="/sme_accountmanager_welcome">Keuze pagina</a></li>
-        <li><a href="/logout">Uitloggen</a></li>
-
-    </ul>
-</nav>
+    <nav>
+        <ul>
+            <li><a href="/sme_accountmanager_welcome">Keuze pagina</a></li>
+            <li><a href="/logout">Uitloggen</a></li>
+        </ul>
+    </nav>
 <h1> Hier vindt u het gemiddelde saldo per sector</h1>
 <h2>Welkom <span th:text="${welcome}"/></h2>
-<table >
-    <tr>
-        <th>Gemiddelde saldo per sector</th>
-    </tr>
-    <tr>
-        <td data-th="sector">sector</td>
-        <td data-th="saldo">saldo</td>
-    </tr>
-    <tr>
-        <td data-th="">Industrie </td>
-        <td data-th="">€100.12348,78</td>
-    </tr>
-
-</table>
+    <table >
+        <tr>
+            <td>Kies sector</td>
+        </tr>
+        <form action="/averageSaldo" method="post">
+            <td>
+                <select name="sector">
+                    <option th:each="branch, iter: ${branch_list}"
+                        th:text="${branch}">
+                    </option>
+                </select>
+            </td>
+            <td>
+                <input type="submit"  value="Ok">
+            </td>
+        </form>
+    </table>
+    <table>
+        <br>
+            <tr>
+                <td>Sector</td>
+                <td>Gemiddeld Saldo</td>
+            </tr>
+            <tr>
+                <td th:text="${selected_branch}"></td>
+                <td th:text="${average_saldo}"></td>
+            </tr>
+    </table>
 </body>
 </html>
