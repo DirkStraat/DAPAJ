@@ -33,16 +33,6 @@
                 x.style.display = "none";
             }
         }
-
-        $(document).ready(function () {
-            $('#keyCode').on('focusout', function(){
-                var keycode = $("#keyCode").val();
-                if (keycode.length != 5){
-                    $("#addRepresentativeMessage").val("Lengte koppelcode moet vijf zijn.")
-                }
-            });
-
-        });
     </script>
 </head>
 <body>
@@ -73,7 +63,7 @@
         </div>
     </nav>
 
-    <div class="content" id="addRepresentative">
+    <div class="content" id="addRepresentative" style="display: none">
         <form action="#" th:action="@{invite_representative}" method="post" class="container-fluid border border-secondary">
 <!--            <h1 id="addRepresentativeMessage"><span th:text="${motd}"/></h1>-->
             <table>
