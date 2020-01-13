@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
@@ -34,54 +35,49 @@ public class LinkAccountController {
     @Autowired
     LoginController loginController;
 
-    @GetMapping("link_account")
+    @PostMapping("link_account")
     public String inviteRepresentativeHandler(@RequestParam(name = "keycode") String keycode,
                                               @RequestParam(name = "invitationId") int invitationId,
                                               Model model) {
-        //gebruiker uit model
         User user = (User)model.getAttribute("user");
-        //lijst uitnodigingen uit model
         List<AuthorizationInvitation> authorizationInvitations = authorizationInvitationService.getInvitationsByUser(user);
         AuthorizationInvitation authorizationInvitation = authorizationInvitationService.getInvitationByInvitationId(invitationId);
         String keycodeFromInvitation = authorizationInvitation.getKeycode();
 
-        //check of koppelcode juiste lengte heeft
         if (keycode.length() != LENGTE_KOPPELCODE){
-            return wrongKey(model, authorizationInvitations, "Aantal tekens van koppelcode is niet juist.");
+            wrongKey(model, authorizationInvitations, "Aantal tekens van koppelcode is niet juist.");
+            return "customer_welcome";
         }
 
-        //check of koppelcode klopt
         if (!keycode.equals(keycodeFromInvitation) ){
-            return wrongKey(model, authorizationInvitations, "Koppelcode is niet juist.");
+            wrongKey(model, authorizationInvitations, "Koppelcode is niet juist.");
+            return "customer_welcome";
         }
 
-        //check sme of retail
         SMEAccount smeLinkAccount = smeAccountService.getSMEAccountByAccountId(authorizationInvitation.getAccount().getAccountID());
         if (smeLinkAccount != null){
-            //als sme voeg gebruiker toe aan Company Employees
             addUserToCompany(model, user, smeLinkAccount);
-
+            setInvitationAccepted(model, user, authorizationInvitation);
         } else {
-            //als retail voeg gebruiker toe aan account
             addUserToAccount(model, user, authorizationInvitation);
+            setInvitationAccepted(model, user, authorizationInvitation);
         }
 
-        //change invitationaccepted to true and save to db
-        setInvitationAccepted(model, user, authorizationInvitation);
-
+        loginController.enterCustomerWelcome(user.getLoginName(), model);
         return "customer_welcome";
     }
 
     private String wrongKey(Model model, List<AuthorizationInvitation> authorizationInvitations, String s) {
         model.addAttribute("invitations", authorizationInvitations);
         model.addAttribute("motd", s);
+        User user = (User)model.getAttribute("user");
+        loginController.enterCustomerWelcome(user.getLoginName(), model);
         return "link_account";
     }
 
     private void setInvitationAccepted(Model model, User user, AuthorizationInvitation authorizationInvitation) {
         authorizationInvitation.setInvitationAccepted(true);
         authorizationInvitationService.save(authorizationInvitation);
-        loginController.enterCustomerWelcome(user.getLoginName(), model);
     }
 
     private void addUserToAccount(Model model, User user, AuthorizationInvitation authorizationInvitation) {
