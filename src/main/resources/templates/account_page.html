@@ -16,9 +16,34 @@
         .afschrijving{
             color: red;
         }
+
+        #addRepresentative{
+            display: none;
+        }
+
+
     </style>
     <title>account_page</title>
+    <script>
+        function showAddRepresentative() {
+            var x = document.getElementById("addRepresentative");
+            if (x.style.display === "none") {
+                x.style.display = "block";
+            } else {
+                x.style.display = "none";
+            }
+        }
 
+        $(document).ready(function () {
+            $('#keyCode').on('focusout', function(){
+                var keycode = $("#keyCode").val();
+                if (keycode.length != 5){
+                    $("#addRepresentativeMessage").val("Lengte koppelcode moet vijf zijn.")
+                }
+            });
+
+        });
+    </script>
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -35,7 +60,8 @@
                     <a class="nav-link" href="/transfer">geld overmaken</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/add_representative">rekeninghouder toevoegen</a>
+<!--                    <a class="nav-link" href="/add_representative">rekeninghouder toevoegen</a>-->
+                    <a class="nav-link" href="#" onclick="showAddRepresentative();">rekeninghouder toevoegen</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/logout">uitloggen</a>
@@ -46,23 +72,42 @@
             </ul>
         </div>
     </nav>
+
+    <div class="content" id="addRepresentative">
+        <form action="#" th:action="@{invite_representative}" method="post" class="container-fluid border border-secondary">
+<!--            <h1 id="addRepresentativeMessage"><span th:text="${motd}"/></h1>-->
+            <table>
+                <tr>
+                    <td>Gebruikersnaam nieuwe gemachtigde:</td>
+                    <td><input type="text" name="user_name"></td>
+                </tr>
+                <tr>
+                    <td>Koppelcode (vijf cijfers):</td>
+                    <td><input id="keyCode" type="password" name="keycode"></td>
+                </tr>
+                <td></td>
+                <td><input type="submit" value="Stuur koppelverzoek."></td>
+            </table>
+        </form>
+
+    </div>
+
     <div class="content">
         <div  th:if="${motd != null}" id="welkom" class="container-fluid border border-secondary">
 <!--        <h2>Welkom <span th:text="${user.firstName}"></span></h2>-->
             <h3><span th:text="${motd}"/></h3>
         </div>
 
-        <p>
         <div class="container-fluid border border-secondary">
             <div>Dit is de overzichtspagina voor rekening met nummer: <span th:text="${account.iban}"></span></div>
             <div>Deze rekening is gesteld op naam van: <span th:text="${account.accountName}"></span></div>
             <div>Het huidige saldo op deze rekening is: <span th:text="${#numbers.formatCurrency(account.balance)}"></span></div>
         </div>
-        </p>
+
         <h3 class="container-fluid">Overzicht van transacties</h3>
         <table id="overzicht_transacties" class="container-fluid border border-secondary">
             <tr>
-                <strong><td>Datum</td><td>Bedrag</td><td>Tegenrekening</td><td>Af/Bij</td><td>Omschrijving</td></strong>
+                <td>Datum</td><td>Bedrag</td><td>Tegenrekening</td><td>Af/Bij</td><td>Omschrijving</td>
             </tr>
             <tr th:each="transaction, iter: ${transactions}" th:unless="${iter.count > 10}">
                 <td><span th:text="${#temporals.format(transaction.date, 'dd-MM-yyyy')}"/></td>
