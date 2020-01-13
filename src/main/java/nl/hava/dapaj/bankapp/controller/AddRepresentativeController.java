@@ -24,6 +24,9 @@ public class AddRepresentativeController {
     @Autowired
     AuthorizationInvitationService authorizationInvitationService;
 
+    @Autowired
+    AccountPageController accountPageController;
+
     @PostMapping("invite_representative")
     public String inviteRepresentativeHandler(@RequestParam(name = "user_name") String userName,
                                               @RequestParam(name = "keycode") String keycode , Model model) {
@@ -38,10 +41,16 @@ public class AddRepresentativeController {
         }
 
         Account account = (Account)model.getAttribute("account");
-        AuthorizationInvitation authorizationInvitation = new AuthorizationInvitation(account, newRepresentative, keycode);
-        authorizationInvitationService.inviteAuthorizedRepresentative(authorizationInvitation);
-        model.addAttribute("motd", "Uitnodiging naar gemachtigde verstuurd. Deze kan de rekening koppelen met de koppelcode.");
-
+        AuthorizationInvitation invitation = authorizationInvitationService.getInvitationByUserAndAccount(newRepresentative, account);
+        if (invitation != null){
+            model.addAttribute("motd", "Deze uitnodiging is al eerder naar gemachtigde verstuurd.");
+            accountPageController.enterAccountPage(account.getAccountID(), model);
+        } else {
+            AuthorizationInvitation authorizationInvitation = new AuthorizationInvitation(account, newRepresentative, keycode);
+            authorizationInvitationService.inviteAuthorizedRepresentative(authorizationInvitation);
+            model.addAttribute("motd", "Uitnodiging naar gemachtigde verstuurd. Deze kan de rekening koppelen met de koppelcode.");
+            accountPageController.enterAccountPage(account.getAccountID(), model);
+        }
         return "account_page";
     }
 }

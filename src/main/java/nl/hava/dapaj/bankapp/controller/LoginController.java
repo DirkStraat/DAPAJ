@@ -54,16 +54,19 @@ public class LoginController {
             }else if(((Employee) user).getRole().equals("Manager Retail")){
                 return "private_client_accountmanager_welcome";
             }else{
-                model.addAttribute("header_inlog","Naam/password combinatie niet bekend");
+                enterLogin(model);
                 return "login";
             }
         }else {
-            model.addAttribute("header_inlog","Naam/password combinatie niet bekend");
+            enterLogin(model);
             return "login";
 
         }
     }
 
+    private void enterLogin(Model model) {
+        model.addAttribute("header_inlog", "Naam/password combinatie niet bekend");
+    }
 
 
     public void enterCustomerWelcome(@RequestParam(name = "user_name") String loginName, Model model) {

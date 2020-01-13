@@ -10,10 +10,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
-@SessionAttributes({"user", "account", "customer", "linkAccount"})
+@SessionAttributes({"user", "account", "customer", "invitations"})
 public class CustomerWelcomeController {
 
     @Autowired
@@ -28,25 +29,12 @@ public class CustomerWelcomeController {
     @Autowired
     private AuthorizationInvitationService authorizationInvitationService;
 
-
-
-
+    @Autowired
+    private AccountPageController accountPageController;
 
     @GetMapping("do_select_account")
     public String doSelectAccountHandler(@RequestParam(name = "account_id") int id, Model model) {
-
-        User user = (User)model.getAttribute("user");
-        model.addAttribute("user", user);
-
-        Account account = accountService.getAccountByAccountId(id);
-        model.addAttribute("account", account);
-
-        List<Customer> userList = userService.findCustomersByAccountId(account);
-        model.addAttribute("customers", userList);
-
-        List<Transaction> transactions = transactionService.getSortedListOfTransactionsByAccountId(account);
-        model.addAttribute("transactions", transactions);
-
+        accountPageController.enterAccountPage(id, model);
         return "account_page";
     }
 
@@ -54,8 +42,8 @@ public class CustomerWelcomeController {
     public String doLinkAccountHandler(Model model) {
         User user = (User)model.getAttribute("user");
         List<AuthorizationInvitation> invitations = authorizationInvitationService.getInvitationsByUser(user);
-        Account linkAccount = invitations.get(0).getAccount();
-        model.addAttribute("linkAccount", linkAccount);
+        model.addAttribute("motd", "Kies hier de rekening die u wilt koppelen en voer de vijfcijferige koppelcode in.");
+        model.addAttribute("invitations", invitations);
 
         return "link_account";
     }
