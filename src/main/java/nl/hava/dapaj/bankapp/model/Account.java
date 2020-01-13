@@ -12,7 +12,7 @@ public  class Account {
 
     protected String accountName;
 
-    @Column
+    @Column (unique = true)
     protected String iban;
 
     @ManyToMany (fetch = FetchType.EAGER)

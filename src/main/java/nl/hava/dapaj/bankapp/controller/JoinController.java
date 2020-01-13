@@ -63,7 +63,8 @@ public class JoinController {
                                   @RequestParam(name = "company_name") String companyName,
                                   //@RequestParam(name = "branch") String companyBranch,
                                   @RequestParam(name = "company_street") String companyStreet,
-                                  @RequestParam(name = "company_number") int companyNumber,
+                                  //@RequestParam(name = "company_number") Integer companyNumber, //CREATES PROBLEM WHEN ITS NOT CORPORATE
+                                  @RequestParam(name = "company_number") String companyNumber,
                                   @RequestParam(name = "company_postcode") String companyPostcode,
                                   @RequestParam(name = "company_city") String companyCity,
                                   @RequestParam(name = "company_country") String companyCountry
@@ -90,32 +91,11 @@ public class JoinController {
         //save the user in the database
         userService.save(user);
 
-        //IF corporate account, create the company info
-        Company company = new Company();
-        company.setCompanyName(companyName);
-            //company address
-            Address companyAddress = new Address();
-            companyAddress.setSuffix("Co.");
-            companyAddress.setStreet(companyStreet);
-            companyAddress.setHousenumber(companyNumber);
-            companyAddress.setPostcode(companyPostcode);
-            companyAddress.setCity(companyCity);
-            companyAddress.setCountry(companyCountry);
-            company.setAddress(companyAddress);
-            addressService.save(companyAddress);
-        companyService.saveCompany(company);
 
-        //save user as an employee to the company
-        List<User> companyEmployees = null;
-        assert false;
-        //companyEmployees.add(user); PROBLEM
-        company.setCompanyEmployees(companyEmployees);
 
         System.out.println(accountType);
 
         if (accountType.equals("private")) { //create an Account
-
-            System.out.println("reads private");
             String privateIban = IBANGenerator.generateIBAN();
             //String testIbanOne = "NL81DPAJ0000010101";
 
@@ -124,8 +104,30 @@ public class JoinController {
             accountService.save(privateAccount);
 
         }
-
         else if (accountType.equals("corporate")) { //create an SMEAccount
+
+            //IF corporate account, create the company info
+            Company company = new Company();
+            company.setCompanyName(companyName);
+            //company address
+            Address companyAddress = new Address();
+            companyAddress.setSuffix("Co.");
+            companyAddress.setStreet(companyStreet);
+                int i = Integer.parseInt(companyNumber);
+            companyAddress.setHousenumber(i);
+            companyAddress.setPostcode(companyPostcode);
+            companyAddress.setCity(companyCity);
+            companyAddress.setCountry(companyCountry);
+            company.setAddress(companyAddress);
+            addressService.save(companyAddress);
+            companyService.saveCompany(company);
+
+            //save user as an employee to the company
+            List<User> companyEmployees = null;
+            assert false;
+            //companyEmployees.add(user); PROBLEM
+            company.setCompanyEmployees(companyEmployees);
+
             String corporateIban = IBANGenerator.generateIBAN();
             System.out.println(corporateIban);
             String corporateIbanTwo = IBANGenerator.generateIBAN();
