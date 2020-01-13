@@ -5,16 +5,20 @@
     <title>Overboekingen</title>
 </head>
 <body>
-<form action="#" th:action="@{do_transfer}" method="post" >
-    <table>
-        <tr>
-            <td>Rekening</td>
-            <td><input id = "Iban" type="text"  name="yourCreditAccount" required></td>
 
-            </td>        </tr>
+<form action="#" th:action="@{do_transfer}" method="post" >
+    <h1><span th:text="${header_trans}"/></h1>
+    <table>
+<tr>
+            <td>Rekering</td>
+    <td><input id = "Iban" type="text"  name="yourCreditAccount" required placeholder="NL11DPAJ0000123456"></td>
+
+        </tr>
+
         <tr>
             <td>Bedrag</td>
-            <td><input id = "amount" type="text" name="amount" required ></td>
+            <td><input id = "amount" type="text" name="amount" required placeholder="min 0.01"></td>
+
 
         </tr>
         <tr>
@@ -27,9 +31,6 @@
         </tr>
     </table>
 </form>
-<p class="info"></p>
-<script>
 
-</script>
 </body>
 </html>

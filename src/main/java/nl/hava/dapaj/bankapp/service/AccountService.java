@@ -51,4 +51,8 @@ public class AccountService {
         }
         return accountList;
     }
+
+    public List<Account>findAllAccounts(){
+        return (List<Account>) accountDAO.findAll();
+    }
 }

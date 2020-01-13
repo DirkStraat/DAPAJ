@@ -2,11 +2,7 @@ package nl.hava.dapaj.bankapp.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
-import java.util.HashSet;
-import java.util.Set;
-
 import java.util.*;
-
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -18,7 +14,6 @@ public  class Account {
     protected String accountName;
 
     @Column(unique = true)
-
     protected String iban;
 
     @ManyToMany (fetch = FetchType.EAGER)
@@ -99,3 +94,4 @@ public  class Account {
         return String.format(iban);
     }
 }
+
