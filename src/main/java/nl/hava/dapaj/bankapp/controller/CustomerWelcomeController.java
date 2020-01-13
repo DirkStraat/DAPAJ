@@ -64,6 +64,4 @@ public class CustomerWelcomeController {
         model.addAttribute("accounts", accountList);
         return "customer_welcome";
     }
-
-
 }
