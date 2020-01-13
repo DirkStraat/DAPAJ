@@ -74,4 +74,5 @@ public class CustomerWelcomeController {
         }
         return "customer_welcome";
     }
+
 }
