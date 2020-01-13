@@ -1,5 +1,6 @@
 package nl.hava.dapaj.bankapp.controller;
 
+import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import nl.hava.dapaj.bankapp.model.*;
 import nl.hava.dapaj.bankapp.service.*;
 import nl.hava.dapaj.bankapp.utils.IBANGenerator;
@@ -30,6 +31,9 @@ public class JoinController {
     @Autowired
     SMEAccountService smeAccountService;
 
+    @Autowired
+    EmpoyeeService employeeService;
+
     @GetMapping("join_dapaj")
     public String joinForm(Model model) {
         model.addAttribute("user", new User());
@@ -46,7 +50,7 @@ public class JoinController {
 
                                   //now the requestparam for the address
                                   @RequestParam(name = "street") String street,
-                                  @RequestParam(name = "house_number") int housenumber,
+                                  @RequestParam(name = "house_number") int houseNumber,
                                   @RequestParam(name = "insert") String suffix,
                                   @RequestParam(name = "postcode") String postcode,
                                   @RequestParam(name = "city") String city,
@@ -57,7 +61,7 @@ public class JoinController {
 
                                   //company info
                                   @RequestParam(name = "company_name") String companyName,
-                                  //@RequestParam(name = "company_sector") String companySector, //do we want this, or is branch another thing?
+                                  //@RequestParam(name = "branch") String companyBranch,
                                   @RequestParam(name = "company_street") String companyStreet,
                                   @RequestParam(name = "company_number") int companyNumber,
                                   @RequestParam(name = "company_postcode") String companyPostcode,
@@ -72,12 +76,11 @@ public class JoinController {
         user.setPrefix(prefix);
         user.setSocialSecurityNumber(BSN);
         user.setDateOfBirth(dateOfBirth);
-        user.setDateOfBirth(dateOfBirth);
         user.setEmail(email);
             //now make the user sub-object Address
             Address address = new Address();
             address.setStreet(street);
-            address.setHousenumber(housenumber);
+            address.setHousenumber(houseNumber);
             address.setSuffix(suffix);
             address.setPostcode(postcode);
             address.setCity(city);
@@ -105,21 +108,35 @@ public class JoinController {
         //save user as an employee to the company
         List<User> companyEmployees = null;
         assert false;
-        companyEmployees.add(user);
+        //companyEmployees.add(user); PROBLEM
         company.setCompanyEmployees(companyEmployees);
 
-        if (accountType.equals("Private")) { //create an Account
+        System.out.println(accountType);
+
+        if (accountType.equals("private")) { //create an Account
+
+            System.out.println("reads private");
             String privateIban = IBANGenerator.generateIBAN();
+            //String testIbanOne = "NL81DPAJ0000010101";
+
             Account privateAccount = new Account(privateIban);
                 privateAccount.setAccountName(firstName + lastName);
             accountService.save(privateAccount);
 
-        } else if (accountType.equals("Corporate")) { //create an SMEAccount
-            String corporateIban = IBANGenerator.generateIBAN();
-            SMEAccount corporateAccount = new SMEAccount(corporateIban, "branch", new Employee(), company);
-            smeAccountService.save(corporateAccount);
         }
 
+        else if (accountType.equals("corporate")) { //create an SMEAccount
+            String corporateIban = IBANGenerator.generateIBAN();
+            System.out.println(corporateIban);
+            String corporateIbanTwo = IBANGenerator.generateIBAN();
+            System.out.println(corporateIbanTwo);
+
+            //String testIbanTwo = "NL81DPAJ0000020202";
+
+            Employee managerSME = employeeService.findEmployeeByRole("Manager SME");
+            SMEAccount corporateAccount = new SMEAccount(corporateIbanTwo, "Internet", managerSME, company);
+            smeAccountService.save(corporateAccount);
+        }
 
         return "redirect:/set_password";
     }

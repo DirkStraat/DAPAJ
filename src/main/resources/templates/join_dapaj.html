@@ -48,7 +48,7 @@
                     <option>van der</option>
                     <option>den</option>
                     <option>van den</option>
-                </select>
+                    </select>
                 </td>
             </tr>
 
@@ -60,13 +60,13 @@
 
             <tr>
                 <td>Date of Birth:</td>
-                <td><input type="date"  placeholder="Your Birthday" name="birthday"></td>
+                <td><input type="date" placeholder = "Your Birthday" name="birthday"></td>
             </tr>
 
 
             <tr>
                 <td>BSN:</td>
-                <td><input type="number" placeholder="BSN Number" name="BSN"></td>
+                <td><input type="text" placeholder="BSN Number" name="BSN"></td>
             </tr> <br/>
 
             <tr>
@@ -106,34 +106,29 @@
 
             <tr>
                 <td>Open an account?</td>
-                <td><select name="account_type" multiple onchange="yesnoCheck(this);">
+                <td><select name="account_type" onchange="yesnoCheck(this);">
                     <option name="open_private_account" value="private">Private</option>
                     <option name="open_corporate_account" value="corporate">Corporate</option>
-                </select><br></td>
-            </tr>
-
-<!--            <tr>
-                <td>Open an account?:</td>
-                <td><select name="account_type">
-                    <option></option>
-                    <option>Private</option>
-                    <option>Corporate</option>
-                </select>
+                    </select>
                 </td>
-            </tr>-->
-
-<!--            This part below of the questionnaire only pops up if the visitor selects to open a company account-->
+            </tr>
 
             <tr class="ifCorporate" style="display: none;">
                 <td>Company:</td>
                 <td><input type="text" placeholder="Company Name" name="company_name"></td>
             </tr>
+<!--
 
-            <tr class="ifCorporate" style="display: none;">
-                <td>Activity Sector:</td>
-                <td><input type="text" placeholder="Activity Sector" name="company_sector"></td>
+                <td>Branch:</td>
+                <td><select name="company_sector">
+                    <option>Sector 1</option>
+                    <option>Sector 2</option>
+                    <option>Sector 3</option>
+                    <option>Sector 4</option>
+                </select>
+                </td>
             </tr>
-
+-->
             <tr class="ifCorporate" style="display: none;">
                 <td>Street:</td>
                 <td><input type="text" placeholder="Street" name="company_street"></td>
@@ -141,7 +136,7 @@
 
             <tr class="ifCorporate" style="display: none;">
                 <td>Number:</td>
-                <td><input type="text" placeholder="Company number" name="company_number"></td>
+                <td><input type="number" placeholder="Company number" name="company_number"></td>
             </tr> <br/>
 
             <tr class="ifCorporate" style="display: none;">

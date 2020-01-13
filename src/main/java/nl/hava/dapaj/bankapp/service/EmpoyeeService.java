@@ -14,4 +14,7 @@ public class EmpoyeeService {
     public Employee findUserByEmployeeLoginName(String loginName){
         return employeeDao.findUserByEmployeeLoginName(loginName);
     }
+    public Employee findEmployeeByRole(String role){
+        return employeeDao.findEmployeeByRole(role);
+    }
 }
