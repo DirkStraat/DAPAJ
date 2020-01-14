@@ -30,6 +30,9 @@ public class AccountPageController {
     @Autowired
     TransactionService transactionService;
 
+    @Autowired
+    LoginController loginController;
+
     @GetMapping("add_representative")
     public String addRepresentativeHandler(Model model) {
 
@@ -57,16 +60,8 @@ public class AccountPageController {
 
     @GetMapping("customer_welcome")
     public String customerWelcomeHandler(Model model){
-
         User user = (User)model.getAttribute("user");
-
-        List<Account> accountList = accountService.getAccountByUser(user);
-        List<Account> accountList1 = accountService.getAccountByCompany(user);  // verkrijgt company rekeningen
-        for(Account account: accountList1){                                     // voegt de lijsten samen
-            accountList.add(account);
-        }
-        model.addAttribute("accounts", accountList );
-
+        loginController.enterCustomerWelcome(user.getLoginName() , model);
         return "customer_welcome";
     }
 
