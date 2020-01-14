@@ -22,6 +22,7 @@ public class SetPasswordController {
         if (user != null && bsn.equals(user.getSocialSecurityNumber())) {
             user.setPassword(password);
             userService.save(user);
+
             model.addAttribute("header_inlog", "Wachtwoord succesvol gewijzigd");
             return "login";
         } else {

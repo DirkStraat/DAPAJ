@@ -71,7 +71,7 @@ public class JoinController {
                                   ) {
 
         //create the user with the form info
-        User user = new User();
+        Customer user = new Customer();
         user.setLastName(lastName);
         user.setFirstName(firstName);
         user.setPrefix(prefix);
@@ -91,9 +91,6 @@ public class JoinController {
         }
         user.setAddress(address);
         addressService.save(address);
-
-
-
         //save the user in the database
         userService.save(user);
 
@@ -138,7 +135,8 @@ public class JoinController {
             smeAccountService.save(corporateAccount);
         }
 
-        model.addAttribute("header_inlog", "Wachtwoord succesvol opgeslagen");
-        return "redirect:/set_password";
+        model.addAttribute("new_user", true);
+
+        return "set_password";
     }
 }
