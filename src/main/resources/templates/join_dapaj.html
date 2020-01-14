@@ -37,7 +37,7 @@
         <table >
             <tr>
                 <td>First Name:</td>
-                <td><input type="text" placeholder="First Name" name="name"></td>
+                <td><input type="text" placeholder="First Name" name="name" required></td>
             </tr>
 
             <tr>
@@ -54,39 +54,39 @@
 
             <tr>
                 <td>Last Name:</td>
-                <td><input type="text" placeholder="Last Name" name="last name"></td>
+                <td><input type="text" placeholder="Last Name" name="last name" required></td>
             </tr>
 
 
             <tr>
                 <td>Date of Birth:</td>
-                <td><input type="date" placeholder = "Your Birthday" name="birthday"></td>
+                <td><input type="date" placeholder = "Your Birthday" name="birthday" required></td>
             </tr>
 
 
             <tr>
                 <td>BSN:</td>
-                <td><input type="text" placeholder="BSN Number" name="BSN"></td>
+                <td><input type="text" placeholder="BSN Number" name="BSN" required></td>
             </tr> <br/>
 
             <tr>
                 <td>Street:</td>
-                <td><input type="text" placeholder="Street" name="street"></td>
+                <td><input type="text" placeholder="Street" name="street" required></td>
             </tr> <br/>
 
             <tr>
                 <td>House number:</td>
-                <td><input type="text" placeholder="House number" name="house_number"></td>
+                <td><input type="text" placeholder="House number" name="house_number" required></td>
             </tr> <br/>
 
             <tr>
                 <td>Postcode:</td>
-                <td><input type="text" placeholder="Postcode" name="postcode"></td>
+                <td><input type="text" placeholder="Postcode" name="postcode" required></td>
             </tr> <br/>
 
             <tr>
                 <td>City:</td>
-                <td><input type="text" placeholder="City" name="city"></td>
+                <td><input type="text" placeholder="City" name="city" required></td>
             </tr> <br/>
 
             <tr>
@@ -96,7 +96,7 @@
 
             <tr>
                 <td>Email:</td>
-                <td><input type="email" placeholder="Email" name="email"></td>
+                <td><input type="email" placeholder="Email" name="email" required></td>
             </tr>
 
             <tr>
@@ -105,7 +105,7 @@
             </tr>
 
             <tr>
-                <td>Open an account?</td>
+                <td>Open an account:</td>
                 <td><select name="account_type" onchange="yesnoCheck(this);">
                     <option name="open_private_account" value="private">Private</option>
                     <option name="open_corporate_account" value="corporate">Corporate</option>
@@ -115,7 +115,7 @@
 
             <tr class="ifCorporate" style="display: none;">
                 <td>Company:</td>
-                <td><input type="text" placeholder="Company Name" name="company_name"></td>
+                <td><input type="text" placeholder="Company Name" name="company_name" required></td>
             </tr>
 <!--
 
@@ -131,22 +131,22 @@
 -->
             <tr class="ifCorporate" style="display: none;">
                 <td>Street:</td>
-                <td><input type="text" placeholder="Street" name="company_street"></td>
+                <td><input type="text" placeholder="Street" name="company_street" required></td>
             </tr> <br/>
 
             <tr class="ifCorporate" style="display: none;">
                 <td>Number:</td>
-                <td><input type="number" placeholder="Company number" name="company_number"></td>
+                <td><input type="number" placeholder="Company number" name="company_number" required></td>
             </tr> <br/>
 
             <tr class="ifCorporate" style="display: none;">
                 <td>Postcode:</td>
-                <td><input type="text" placeholder="Company postcode" name="company_postcode"></td>
+                <td><input type="text" placeholder="Company postcode" name="company_postcode" required></td>
             </tr> <br/>
 
             <tr class="ifCorporate" style="display: none;">
                 <td>City:</td>
-                <td><input type="text" placeholder="City" name="company_city"></td>
+                <td><input type="text" placeholder="City" name="company_city" required></td>
             </tr> <br/>
 
             <tr class="ifCorporate" style="display: none;">
