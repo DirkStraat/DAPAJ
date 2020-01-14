@@ -88,9 +88,12 @@ public class JoinController {
             address.setPostcode(postcode);
             address.setCity(city);
             address.setCountry(country);
-            user.setAddress(address);
         }
+        user.setAddress(address);
         addressService.save(address);
+
+
+
         //save the user in the database
         userService.save(user);
 
@@ -101,6 +104,7 @@ public class JoinController {
                 privateAccount.setAccountName(firstName + lastName);
             accountService.save(privateAccount);
         }
+
         else if (accountType.equals("corporate")) { //create an SMEAccount
             Company company = new Company();
             company.setCompanyName(companyName);
@@ -115,21 +119,18 @@ public class JoinController {
                 companyAddress.setPostcode(companyPostcode);
                 companyAddress.setCity(companyCity);
                 companyAddress.setCountry(companyCountry);
-                company.setAddress(companyAddress);
             }
+            company.setAddress(companyAddress);
             addressService.save(companyAddress);
 
             //save user as an employee to the company
-            //company.getCompanyEmployees().add(user);
             List<User> companyEmployees = new ArrayList<>();
             companyEmployees.add(user);
             company.setCompanyEmployees(companyEmployees);
-            for (User u : company.getCompanyEmployees()){
-                System.out.println(u);
-            }
+            //save company as a company of user
             user.getCompanies().add(company);
             companyService.saveCompany(company);
-            userService.save(user);
+            userService.save(user); //user info is updated
 
             String corporateIban = IBANGeneratoRand.generateIBAN();
             Employee managerSME = employeeService.findEmployeeByRole("Manager SME");
