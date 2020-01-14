@@ -1,6 +1,10 @@
 package nl.hava.dapaj.bankapp.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.DecimalMax;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -22,7 +26,11 @@ public class Transaction implements Comparable<Transaction> {
     @OneToOne
     private Account suspenseAccount;
 
+    @NotNull //of NotEmpty?
+    @DecimalMin(value = "0.01")
     private double amount;
+
+
     private String description;
 
     private LocalDate date;
