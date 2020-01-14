@@ -38,19 +38,20 @@
             </tr>
             <tr>
                 <td th:text="${selected_branch}"></td>
-                <td th:text="${average_saldo}"></td>
+                <td th:text="${#numbers.formatCurrency(average_saldo)}"></td>
+
+<!--
+                <div>Het huidige saldo op deze rekening is: <span th:text="${#numbers.formatCurrency(average_saldo)}"></span></div>
+-->
             </tr>
     </table>
     <h1>Methode 2</h1>
     <form action="ergens" method="POST">
-<!--
-        <input type="text" id="sector" name="sector" placeholder="sector"><br>
--->
         <select name="sector" id="sector">
             <option th:each="branch, iter: ${branch_list}"
                     th:text="${branch}">
             </option>
-        </select>€
+        </select>
         <input type="text" id="accountid" name="balance" placeholder="saldo"><br>
     </form>
     <div id="error" hidden>
@@ -85,9 +86,9 @@
                     console.log(`Done, got ${request.response.length} bytes`);
                     console.log('response' + request.response);
                     let addressPart = JSON.parse(request.response);
-                    console.log(addressPart)
-                    //document.getElementById('sector').value = addressPart.avrg_blance;
-                    document.getElementById('accountid').value = addressPart;
+                    console.log(addressPart.toFixed(2));
+                    document.getElementById('accountid').value = '€' + addressPart.toFixed(2);
+
                 }
             }
         }
