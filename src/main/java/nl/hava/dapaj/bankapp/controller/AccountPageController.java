@@ -25,10 +25,10 @@ public class AccountPageController {
     private AccountService accountService;
 
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     @Autowired
-    TransactionService transactionService;
+    private TransactionService transactionService;
 
     @GetMapping("add_representative")
     public String addRepresentativeHandler(Model model) {

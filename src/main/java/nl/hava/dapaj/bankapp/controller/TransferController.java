@@ -25,7 +25,8 @@ public class TransferController {
     TransactionService transactionService;
     @Autowired
     AccountService accountService;
-
+    @Autowired
+    AccountPageController accountPageController;
 
     @PostMapping("do_transfer")
     public String doTransferHandler(@RequestParam String yourCreditAccount,
@@ -35,12 +36,14 @@ public class TransferController {
                                     @RequestParam String description,
                                     Model model) {
 
-        if ((accountExists(yourCreditAccount)) && (isDouble(amount)) && (Double.parseDouble(amount) > 0.01)) {
+        if ((accountExists(yourCreditAccount)) && (isDouble(amount)) && (Double.parseDouble(amount) >= 0.01)) {
             Account creditAccount = accountService.getAccountByIban(yourCreditAccount);
             Account debitAccount = (Account) model.getAttribute("account");
             Transaction transaction = new Transaction(debitAccount, creditAccount, Double.parseDouble(amount), description);
             transactionService.doTransAction(transaction);
+            accountPageController.enterAccountPage(debitAccount.getAccountID(), model);
             model.addAttribute("motd", "Transactie succesvol");
+
             return "account_page";
         } else {
             model.addAttribute("header_trans", "iban of bedrag onjuist");
