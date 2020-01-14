@@ -38,7 +38,7 @@
             </tr>
             <tr>
                 <td th:text="${selected_branch}"></td>
-                <td th:text="${#numbers.formatDecimal(average_saldo,2,2)}"></td>
+                <td th:text="${#numbers.formatCurrency(average_saldo)}"></td>
 
 <!--
                 <div>Het huidige saldo op deze rekening is: <span th:text="${#numbers.formatCurrency(average_saldo)}"></span></div>
@@ -47,9 +47,6 @@
     </table>
     <h1>Methode 2</h1>
     <form action="ergens" method="POST">
-<!--
-        <input type="text" id="sector" name="sector" placeholder="sector"><br>
--->
         <select name="sector" id="sector">
             <option th:each="branch, iter: ${branch_list}"
                     th:text="${branch}">
