@@ -35,10 +35,10 @@ public class TransferController {
                                             String amount,
                                     @RequestParam String description,
                                     Model model) {
+        Account debitAccount = (Account) model.getAttribute("account");
 
         if ((accountExists(yourCreditAccount)) && (isDouble(amount)) && (Double.parseDouble(amount) >= 0.01)) {
             Account creditAccount = accountService.getAccountByIban(yourCreditAccount);
-            Account debitAccount = (Account) model.getAttribute("account");
             Transaction transaction = new Transaction(debitAccount, creditAccount, Double.parseDouble(amount), description);
             transactionService.doTransAction(transaction);
             accountPageController.enterAccountPage(debitAccount.getAccountID(), model);
@@ -46,8 +46,9 @@ public class TransferController {
 
             return "account_page";
         } else {
-            model.addAttribute("header_trans", "iban of bedrag onjuist");
-            return "transfer";
+            model.addAttribute("motd", "iban of bedrag onjuist");
+            accountPageController.enterAccountPage(debitAccount.getAccountID(), model);
+            return "account_page";
         }
     }
 
