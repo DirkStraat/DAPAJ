@@ -2,6 +2,7 @@ package nl.hava.dapaj.bankapp.controller;
 
 import nl.hava.dapaj.bankapp.model.*;
 import nl.hava.dapaj.bankapp.service.*;
+import nl.hava.dapaj.bankapp.utils.IBANGeneratoRand;
 import nl.hava.dapaj.bankapp.utils.IBANGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -91,35 +92,26 @@ public class JoinController {
         userService.save(user);
 
 
-
-        System.out.println(accountType);
-
         if (accountType.equals("private")) { //create an Account
-            IBANGenerator.generateIBAN();
-            String privateIban = IBANGenerator.generateIBAN();
-            //String testIbanOne = "NL81DPAJ0000010101";
-
+            String privateIban = IBANGeneratoRand.generateIBAN();
             Account privateAccount = new Account(privateIban);
                 privateAccount.setAccountName(firstName + lastName);
             accountService.save(privateAccount);
-
         }
         else if (accountType.equals("corporate")) { //create an SMEAccount
-
-            //IF corporate account, create the company info
             Company company = new Company();
             company.setCompanyName(companyName);
-            //company address
-            Address companyAddress = new Address();
-            companyAddress.setSuffix("Co.");
-            companyAddress.setStreet(companyStreet);
-                int i = Integer.parseInt(companyNumber);
-            companyAddress.setHousenumber(i);
-            companyAddress.setPostcode(companyPostcode);
-            companyAddress.setCity(companyCity);
-            companyAddress.setCountry(companyCountry);
-            company.setAddress(companyAddress);
-            addressService.save(companyAddress);
+                //company address
+                Address companyAddress = new Address();
+                companyAddress.setSuffix("Co.");
+                companyAddress.setStreet(companyStreet);
+                    int i = Integer.parseInt(companyNumber);
+                companyAddress.setHousenumber(i);
+                companyAddress.setPostcode(companyPostcode);
+                companyAddress.setCity(companyCity);
+                companyAddress.setCountry(companyCountry);
+                company.setAddress(companyAddress);
+                addressService.save(companyAddress);
             companyService.saveCompany(company);
 
             //save user as an employee to the company
@@ -128,15 +120,9 @@ public class JoinController {
             companyEmployees.add(user);
             company.setCompanyEmployees(companyEmployees);
 
-            String corporateIban = IBANGenerator.generateIBAN();
-            System.out.println(corporateIban);
-            String corporateIbanTwo = IBANGenerator.generateIBAN();
-            System.out.println(corporateIbanTwo);
-
-            //String testIbanTwo = "NL81DPAJ0000020202";
-
+            String corporateIban = IBANGeneratoRand.generateIBAN();
             Employee managerSME = employeeService.findEmployeeByRole("Manager SME");
-            SMEAccount corporateAccount = new SMEAccount(corporateIbanTwo, companySector, managerSME, company);
+            SMEAccount corporateAccount = new SMEAccount(corporateIban, companySector, managerSME, company);
             smeAccountService.save(corporateAccount);
         }
 

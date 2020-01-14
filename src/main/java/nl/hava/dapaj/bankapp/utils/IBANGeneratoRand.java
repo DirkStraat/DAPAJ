@@ -17,7 +17,7 @@ public class IBANGeneratoRand {
     private static final String dapajBankCode = "DPAJ";
     private static final int MAX_LENGTH_BANK_ACCOUNT = 10;
         private static Random newRandom = new Random();
-    private static int incrementalID = newRandom.nextInt(999999999); // initial starting point to increment bank account number
+    private static int incrementalID = 126000 + newRandom.nextInt(99999999); // initial starting point to increment bank account number
 
 
     /**
