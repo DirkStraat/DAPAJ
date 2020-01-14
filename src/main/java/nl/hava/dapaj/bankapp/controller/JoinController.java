@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -94,6 +95,7 @@ public class JoinController {
         System.out.println(accountType);
 
         if (accountType.equals("private")) { //create an Account
+            IBANGenerator.generateIBAN();
             String privateIban = IBANGenerator.generateIBAN();
             //String testIbanOne = "NL81DPAJ0000010101";
 
@@ -121,9 +123,9 @@ public class JoinController {
             companyService.saveCompany(company);
 
             //save user as an employee to the company
-            List<User> companyEmployees = null;
-            assert false;
-            //companyEmployees.add(user); PROBLEM
+            //company.getCompanyEmployees().add(user);
+            List<User> companyEmployees = new ArrayList<>();
+            companyEmployees.add(user);
             company.setCompanyEmployees(companyEmployees);
 
             String corporateIban = IBANGenerator.generateIBAN();
