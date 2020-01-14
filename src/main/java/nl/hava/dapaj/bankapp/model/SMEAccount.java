@@ -30,6 +30,9 @@ public class SMEAccount extends Account {
 
     }
 
+    public SMEAccount(String accountid) {
+    }
+
     public String getBranch() {
         return branch;
     }
