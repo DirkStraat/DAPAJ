@@ -60,9 +60,8 @@ public class JoinController {
 
                                   //company info
                                   @RequestParam(name = "company_name") String companyName,
-                                  //@RequestParam(name = "branch") String companyBranch,
+                                  @RequestParam(name = "company_sector") String companySector,
                                   @RequestParam(name = "company_street") String companyStreet,
-                                  //@RequestParam(name = "company_number") Integer companyNumber, //CREATES PROBLEM WHEN ITS NOT CORPORATE
                                   @RequestParam(name = "company_number") String companyNumber,
                                   @RequestParam(name = "company_postcode") String companyPostcode,
                                   @RequestParam(name = "company_city") String companyCity,
@@ -135,7 +134,7 @@ public class JoinController {
             //String testIbanTwo = "NL81DPAJ0000020202";
 
             Employee managerSME = employeeService.findEmployeeByRole("Manager SME");
-            SMEAccount corporateAccount = new SMEAccount(corporateIbanTwo, "Internet", managerSME, company);
+            SMEAccount corporateAccount = new SMEAccount(corporateIbanTwo, companySector, managerSME, company);
             smeAccountService.save(corporateAccount);
         }
 
