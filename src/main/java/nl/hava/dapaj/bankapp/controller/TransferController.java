@@ -20,6 +20,7 @@ import javax.validation.constraints.DecimalMin;
 @SessionAttributes ({"account","user"}) //het moet nog even gecontroleerd worden
 @Validated
 public class TransferController {
+    final static double CREDIT_LIMIT = -1000.0;
 
     @Autowired
     TransactionService transactionService;
@@ -36,22 +37,40 @@ public class TransferController {
                                     @RequestParam String description,
                                     Model model) {
         Account debitAccount = (Account) model.getAttribute("account");
+        Account creditAccount = accountService.getAccountByIban(yourCreditAccount);
 
-        if ((accountExists(yourCreditAccount)) && (isDouble(amount)) && (Double.parseDouble(amount) >= 0.01)) {
-            Account creditAccount = accountService.getAccountByIban(yourCreditAccount);
-            Transaction transaction = new Transaction(debitAccount, creditAccount, Double.parseDouble(amount), description);
-            transactionService.doTransAction(transaction);
+        if(!(accountExists(yourCreditAccount))) {
+
             accountPageController.enterAccountPage(debitAccount.getAccountID(), model);
-            model.addAttribute("motd", "Transactie succesvol");
+            model.addAttribute("motd", "iban onjuist");
+        }
 
+            else if (!(isDouble(amount)))
+            {
+                model.addAttribute("motd", " bedrag onjuist");
+                accountPageController.enterAccountPage(debitAccount.getAccountID(), model);
+                return "account_page";
+            }
+            else if(Double.parseDouble(amount) < 0.01) {
+            model.addAttribute("motd", " bedrag te klein");
+            accountPageController.enterAccountPage(debitAccount.getAccountID(), model);
             return "account_page";
-        } else {
-            model.addAttribute("motd", "iban of bedrag onjuist");
+
+        }
+        else if(debitAccount.getBalance() > -1000) {
+            model.addAttribute("motd", "balance niet genoeg");
             accountPageController.enterAccountPage(debitAccount.getAccountID(), model);
             return "account_page";
         }
-    }
 
+            else {
+                Transaction transaction = new Transaction(debitAccount, creditAccount, Double.parseDouble(amount), 		description);
+                transactionService.doTransAction(transaction);
+                accountPageController.enterAccountPage(debitAccount.getAccountID(), model);
+                model.addAttribute("motd", "Transactie succesvol");
+            }
+            return "account_page";
+        }
 
 
 
