@@ -79,7 +79,9 @@ public class JoinController {
         user.setDateOfBirth(dateOfBirth);
         user.setEmail(email);
             //now make the user sub-object Address
-            Address address = new Address();
+        Address address = addressService.getAddressByStreetandNumber(street, houseNumber); //check if it already exists
+        if(address == null) {
+            address = new Address();
             address.setStreet(street);
             address.setHousenumber(houseNumber);
             address.setSuffix(suffix);
@@ -87,7 +89,8 @@ public class JoinController {
             address.setCity(city);
             address.setCountry(country);
             user.setAddress(address);
-            addressService.save(address);
+        }
+        addressService.save(address);
         //save the user in the database
         userService.save(user);
 
