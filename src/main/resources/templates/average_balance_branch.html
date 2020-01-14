@@ -43,7 +43,14 @@
     </table>
     <h1>Methode 2</h1>
     <form action="ergens" method="POST">
+<!--
         <input type="text" id="sector" name="sector" placeholder="sector"><br>
+-->
+        <select name="sector" id="sector">
+            <option th:each="branch, iter: ${branch_list}"
+                    th:text="${branch}">
+            </option>
+        </select>€
         <input type="text" id="accountid" name="balance" placeholder="saldo"><br>
     </form>
     <div id="error" hidden>

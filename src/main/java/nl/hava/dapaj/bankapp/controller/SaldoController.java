@@ -17,6 +17,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
+import static java.lang.Float.NaN;
+
 @Controller
 @Validated
 public class SaldoController {
@@ -53,28 +55,25 @@ public class SaldoController {
             throw new ResponseStatusException(
                     HttpStatus.FORBIDDEN, "No valid key found");
         }
-        System.out.println("request data in" + sector);
         return getSaldo(sector);
     }
     private double getSaldo(@RequestParam String sector){
         double averageSaldo;
         try {
-            System.out.println("get saldo: try!");
-            System.out.println(sector);
             List<SMEAccount> accountsByBranch = smeAccountService.findsSmeAccountbyBranch(sector);
             double totalSaldo = 0;
             for (SMEAccount account: accountsByBranch){
                 if(account.getBranch().equals(sector))
                     totalSaldo += account.getBalance();
             }
-            averageSaldo = totalSaldo/accountsByBranch.size();
+            System.out.println("get saldo totaal saldo"+totalSaldo);
+            System.out.println("getsaldo size" + accountsByBranch.size());
 
-            //List<SMEAccount> smeAccountList = smeAccountService.findsSmeAccountbyBranch(sector);
-            //smeAccount = smeAccountList.get(0);
-
-
-        /*jdbcTemplate.queryForObject("SELECT accountid FORM dapaj.smeaccount WHERE dapaj.smeaccount.branch=?",
-                    new SaldoMapper(), sector);*/
+            int branchSize = accountsByBranch.size();
+            if(branchSize == 0){
+                branchSize = 1;
+            }
+            averageSaldo = totalSaldo/branchSize;
         } catch (EmptyResultDataAccessException ex) {
             System.out.println("get saldo: catch1");
             throw new ResponseStatusException(
@@ -87,10 +86,10 @@ public class SaldoController {
         return averageSaldo;
     }
 
-    class SaldoMapper implements RowMapper<SMEAccount> {
+  /*  class SaldoMapper implements RowMapper<SMEAccount> {
         @Override
         public SMEAccount mapRow(ResultSet resultSet, int i) throws SQLException {
             return new SMEAccount(resultSet.getString("accountid"));
         }
-    }
+    }*/
 }
