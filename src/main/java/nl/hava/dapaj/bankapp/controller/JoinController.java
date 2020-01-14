@@ -3,7 +3,6 @@ package nl.hava.dapaj.bankapp.controller;
 import nl.hava.dapaj.bankapp.model.*;
 import nl.hava.dapaj.bankapp.service.*;
 import nl.hava.dapaj.bankapp.utils.IBANGeneratoRand;
-import nl.hava.dapaj.bankapp.utils.IBANGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
@@ -67,7 +66,8 @@ public class JoinController {
                                   @RequestParam(name = "company_number") String companyNumber,
                                   @RequestParam(name = "company_postcode") String companyPostcode,
                                   @RequestParam(name = "company_city") String companyCity,
-                                  @RequestParam(name = "company_country") String companyCountry
+                                  @RequestParam(name = "company_country") String companyCountry,
+                                  Model model
                                   ) {
 
         //create the user with the form info
@@ -126,6 +126,7 @@ public class JoinController {
             smeAccountService.save(corporateAccount);
         }
 
+        model.addAttribute("header_inlog", "Wachtwoord succesvol opgeslagen");
         return "redirect:/set_password";
     }
 }
