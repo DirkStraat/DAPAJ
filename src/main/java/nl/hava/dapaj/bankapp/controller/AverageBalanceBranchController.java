@@ -53,7 +53,7 @@ public class AverageBalanceBranchController {
         List<String> branches = fillBranchList();
         model.addAttribute("branch_list", branches);
         model.addAttribute("selected_branch", sector );
-        model.addAttribute("average_saldo", "€" +averageSaldo);
+        model.addAttribute("average_saldo", averageSaldo);
         return "average_balance_branch";
     }
 
