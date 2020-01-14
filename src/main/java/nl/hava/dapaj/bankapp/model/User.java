@@ -41,7 +41,7 @@ public class User {
     protected Address address;
 
     @ManyToMany (fetch = FetchType.EAGER)
-    protected Set<Company> companies;
+    protected Set<Company> companies = new HashSet<>();
 
     @OneToMany
     protected List<AuthorizationInvitation> aRInvitations;

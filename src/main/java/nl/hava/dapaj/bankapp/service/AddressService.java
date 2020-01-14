@@ -14,4 +14,8 @@ public class AddressService {
     public void save(Address address) {
         addressDao.save(address);
     }
+
+    public Address getAddressByStreetandNumber(String companyStreet, int number) {
+        return addressDao.findAddressByStreetAndHousenumber(companyStreet, number);
+    }
 }

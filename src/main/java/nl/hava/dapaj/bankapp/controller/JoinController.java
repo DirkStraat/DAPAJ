@@ -101,24 +101,32 @@ public class JoinController {
         else if (accountType.equals("corporate")) { //create an SMEAccount
             Company company = new Company();
             company.setCompanyName(companyName);
-                //company address
-                Address companyAddress = new Address();
+            //company address
+                int i = Integer.parseInt(companyNumber); //necessary parsing for the corporate form
+            Address companyAddress = addressService.getAddressByStreetandNumber(companyStreet, i);
+            if(companyAddress == null){
+                companyAddress = new Address();
                 companyAddress.setSuffix("Co.");
                 companyAddress.setStreet(companyStreet);
-                    int i = Integer.parseInt(companyNumber);
                 companyAddress.setHousenumber(i);
                 companyAddress.setPostcode(companyPostcode);
                 companyAddress.setCity(companyCity);
                 companyAddress.setCountry(companyCountry);
                 company.setAddress(companyAddress);
-                addressService.save(companyAddress);
-            companyService.saveCompany(company);
+            }
+            addressService.save(companyAddress);
 
             //save user as an employee to the company
             //company.getCompanyEmployees().add(user);
             List<User> companyEmployees = new ArrayList<>();
             companyEmployees.add(user);
             company.setCompanyEmployees(companyEmployees);
+            for (User u : company.getCompanyEmployees()){
+                System.out.println(u);
+            }
+            user.getCompanies().add(company);
+            companyService.saveCompany(company);
+            userService.save(user);
 
             String corporateIban = IBANGeneratoRand.generateIBAN();
             Employee managerSME = employeeService.findEmployeeByRole("Manager SME");
