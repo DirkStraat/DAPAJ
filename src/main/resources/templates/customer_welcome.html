@@ -5,9 +5,19 @@
 <head>
     <meta charset="UTF-8">
     <title>Welkom</title>
+    <script>
+        function showLinkAccount() {
+            var x = document.getElementById("linkAccount");
+            if (x.style.display === "none") {
+                x.style.display = "block";
+            } else {
+                x.style.display = "none";
+            }
+        }
+    </script>
 </head>
 <body>
-<h1>Welkom <span th:text="${user.getFirstName()}"></span></h1>
+<h1><span th:text="${motd}"></span></h1>
 <br>
 <h3>Rekening overzicht:</h3>
 <table>
@@ -19,18 +29,24 @@
     <tr th:each="account: ${accounts}">
         <td><span th:text="${account.getAccountName()}"/> </a> </td>
         <td><a th:href="@{/do_select_account(account_id=${account.getAccountID()})}"><span th:text="${account.getIban()}"/> </a></td>
-        <td><span th:text="${account.getBalance()}"/> </a> </td>
+        <td><span th:text="${#numbers.formatCurrency(account.getBalance())}"/> </a> </td>
     </tr>
 </table>
 <br/>
 
-<form action="do_open_new_account" method="post">
-    <input type="submit" value="open rekening">
-</form>
+<div th:style="${invitations.isEmpty()} ? 'display: none':'display: block'">
+    <input type="button" name="do_select_account" value="Koppel rekening" onclick="showLinkAccount();" class="">
+</div>
 
-<form action="do_link_account" method="post">
-    <input type="submit"  value="koppel rekening"><br/>
-</form>
-
+<div id="linkAccount" style="display: none">
+    <form action="link_account" method="post">
+        <select th:id="invitationId" th:name="invitationId">
+            <option th:each="invitation : ${invitations}" th:text="${invitation.getAccount().getAccountName()}" th:value="*{invitation.getInvitationId()}">
+            </option>
+        </select>
+        <input type="password" th:name="keycode" th:id="tekstveld">
+        <input type="submit" value="Stuur koppelverzoek.">
+    </form>
+</div>
 </body>
 </html>
