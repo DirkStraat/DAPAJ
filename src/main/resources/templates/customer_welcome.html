@@ -38,6 +38,12 @@
     <input type="button" name="do_select_account" value="Koppel rekening" onclick="showLinkAccount();" class="">
 </div>
 
+<div>
+    <form action="do_open_new_account" method="post">
+        <input type="submit" value="open rekening">
+    </form>
+</div>
+
 <div id="linkAccount" style="display: none">
     <form action="link_account" method="post">
         <select th:id="invitationId" th:name="invitationId">
