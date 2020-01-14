@@ -1,6 +1,7 @@
 package nl.hava.dapaj.bankapp.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import java.util.*;
 
 @Entity
@@ -93,3 +94,4 @@ public  class Account {
         return String.format(iban);
     }
 }
+

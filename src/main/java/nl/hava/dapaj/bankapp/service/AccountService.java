@@ -18,6 +18,7 @@ public class AccountService {
         return accountDAO.getAccountByCustomersCustomerId(customerId);
     }
 
+
     public Account getAccountByIban(String iBan){
         return accountDAO.getAccountByIban(iBan);
     }
@@ -49,5 +50,9 @@ public class AccountService {
                 accountList.add(account);
         }
         return accountList;
+    }
+
+    public List<Account>findAllAccounts(){
+        return (List<Account>) accountDAO.findAll();
     }
 }

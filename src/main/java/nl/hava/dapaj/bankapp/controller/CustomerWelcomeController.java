@@ -49,7 +49,7 @@ public class CustomerWelcomeController {
     }
 
     @PostMapping("do_open_new_account")
-    public void doOpenNewAccount(Model model) {
+    public String doOpenNewAccount(Model model) {
         User user = (User) model.getAttribute("user");
         Account account = new Account(generateIBAN());
         if (user != null) {
@@ -58,21 +58,29 @@ public class CustomerWelcomeController {
             ((Customer) user).getAccounts().add(account);
             accountService.save(account);
             userService.save(user);
-            customerWelcomeHandler(model);
+            fillModel(model);
         }
+        return "customer_welcome";
     }
 
-    @GetMapping("customerWelcome")
+    @PostMapping("customer_welcome")
     public String customerWelcomeHandler(Model model) {
+       fillModel(model);
+        return "customer_welcome";
+    }
+
+    public Model fillModel(Model model){
         User user = (User) model.getAttribute("user");
         if (user != null) {
+            List<AuthorizationInvitation> invitations = authorizationInvitationService.getInvitationsByUser(user);
             List<Account> accountsByUser = accountService.getAccountByUser(user);
             List<Account> accountsByCompany = accountService.getAccountByCompany(user);
             accountsByUser.addAll(accountsByCompany);
             model.addAttribute("user", user);
             model.addAttribute("accounts", accountsByUser);
+            model.addAttribute("invitations", invitations);
         }
-        return "customer_welcome";
+        return model;
     }
 
 }

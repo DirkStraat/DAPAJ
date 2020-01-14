@@ -20,7 +20,7 @@ public class LoginService {
         User user = userDao.findUserByLoginName(loginName);
         if(user == null){
             return false;
-        }else if (user.getPassword().equals(password)){
+        }else if (user.getPassword().equals(password) && user.getLoginName().equals(loginName)){
             return true;
         }else{
             return false;
@@ -30,7 +30,7 @@ public class LoginService {
         Employee employee = (Employee) employeeDao.findUserByEmployeeLoginName(employeeLogin);
         if (employee == null){
             return false;
-        }else if(employee.getEmployeePassword().equals(employeePassword)){
+        }else if(employee.getEmployeePassword().equals(employeePassword)&& employee.getEmployeeLoginName().equals(employeeLogin)){
             return true;
         }else {
             return false;

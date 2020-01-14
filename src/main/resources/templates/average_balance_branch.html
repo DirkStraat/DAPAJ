@@ -41,5 +41,59 @@
                 <td th:text="${average_saldo}"></td>
             </tr>
     </table>
+    <h1>Methode 2</h1>
+    <form action="ergens" method="POST">
+<!--
+        <input type="text" id="sector" name="sector" placeholder="sector"><br>
+-->
+        <select name="sector" id="sector">
+            <option th:each="branch, iter: ${branch_list}"
+                    th:text="${branch}">
+            </option>
+        </select>€
+        <input type="text" id="accountid" name="balance" placeholder="saldo"><br>
+    </form>
+    <div id="error" hidden>
+        <p> Er ging iet fout</p>
+    </div>
+
+    <script>
+        document.getElementById('sector').addEventListener('focusout', checkForSectorBalance);
+
+        function checkForSectorBalance() {
+            console.log('out of focus' + this);
+        let sector = document.getElementById('sector').value;
+        console.log('sector: ' + sector);
+
+        if(sector){
+            var formData = `sector=${sector}`;
+            console.log('we have valid data' + this)
+            let request = new XMLHttpRequest();
+            request.open('POST','http://localhost:8080/saldo', this)
+
+            request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            request.setRequestHeader('Accept', 'application/json')
+            request.send(formData);
+
+            request.onload = function () {
+                if (request.status !=200){
+                    document.getElementById('error').style.display = 'block'
+                    document.getElementById('accountid').value = '';
+                    document.getElementById('sector').classList.add('error');
+                }   else {
+                    document.getElementById('error').style.display='none';
+                    console.log(`Done, got ${request.response.length} bytes`);
+                    console.log('response' + request.response);
+                    let addressPart = JSON.parse(request.response);
+                    console.log(addressPart)
+                    //document.getElementById('sector').value = addressPart.avrg_blance;
+                    document.getElementById('accountid').value = addressPart;
+                }
+            }
+        }
+        function processError() {
+        }
+        }
+    </script>
 </body>
 </html>
