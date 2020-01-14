@@ -40,7 +40,7 @@ public class TransferController {
             Account debitAccount = (Account) model.getAttribute("account");
             Transaction transaction = new Transaction(debitAccount, creditAccount, Double.parseDouble(amount), description);
             transactionService.doTransAction(transaction);
-            model.addAttribute("transfer_message", "Transactie succesvol");
+            model.addAttribute("motd", "Transactie succesvol");
             return "account_page";
         } else {
             model.addAttribute("header_trans", "iban of bedrag onjuist");
