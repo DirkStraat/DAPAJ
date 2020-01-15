@@ -47,16 +47,12 @@ public class JoinController {
                                   @RequestParam(name ="BSN") String BSN,
                                   @RequestParam(name = "birthday") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate dateOfBirth,
                                   @RequestParam(name = "email") String email,
-
-                                  //now the requestparam for the address
                                   @RequestParam(name = "street") String street,
                                   @RequestParam(name = "house_number") int houseNumber,
                                   @RequestParam(name = "insert") String suffix,
                                   @RequestParam(name = "postcode") String postcode,
                                   @RequestParam(name = "city") String city,
                                   @RequestParam(name = "country") String country,
-
-                                  //now check if the user wants to open an account, and what type of account
                                   @RequestParam(name = "account_type") String accountType,
 
                                   //company info
@@ -74,7 +70,7 @@ public class JoinController {
         Address address = null;
         Customer user   = new Customer(firstName, prefix, lastName, address, BSN, dateOfBirth, email);
 
-        //... and a new Address or refer to existing Address
+        //... check for existing Address otherwise create a new one
         address = addressService.getAddressByStreetandNumber(street, houseNumber);
         if(address == null) {
             address = new Address(street, houseNumber, postcode, city, country);
@@ -87,16 +83,15 @@ public class JoinController {
         if (accountType.equals("private")) { //create an Account (particular account)
             String privateIban = IBANGeneratoRand.generateIBAN();
             Account privateAccount = new Account(privateIban);
-                privateAccount.setAccountName(firstName + lastName);
+            privateAccount.setAccountName(firstName + lastName);
             accountService.save(privateAccount);
         }
-
         else if (accountType.equals("corporate")) { //create an SMEAccount
             Address companyAddress = null;
             Company company = new Company(companyName, companyAddress);
 
             //company address
-                int i = Integer.parseInt(companyNumber); //necessary parsing for the corporate number in form
+            int i = Integer.parseInt(companyNumber); //necessary parsing for the corporate number in form
             companyAddress = addressService.getAddressByStreetandNumber(companyStreet, i);
             if(companyAddress == null){
                 companyAddress = new Address(companyStreet, i, companyPostcode, companyCity, companyCountry);
@@ -119,9 +114,7 @@ public class JoinController {
             SMEAccount corporateAccount = new SMEAccount(corporateIban, companySector, managerSME, company);
             smeAccountService.save(corporateAccount);
         }
-
         model.addAttribute("new_user", true);
-
         return "set_password";
     }
 }
