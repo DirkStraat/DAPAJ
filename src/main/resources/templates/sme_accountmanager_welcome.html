@@ -31,16 +31,22 @@
             <ul class="navbar-nav">
                 <li class="nav-item">
                     <a class="nav-link" href="/average_balance_branch">Saldo per sector</a></li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#"><div><span th:text="${#dates.format(#dates.createNow(), 'dd MMMMMMMMM yyyy HH:mm')}"></span></div></a>
-            </ul>
-            <ul class="navbar-nav nav-right">
-            </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/logout">Uitloggen</a></li>
             </ul>
         </div>
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="#"><div><span th:text="${#dates.format(#dates.createNow(), 'dd MMMMMMMMM yyyy HH:mm')}"></span></div></a>
+            <li class="nav-item ">
+                <a class="nav-link" href="/logout">Uitloggen</a></li>
+        </ul>
     </nav>
+    <!--<nav class="navbar navbar-light bg-light">
+        <a class="navbar-brand">Navbar</a>
+        <form class="form-inline nav-item">
+            <li class="nav-link"> <a href="/logout">Uitloggen</a></li>
+
+        </form>
+    </nav>-->
 
     <div class="content">
     <h1>Hoofd MKB keuze pagina</h1>
