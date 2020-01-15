@@ -2,29 +2,92 @@
 <html lang="en" html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <style>
+        .content{
+            margin-left : 30px;
+            margin-right: 30px;
+        }
+        .nav-right{
+            text-align:right;
+        }
+        .navbar{
+            padding-left: 30px;;
+        }
+
+    </style>
     <title>Welkom hoofd MKB</title>
 
 </head>
 <body>
-
-    <nav>
-        <ul>
-            <li><a href="/logout">Uitloggen</a></li>
-        </ul>
+    <!--Navbar-->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">DAPAJ</a>
+        <!--Hamburger-->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="/average_balance_branch">Saldo per sector</a></li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#"><div><span th:text="${#dates.format(#dates.createNow(), 'dd MMMMMMMMM yyyy HH:mm')}"></span></div></a>
+            </ul>
+            <ul class="navbar-nav nav-right">
+            </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/logout">Uitloggen</a></li>
+            </ul>
+        </div>
     </nav>
 
+    <div class="content">
     <h1>Hoofd MKB keuze pagina</h1>
         <h2>Welkom <span th:text="${welcome}"/></h2>
             <h3>Hieronder uw keuze mogelijkheden</h3>
-    <table>
+    </div>
+    <!--<table>
     <tr>
-        <td> <a href="/average_balance_branch">Saldo per sector overzicht </a></td>
         <td> <a href="10_highest_balance_smec">Klant met hoogste saldo overzicht</a></td>
     </tr>
     <tr>
         <td> <a href="10_highest_volume_smec">Meest active klant overzicht</a></td>
         <td> <a href="link_terminal">Automaat koppelen</a></td>
     </tr>
-    </table>
+    </table>-->
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
 </body>
 </html>
+
+<!--
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">DAPAJ</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="/customer_welcome">jouw rekeningen</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#" onclick="showDiv('transfer');">geld overmaken</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#" onclick="showDiv('addRepresentative');">rekeninghouder toevoegen</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link logout" href="/logout">uitloggen</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#"><div><span th:text="${#dates.format(#dates.createNow(), 'dd MMMMMMMMM yyyy HH:mm')}"></span></div></a>
+            </li>
+        </ul>
+    </div>
+</nav>-->
