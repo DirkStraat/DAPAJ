@@ -71,23 +71,13 @@ public class JoinController {
                                   ) {
 
         //create the user with the form info
-        Customer user = new Customer();
-        user.setLastName(lastName);
-        user.setFirstName(firstName);
-        user.setPrefix(prefix);
-        user.setSocialSecurityNumber(BSN);
-        user.setDateOfBirth(dateOfBirth);
-        user.setEmail(email);
+        Address address = null;
+        Customer user   = new Customer(firstName, prefix, lastName, address, BSN, dateOfBirth, email);
+
             //now make the user sub-object Address
-        Address address = addressService.getAddressByStreetandNumber(street, houseNumber); //check if it already exists
+        address = addressService.getAddressByStreetandNumber(street, houseNumber); //check if it already exists
         if(address == null) {
-            address = new Address();
-            address.setStreet(street);
-            address.setHousenumber(houseNumber);
-            address.setSuffix(suffix);
-            address.setPostcode(postcode);
-            address.setCity(city);
-            address.setCountry(country);
+            address = new Address(street, houseNumber, postcode, city, country);
         }
         user.setAddress(address);
         addressService.save(address);
