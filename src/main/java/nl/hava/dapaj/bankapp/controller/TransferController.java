@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import javax.validation.constraints.DecimalMin;
-
+import javax.validation.constraints.Max;
+import java.lang.reflect.Array;
+import java.util.List;
 
 
 @Controller
@@ -38,29 +40,29 @@ public class TransferController {
                                     Model model) {
         Account debitAccount = (Account) model.getAttribute("account");
         Account creditAccount = accountService.getAccountByIban(yourCreditAccount);
+        String amountDouble = checkForComma(amount);
 
         if(!(accountExists(yourCreditAccount))) {
             accountPageController.enterAccountPage(debitAccount.getAccountID(), model);
             model.addAttribute("motd", "iban onjuist");
         }
-            else if (!(isDouble(amount)))
-            {
+            else if (!(isDouble(amountDouble))) {
                 model.addAttribute("motd", " bedrag onjuist");
                 accountPageController.enterAccountPage(debitAccount.getAccountID(), model);
                 return "account_page";
             }
-            else if (Double.parseDouble(amount) < 0.01) {
+            else if (Double.parseDouble(amountDouble) < 0.01) {
             model.addAttribute("motd", " bedrag te klein");
             accountPageController.enterAccountPage(debitAccount.getAccountID(), model);
             return "account_page";
         }
-            else if(debitAccount.getBalance() > CREDIT_LIMIT) {
+            else if(debitAccount.getBalance() - Double.parseDouble(amountDouble) < CREDIT_LIMIT) {
             model.addAttribute("motd", "balance niet genoeg");
             accountPageController.enterAccountPage(debitAccount.getAccountID(), model);
             return "account_page";
         }
             else {
-                Transaction transaction = new Transaction(debitAccount, creditAccount, Double.parseDouble(amount), 		description);
+                Transaction transaction = new Transaction(debitAccount, creditAccount, Double.parseDouble(amountDouble), description);
                 transactionService.doTransAction(transaction);
                 accountPageController.enterAccountPage(debitAccount.getAccountID(), model);
                 model.addAttribute("motd", "Transactie succesvol");
@@ -80,6 +82,13 @@ public class TransferController {
         return false;
     }
 
+
+    private String checkForComma(String amount){
+        System.out.println(amount);
+        amount = amount.replace(',','.');
+        System.out.println(amount);
+        return amount;
+    }
 
     public boolean isDouble(String amount) {
         try {
