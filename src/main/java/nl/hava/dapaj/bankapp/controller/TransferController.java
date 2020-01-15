@@ -40,29 +40,25 @@ public class TransferController {
         Account creditAccount = accountService.getAccountByIban(yourCreditAccount);
 
         if(!(accountExists(yourCreditAccount))) {
-
             accountPageController.enterAccountPage(debitAccount.getAccountID(), model);
             model.addAttribute("motd", "iban onjuist");
         }
-
             else if (!(isDouble(amount)))
             {
                 model.addAttribute("motd", " bedrag onjuist");
                 accountPageController.enterAccountPage(debitAccount.getAccountID(), model);
                 return "account_page";
             }
-            else if(Double.parseDouble(amount) < 0.01) {
+            else if (Double.parseDouble(amount) < 0.01) {
             model.addAttribute("motd", " bedrag te klein");
             accountPageController.enterAccountPage(debitAccount.getAccountID(), model);
             return "account_page";
-
         }
-        else if(debitAccount.getBalance() > -1000) {
+            else if(debitAccount.getBalance() > CREDIT_LIMIT) {
             model.addAttribute("motd", "balance niet genoeg");
             accountPageController.enterAccountPage(debitAccount.getAccountID(), model);
             return "account_page";
         }
-
             else {
                 Transaction transaction = new Transaction(debitAccount, creditAccount, Double.parseDouble(amount), 		description);
                 transactionService.doTransAction(transaction);
@@ -70,7 +66,8 @@ public class TransferController {
                 model.addAttribute("motd", "Transactie succesvol");
             }
             return "account_page";
-        }
+    }
+
 
 
 
