@@ -63,7 +63,7 @@ public class CustomerWelcomeController {
         return "customer_welcome";
     }
 
-    @PostMapping("customer_welcome")
+    @GetMapping("customer_welcome")
     public String customerWelcomeHandler(Model model) {
        fillModel(model);
         return "customer_welcome";
