@@ -47,19 +47,19 @@
     </table>
     <h1>Methode 2</h1>
     <form action="ergens" method="POST">
-        <select name="sector" id="sector">
+        <select name="sector" id="sector" onchange="checkForSectorBalance()">
             <option th:each="branch, iter: ${branch_list}"
                     th:text="${branch}">
             </option>
         </select>
-        <input type="text" id="accountid" name="balance" placeholder="saldo"><br>
+        <input type="text" id="average_balance" name="balance" placeholder="saldo"><br>
     </form>
     <div id="error" hidden>
         <p> Er ging iet fout</p>
     </div>
 
     <script>
-        document.getElementById('sector').addEventListener('focusout', checkForSectorBalance);
+        document.getElementById('sector');
 
         function checkForSectorBalance() {
             console.log('out of focus' + this);
@@ -79,15 +79,15 @@
             request.onload = function () {
                 if (request.status !=200){
                     document.getElementById('error').style.display = 'block'
-                    document.getElementById('accountid').value = '';
+                    document.getElementById('average_balance').value = '';
                     document.getElementById('sector').classList.add('error');
                 }   else {
                     document.getElementById('error').style.display='none';
                     console.log(`Done, got ${request.response.length} bytes`);
                     console.log('response' + request.response);
-                    let addressPart = JSON.parse(request.response);
-                    console.log(addressPart.toFixed(2));
-                    document.getElementById('accountid').value = '€' + addressPart.toFixed(2);
+                    let average_saldo = JSON.parse(request.response);
+                    console.log(average_saldo.toFixed(2));
+                    document.getElementById('average_balance').value = '€' + average_saldo.toFixed(2);
 
                 }
             }
