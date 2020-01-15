@@ -19,31 +19,21 @@ public class SetPasswordController {
                                         @RequestParam(name = "bsn") String bsn,
                                         Model model) {
         User user = userService.findUserByLoginName(name);
-        if (bsn.equals(user.getSocialSecurityNumber())) {
+        if (user != null && bsn.equals(user.getSocialSecurityNumber())) {
             user.setPassword(password);
             userService.save(user);
             model.addAttribute("header_inlog", "Wachtwoord succesvol gewijzigd");
-        } else {
-            model.addAttribute("header_inlog", "Wachtwoord kan niet gewijzigd worden");
-        }
-        return "login";
-    }
-}
-
-        /*if (user != null && bsn.equals(user.getSocialSecurityNumber())) {
-            user.setPassword(password);
-            userService.save(user);
-
-            model.addAttribute("header_inlog", "Wachtwoord succesvol gewijzigd");
-            return "login";
-        } else {
+        } else if(user==null){
             User newUser = userService.findUserBySocialSecurityNumber(bsn);
             newUser.setLoginName(name);
             newUser.setPassword(password);
             userService.save(newUser);
+            model.addAttribute("header_inlog", "Gebruikersnaam en wachtwoord opgeslagen");
+        } else {
+            model.addAttribute("header_inlog", "Wachtwoord kan niet gewijzigd worden!");
         }
-             model.addAttribute("header_inlog", "Wachtwoord kan niet gewijzigd worden");
-             return "login";
-    }*/
+        return "login";
+    }
+}
 
 
