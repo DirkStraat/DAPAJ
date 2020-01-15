@@ -5,6 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Welkom</title>
+    <link rel="stylesheet" type="text/css" href="customer_welcome.css">
     <script>
         function showLinkAccount() {
             var x = document.getElementById("linkAccount");
@@ -20,15 +21,16 @@
 <h1><span th:text="${motd}"></span></h1>
 <br>
 <h3>Rekening overzicht:</h3>
-<table>
+<table id="accounts">
     <tr>
-        <td>Tenaamstelling:</td>
-        <td>Rekeningnummer:</td>
-        <td>Saldo:</td>
+        <th>Tenaamstelling:</th>
+        <th>Rekeningnummer:</th>
+        <th>Saldo:</th>
     </tr>
     <tr th:each="account: ${accounts}">
         <td><span th:text="${account.getAccountName()}"/> </a> </td>
-        <td><a th:href="@{/do_select_account(account_id=${account.getAccountID()})}"><span th:text="${account.getIban()}"/> </a></td>
+        <td><a th:href="@{/do_select_account(account_id=${account.getAccountID()})}">
+            <span th:text="${account.getIban()}"/> </a></td>
         <td><span th:text="${#numbers.formatCurrency(account.getBalance())}"/> </a> </td>
     </tr>
 </table>
@@ -47,7 +49,8 @@
 <div id="linkAccount" style="display: none">
     <form action="link_account" method="post">
         <select th:id="invitationId" th:name="invitationId">
-            <option th:each="invitation : ${invitations}" th:text="${invitation.getAccount().getAccountName()}" th:value="*{invitation.getInvitationId()}">
+            <option th:each="invitation : ${invitations}" th:text="${invitation.getAccount().getAccountName()}"
+                    th:value="*{invitation.getInvitationId()}">
             </option>
         </select>
         <input type="password" th:name="keycode" th:id="tekstveld">
