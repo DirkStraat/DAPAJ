@@ -70,22 +70,21 @@ public class JoinController {
                                   Model model
                                   ) {
 
-        //create the user with the form info
+        //create the Customer ...
         Address address = null;
         Customer user   = new Customer(firstName, prefix, lastName, address, BSN, dateOfBirth, email);
 
-            //now make the user sub-object Address
-        address = addressService.getAddressByStreetandNumber(street, houseNumber); //check if it already exists
+        //... and a new Address or refer to existing Address
+        address = addressService.getAddressByStreetandNumber(street, houseNumber);
         if(address == null) {
             address = new Address(street, houseNumber, postcode, city, country);
         }
         user.setAddress(address);
         addressService.save(address);
-        //save the user in the database
         userService.save(user);
 
 
-        if (accountType.equals("private")) { //create an Account
+        if (accountType.equals("private")) { //create an Account (particular account)
             String privateIban = IBANGeneratoRand.generateIBAN();
             Account privateAccount = new Account(privateIban);
                 privateAccount.setAccountName(firstName + lastName);
@@ -93,19 +92,15 @@ public class JoinController {
         }
 
         else if (accountType.equals("corporate")) { //create an SMEAccount
-            Company company = new Company();
-            company.setCompanyName(companyName);
+            Address companyAddress = null;
+            Company company = new Company(companyName, companyAddress);
+
             //company address
-                int i = Integer.parseInt(companyNumber); //necessary parsing for the corporate form
-            Address companyAddress = addressService.getAddressByStreetandNumber(companyStreet, i);
+                int i = Integer.parseInt(companyNumber); //necessary parsing for the corporate number in form
+            companyAddress = addressService.getAddressByStreetandNumber(companyStreet, i);
             if(companyAddress == null){
-                companyAddress = new Address();
+                companyAddress = new Address(companyStreet, i, companyPostcode, companyCity, companyCountry);
                 companyAddress.setSuffix("Co.");
-                companyAddress.setStreet(companyStreet);
-                companyAddress.setHousenumber(i);
-                companyAddress.setPostcode(companyPostcode);
-                companyAddress.setCity(companyCity);
-                companyAddress.setCountry(companyCountry);
             }
             company.setAddress(companyAddress);
             addressService.save(companyAddress);
