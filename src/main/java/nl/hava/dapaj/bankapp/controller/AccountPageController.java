@@ -58,13 +58,6 @@ public class AccountPageController {
         return "transfer";
     }
 
-    @GetMapping("customer_welcome")
-    public String customerWelcomeHandler(Model model){
-        User user = (User)model.getAttribute("user");
-        loginController.enterCustomerWelcome(user.getLoginName() , model);
-        return "customer_welcome";
-    }
-
     public void enterAccountPage(int accountId, Model model){
         User user = (User)model.getAttribute("user");
         model.addAttribute("user", user);
