@@ -69,11 +69,10 @@ public class CustomerWelcomeController {
     @GetMapping("customer_welcome")
     public String customerWelcomeHandler(Model model) {
        fillModel(model);
-        System.out.println("uses this one!!");
         return "customer_welcome";
     }
 
-    public Model fillModel(Model model){
+    public void fillModel(Model model){
         User user = (User) model.getAttribute("user");
         if (user != null) {
             List<AuthorizationInvitation> invitations = authorizationInvitationService.getInvitationsByUser(user);
@@ -88,7 +87,6 @@ public class CustomerWelcomeController {
                 model.addAttribute("motd", motd);
             }
         }
-        return model;
     }
 
 }
