@@ -1,8 +1,12 @@
 package nl.hava.dapaj.bankapp.controller;
 
-import nl.hava.dapaj.bankapp.model.*;
-import nl.hava.dapaj.bankapp.service.*;
-import nl.hava.dapaj.bankapp.utils.IBANGenerator;
+import nl.hava.dapaj.bankapp.model.Account;
+import nl.hava.dapaj.bankapp.model.AuthorizationInvitation;
+import nl.hava.dapaj.bankapp.model.Customer;
+import nl.hava.dapaj.bankapp.model.User;
+import nl.hava.dapaj.bankapp.service.AccountService;
+import nl.hava.dapaj.bankapp.service.AuthorizationInvitationService;
+import nl.hava.dapaj.bankapp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,10 +15,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
-import static nl.hava.dapaj.bankapp.utils.IBANGenerator.generateIBAN;
+import static nl.hava.dapaj.bankapp.utils.IBANGeneratoRand.generateIBAN;
 
 @Controller
 @SessionAttributes({"user", "account", "customer", "invitations"})
@@ -66,6 +69,7 @@ public class CustomerWelcomeController {
     @GetMapping("customer_welcome")
     public String customerWelcomeHandler(Model model) {
        fillModel(model);
+        System.out.println("uses this one!!");
         return "customer_welcome";
     }
 
@@ -79,6 +83,10 @@ public class CustomerWelcomeController {
             model.addAttribute("user", user);
             model.addAttribute("accounts", accountsByUser);
             model.addAttribute("invitations", invitations);
+            if (model.getAttribute("motd") == null) {
+                String motd = String.format("Welkom %s.", user.getFirstName());
+                model.addAttribute("motd", motd);
+            }
         }
         return model;
     }
