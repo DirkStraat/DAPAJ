@@ -37,8 +37,7 @@ public class CustomerWelcomeController {
 
     @GetMapping("do_select_account")
     public String doSelectAccountHandler(@RequestParam(name = "account_id") int id, Model model) {
-        accountPageController.enterAccountPage(id, model);
-        return "account_page";
+        return accountPageController.accountPageHandler(id, model);
     }
 
     @PostMapping("do_link_account")

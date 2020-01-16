@@ -91,7 +91,7 @@ public  class Account {
 
     @Override
     public String toString() {
-        return String.format(iban);
+        return String.format("%s, %s", accountName ,iban);
     }
 }
 
