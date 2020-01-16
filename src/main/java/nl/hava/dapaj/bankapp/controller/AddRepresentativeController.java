@@ -45,7 +45,6 @@ public class AddRepresentativeController {
             authorizationInvitationService.inviteAuthorizedRepresentative(authorizationInvitation);
             model.addAttribute("motd", "Uitnodiging naar gemachtigde verstuurd. Deze kan de rekening koppelen met de koppelcode.");
         }
-        accountPageController.enterAccountPage(account.getAccountID(), model);
-        return "account_page";
+        return accountPageController.accountPageHandler(account.getAccountID(), model);
     }
 }

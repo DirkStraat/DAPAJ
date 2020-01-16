@@ -43,31 +43,27 @@ public class TransferController {
         String amountDouble = checkForComma(amount);
 
         if(!(accountExists(yourCreditAccount))) {
-            accountPageController.enterAccountPage(debitAccount.getAccountID(), model);
             model.addAttribute("motd", "iban onjuist");
+            return accountPageController.accountPageHandler(debitAccount.getAccountID(), model);
         }
             else if (!(isDouble(amountDouble))) {
-                model.addAttribute("motd", " bedrag onjuist");
-                accountPageController.enterAccountPage(debitAccount.getAccountID(), model);
-                return "account_page";
-            }
+                model.addAttribute("motd", "bedrag onjuist");
+            return accountPageController.accountPageHandler(debitAccount.getAccountID(), model);
+
+        }
             else if (Double.parseDouble(amountDouble) < 0.01) {
-            model.addAttribute("motd", " bedrag te klein");
-            accountPageController.enterAccountPage(debitAccount.getAccountID(), model);
-            return "account_page";
+            model.addAttribute("motd", "bedrag te klein");
+            return accountPageController.accountPageHandler(debitAccount.getAccountID(), model);
         }
             else if(debitAccount.getBalance() - Double.parseDouble(amountDouble) < CREDIT_LIMIT) {
-            model.addAttribute("motd", "balance niet genoeg");
-            accountPageController.enterAccountPage(debitAccount.getAccountID(), model);
-            return "account_page";
+            model.addAttribute("motd", "saldo niet toereikend");
+            return accountPageController.accountPageHandler(debitAccount.getAccountID(), model);
         }
             else {
                 Transaction transaction = new Transaction(debitAccount, creditAccount, Double.parseDouble(amountDouble), description);
                 transactionService.doTransAction(transaction);
-                accountPageController.enterAccountPage(debitAccount.getAccountID(), model);
-                model.addAttribute("motd", "Transactie succesvol");
-            }
-            return "account_page";
+            return accountPageController.accountPageHandler(debitAccount.getAccountID(), model);
+        }
     }
 
 

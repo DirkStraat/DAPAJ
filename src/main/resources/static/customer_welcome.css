@@ -57,7 +57,7 @@ h3{
 }
 
 
-input[type="submit"] {
+input[type="submit"], input[type="button"] {
     border: 1px solid rgba(250, 205, 136, .8);
     border-radius: 5px;
     color: #fff;

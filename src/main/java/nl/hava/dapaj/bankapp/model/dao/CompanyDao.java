@@ -12,5 +12,6 @@ import java.util.List;
 public interface CompanyDao extends CrudRepository<Company, Integer> {
     Company findCompanyByCompanyName(String companyName);
     Company getCompanyByCompanyId(int companyId);
+    Company getCompanyByAccountsContains(Account account);
 
 }
