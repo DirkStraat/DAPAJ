@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 public interface EmployeeDao extends CrudRepository<Employee, Integer> {
     Employee findUserByEmployeeLoginName(String employeeLogin);
     Employee getEmployeeByEmployeeLoginName(String employeeLogin);
+    Employee findEmployeeByCustomerId(int customerId);
 
     Employee findEmployeeByRole(String role);
 }

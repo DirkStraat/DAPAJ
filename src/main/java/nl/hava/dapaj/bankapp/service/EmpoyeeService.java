@@ -17,4 +17,6 @@ public class EmpoyeeService {
     public Employee findEmployeeByRole(String role){
         return employeeDao.findEmployeeByRole(role);
     }
+
+    public Employee findEmployeeByCustomerId(int customerId){return employeeDao.findEmployeeByCustomerId(customerId);}
 }
