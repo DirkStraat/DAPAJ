@@ -13,7 +13,7 @@
             margin-top: 10px;
         }
 
-        .afschrijving{
+        .negatief{
             color: red;
         }
 
@@ -115,7 +115,7 @@
         <div class="container-fluid border border-secondary">
             <div>Dit is de overzichtspagina voor rekening met nummer: <span th:text="${account.iban}"></span></div>
             <div>Deze rekening is gesteld op naam van: <span th:text="${account.accountName}"></span></div>
-            <div>Het huidige saldo op deze rekening is: <span th:text="${#numbers.formatCurrency(account.balance)}"></span></div>
+            <div>Het huidige saldo op deze rekening is: <span th:class="${account.balance < 0} ? negatief" th:text="${#numbers.formatCurrency(account.balance)}"></span></div>
         </div>
 
         <h3 class="container-fluid">Overzicht van transacties</h3>
@@ -125,7 +125,7 @@
             </tr>
             <tr th:each="transaction, iter: ${transactions}" th:unless="${iter.count > 10}">
                 <td><span th:text="${#temporals.format(transaction.date, 'dd-MM-yyyy')}"/></td>
-                <td><span th:class="${transaction.debitAccount.getAccountID() == account.getAccountID()} ? afschrijving" th:text="${#numbers.formatCurrency(transaction.amount)}"/></td>
+                <td><span th:class="${transaction.debitAccount.getAccountID() == account.getAccountID()} ? negatief" th:text="${#numbers.formatCurrency(transaction.amount)}"/></td>
                 <td><span th:text="${transaction.debitAccount.getAccountID() == account.getAccountID()} ? ${transaction.creditAccount} : ${transaction.debitAccount}"/></td>
                 <td><span th:text="${transaction.debitAccount.getAccountID() == account.getAccountID()} ? 'Afschrijving' : 'Bijschrijving'"></span>
                 </td>

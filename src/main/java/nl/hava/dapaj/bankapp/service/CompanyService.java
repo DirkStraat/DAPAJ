@@ -1,5 +1,6 @@
 package nl.hava.dapaj.bankapp.service;
 
+import nl.hava.dapaj.bankapp.model.Account;
 import nl.hava.dapaj.bankapp.model.Company;
 import nl.hava.dapaj.bankapp.model.User;
 import nl.hava.dapaj.bankapp.model.dao.CompanyDao;
@@ -19,5 +20,7 @@ public class CompanyService {
     public void saveCompany(Company company){
         companyDao.save(company);
     }
+
+    public Company getCompanyByAccount(Account account) {return companyDao.getCompanyByAccountsContains(account);}
 
 }
