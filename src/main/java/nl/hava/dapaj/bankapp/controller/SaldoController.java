@@ -38,6 +38,7 @@ public class SaldoController {
     double getSector(@RequestParam String sector) {
         System.out.println("get sector");
         System.out.println("request data in: " + sector);
+        System.out.println(smeAccountService.findsSmeAccountbyBranch(sector));
         return getSaldo(sector);
     }
 

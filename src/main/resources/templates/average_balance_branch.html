@@ -70,7 +70,7 @@
             var formData = `sector=${sector}`;
             console.log('we have valid data' + this)
             let request = new XMLHttpRequest();
-            request.open('POST','http://localhost:8080/saldo', this)
+            request.open('POST','/saldo', this)
 
             request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
             request.setRequestHeader('Accept', 'application/json')
