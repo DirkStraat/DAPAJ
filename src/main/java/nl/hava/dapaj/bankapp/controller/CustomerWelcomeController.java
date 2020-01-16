@@ -24,6 +24,9 @@ import static nl.hava.dapaj.bankapp.utils.IBANGeneratoRand.generateIBAN;
 public class CustomerWelcomeController {
 
     @Autowired
+    LoginController loginController;
+
+    @Autowired
     private AccountService accountService;
 
     @Autowired
@@ -67,17 +70,25 @@ public class CustomerWelcomeController {
 
     @GetMapping("customer_welcome")
     public String customerWelcomeHandler(Model model) {
-       fillModel(model);
+       User user = (User) model.getAttribute("user");
+        loginController.enterCustomerWelcome(user.getLoginName(), model);
         return "customer_welcome";
     }
 
     public void fillModel(Model model){
+        System.out.println("model 1" + model);
         User user = (User) model.getAttribute("user");
+        System.out.println("model wordt gevuld");
+        System.out.println("model 2" + model);
         if (user != null) {
             List<AuthorizationInvitation> invitations = authorizationInvitationService.getInvitationsByUser(user);
             List<Account> accountsByUser = accountService.getAccountByUser(user);
             List<Account> accountsByCompany = accountService.getAccountByCompany(user);
             accountsByUser.addAll(accountsByCompany);
+            for (Account account : accountsByUser
+            ) {
+                System.out.println(account.getBalance());
+            }
             model.addAttribute("user", user);
             model.addAttribute("accounts", accountsByUser);
             model.addAttribute("invitations", invitations);
@@ -85,6 +96,7 @@ public class CustomerWelcomeController {
                 String motd = String.format("Welkom %s.", user.getFirstName());
                 model.addAttribute("motd", motd);
             }
+            System.out.println("model 3" + model);
         }
     }
 
