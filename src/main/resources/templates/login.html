@@ -11,8 +11,10 @@
 <body>
     <h1> Welkom bij de DAPAJ Bank</h1>
     <h2></h2>
+    <h1><span th:text="${check_acount} ?'Dit BSN is al geregistreerd. Bel ons, als je een tweede account wil openen.': ''"></span></h1>
 
-        <form class="login" action="#" th:action="@{do_login}" method="post">
+
+    <form class="login" action="#" th:action="@{do_login}" method="post">
             <TH COLSPAN="2">
                 <h4><span th:text="${header_inlog}"></span></h4>
             </TH>

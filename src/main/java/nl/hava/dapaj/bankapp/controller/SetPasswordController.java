@@ -2,6 +2,7 @@
 package nl.hava.dapaj.bankapp.controller;
 
         import nl.hava.dapaj.bankapp.model.User;
+        import nl.hava.dapaj.bankapp.service.SMEAccountService;
         import nl.hava.dapaj.bankapp.service.UserService;
         import org.springframework.beans.factory.annotation.Autowired;
         import org.springframework.stereotype.Controller;
@@ -12,6 +13,9 @@ package nl.hava.dapaj.bankapp.controller;
 public class SetPasswordController {
     @Autowired
     private UserService userService;
+
+/*    @Autowired
+    private SMEAccountService smeAccountService;*/
 
     @PostMapping("change_password")
     public String changePasswordHandler(@RequestParam(name = "user_name") String name,
@@ -29,8 +33,6 @@ public class SetPasswordController {
             newUser.setPassword(password);
             userService.save(newUser);
             model.addAttribute("header_inlog", "Gebruikersnaam en wachtwoord opgeslagen");
-        } else if (user.getSocialSecurityNumber() != null) {
-            model.addAttribute("header_inlog", "Dit BSN bestaat al. Vraag hulp aan de balie van een medewerker om een nieuwe account te openen.");
         } else {
             model.addAttribute("header_inlog", "Wachtwoord kan niet gewijzigd worden!");
         }

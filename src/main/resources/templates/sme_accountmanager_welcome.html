@@ -8,9 +8,6 @@
             margin-left : 30px;
             margin-right: 30px;
         }
-        .nav-right{
-            text-align:right;
-        }
         .navbar{
             padding-left: 30px;;
         }
@@ -29,11 +26,27 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav">
+                                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Overzichten
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="/average_balance_branch">Saldo per sector</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">Klant met hoogste saldo</a>
+                        <a class="dropdown-item" href="#">Meest actieve klant</a>
+                        <a class="dropdown-item" href="#"></a>
+                    </div>
+                </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/average_balance_branch">Saldo per sector</a></li>
+                    <a class="nav-link" href=#>Automaat koppelen</a></li>
             </ul>
         </div>
         <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="#">Hallo</a></li>
+            <a class ="nav-item">
+                <a class="nav-link" href="#" th:text="${welcome}"></a></a></li>
             <li class="nav-item">
                 <a class="nav-link" href="#"><div><span th:text="${#dates.format(#dates.createNow(), 'dd MMMMMMMMM yyyy HH:mm')}"></span></div></a>
             <li class="nav-item ">
@@ -49,9 +62,9 @@
     </nav>-->
 
     <div class="content">
-    <h1>Hoofd MKB keuze pagina</h1>
-        <h2>Welkom <span th:text="${welcome}"/></h2>
-            <h3>Hieronder uw keuze mogelijkheden</h3>
+    <!--<h1>Hoofd MKB keuze pagina</h1>
+        <h2>Welkom <span th:text="${welcome}"/></h2>-->
+            <h3>Maak een keuze</h3>
     </div>
     <!--<table>
     <tr>
