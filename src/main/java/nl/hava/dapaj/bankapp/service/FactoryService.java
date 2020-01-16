@@ -52,7 +52,7 @@ public class FactoryService {
         Set<Customer> customers = fabriekje.generateCustomers(AANTAL_KLANTEN);
         List<Account> accounts = generateAccountsWithCustomers(customers);
         List<Company> companies = generateCompanies(AANTAL_BEDRIJVEN);
-        List<User> users = generateUsers(AANTAL_GEBRUIKERS);
+        List<Customer> users = generateUsers(AANTAL_GEBRUIKERS);
         List<SMEAccount> smeAccounts = new ArrayList<>();
         List<Employee> bankEmployees = fabriekje.generateBankEmployees();
         for (Company company : companies) {
@@ -102,15 +102,16 @@ public class FactoryService {
     }
 
 
-    private List<User> generateUsers(int aantalGebruikers){
-        List<User> users = new ArrayList<>();
-        for (int i = 0; i <aantalGebruikers ; i++) {
-            users.add(fabriekje.generateUser());
+    private List<Customer> generateUsers(int aantalGebruikers){
+        Set<Customer> users = fabriekje.generateCustomers(aantalGebruikers);
+        List<Customer> companyCustomers = new ArrayList<>();
+        for (Customer customer :users) {
+            companyCustomers.add(customer);
         }
-        return users;
+        return companyCustomers;
     }
 
-    private void addEmployeesToCompany(Company company, List<User> users) {
+    private void addEmployeesToCompany(Company company, List<Customer> users) {
        if (users.size()>companyEmployeesIndex+1) {
            List<User> companyEmployees = new ArrayList<>();
            User companyEmployee = users.get(companyEmployeesIndex++);
