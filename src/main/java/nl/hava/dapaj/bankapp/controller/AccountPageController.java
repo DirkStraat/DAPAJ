@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-@SessionAttributes({"user", "account"})
+@SessionAttributes({"user", "account", "transactions", "customers"})
 public class AccountPageController {
 
     @Autowired

@@ -62,6 +62,7 @@ public class TransferController {
             else {
                 Transaction transaction = new Transaction(debitAccount, creditAccount, Double.parseDouble(amountDouble), description);
                 transactionService.doTransAction(transaction);
+                model.addAttribute("motd", "transactie succesvol");
             return accountPageController.accountPageHandler(debitAccount.getAccountID(), model);
         }
     }
@@ -80,9 +81,7 @@ public class TransferController {
 
 
     private String checkForComma(String amount){
-        System.out.println(amount);
         amount = amount.replace(',','.');
-        System.out.println(amount);
         return amount;
     }
 

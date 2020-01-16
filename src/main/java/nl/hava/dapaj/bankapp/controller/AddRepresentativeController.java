@@ -5,6 +5,7 @@ import nl.hava.dapaj.bankapp.model.AuthorizationInvitation;
 import nl.hava.dapaj.bankapp.model.User;
 import nl.hava.dapaj.bankapp.service.AccountService;
 import nl.hava.dapaj.bankapp.service.AuthorizationInvitationService;
+import nl.hava.dapaj.bankapp.service.EmpoyeeService;
 import nl.hava.dapaj.bankapp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,6 +28,9 @@ public class AddRepresentativeController {
     @Autowired
     AccountPageController accountPageController;
 
+    @Autowired
+    EmpoyeeService employeeService;
+
     @PostMapping("invite_representative")
     public String inviteRepresentativeHandler(@RequestParam(name = "user_name") String userName,
                                               @RequestParam(name = "keycode") String keycode , Model model) {
@@ -36,6 +40,8 @@ public class AddRepresentativeController {
 
         if (newRepresentative == null){
             model.addAttribute("motd", "Deze gebruikersnaam is niet bekend in het systeem.");
+        } else if (employeeService.findEmployeeByCustomerId(newRepresentative.getCustomerId())!=null){
+            model.addAttribute("motd", "Genodigde is bankmedewerker en mag geen uitnodiging ontvangen");
         } else if (keycode.length() != LENGTE_KOPPELCODE){
             model.addAttribute("motd", "Aantal tekens van koppelcode is niet juist.");
         } else if (invitation != null){
