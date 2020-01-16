@@ -85,6 +85,10 @@ public class JoinController {
             Account privateAccount = new Account(privateIban);
             privateAccount.setAccountName(firstName + lastName);
             accountService.save(privateAccount);
+            privateAccount.getCustomers().add(user); //an account has a set of users
+            user.getAccounts().add(privateAccount); //user as a set of accounts
+            accountService.save(privateAccount);
+            userService.save(user);
         }
         else if (accountType.equals("corporate")) { //create an SMEAccount
             Address companyAddress = null;
@@ -113,8 +117,12 @@ public class JoinController {
             Employee managerSME = employeeService.findEmployeeByRole("Manager SME");
             SMEAccount corporateAccount = new SMEAccount(corporateIban, companySector, managerSME, company);
             smeAccountService.save(corporateAccount);
+
+
         }
+
         model.addAttribute("new_user", true);
+
         return "set_password";
     }
 }

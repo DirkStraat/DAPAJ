@@ -29,6 +29,8 @@ public class SetPasswordController {
             newUser.setPassword(password);
             userService.save(newUser);
             model.addAttribute("header_inlog", "Gebruikersnaam en wachtwoord opgeslagen");
+        } else if (user.getSocialSecurityNumber() != null) {
+            model.addAttribute("header_inlog", "Dit BSN bestaat al. Vraag hulp aan de balie van een medewerker om een nieuwe account te openen.");
         } else {
             model.addAttribute("header_inlog", "Wachtwoord kan niet gewijzigd worden!");
         }
