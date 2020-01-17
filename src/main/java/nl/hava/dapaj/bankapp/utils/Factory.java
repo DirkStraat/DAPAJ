@@ -12,10 +12,10 @@ import java.util.*;
 
 
 public class Factory {
-    static final int NUMBER_OF_CITIES = 1;
-    static final int NUMBER_OF_STREETS = 20;
-    static final int NUMBER_OF_HOUSES = 20;
-    static final int NUMBER_OF_IBANS = 400;
+    static final int NUMBER_OF_CITIES = 6;
+    static final int NUMBER_OF_STREETS = 80;
+    static final int NUMBER_OF_HOUSES = 100;
+    static final int NUMBER_OF_IBANS = 2000;
 
     @Autowired
     TransactionService transactionService;
@@ -107,14 +107,17 @@ public class Factory {
         String companyName = faker.company().name();
         Address address = pickRandom(addresses);
         Company company = new Company(companyName, address);
+
         return company;
+
     }
 
     private <T> T pickRandom(List<T> list){
         int size = list.size();
-        int randomIndex = (int)(Math.random()*size);
+        int randomIndex = (int) (Math.random() * size);
         T t = list.get(randomIndex);
         list.remove(randomIndex);
+
         return t;
     }
 
@@ -144,11 +147,13 @@ public class Factory {
 
     public List<Employee> generateBankEmployees(){
         List<Employee> bankEmployees = new ArrayList<>();
-        Set<Customer> customers = generateCustomers(2);
-        List<Customer> customerList = new ArrayList<>();
-        customerList.addAll(customers);
-        Employee managerRetail = new Employee("Manager Retail", customerList.get(0));
-        Employee managerSME = new Employee("Manager SME", customerList.get(1));
+        Customer employee1 = new Customer("Dirk", "van der", "Straaten", new Address()
+                , "186016190", faker.date().birthday(18, 83).toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), "dirk@hallo.nl");
+        Customer employee2 = new Customer("Dirk", "van der", "Straaten", new Address()
+                , "186016190", faker.date().birthday(18, 83).toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), "dirk@hallo.nl");
+        //customerList.addAll(customers);
+        Employee managerRetail = new Employee("Manager Retail", employee1);
+        Employee managerSME = new Employee("Manager SME", employee2);
         bankEmployees.add(managerRetail);
         bankEmployees.add(managerSME);
         return bankEmployees;

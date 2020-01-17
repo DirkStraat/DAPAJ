@@ -7,15 +7,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 @Service
 public class FactoryService {
-    final static int AANTAL_KLANTEN = 40;
-    final static int AANTAL_BEDRIJVEN = 10;
-    final static int AANTAL_GEBRUIKERS = 30;
-    final static int NUMBER_OF_TRANSACTIONS = 500;
+    final static int AANTAL_KLANTEN = 400;
+    final static int AANTAL_BEDRIJVEN = 100;
+    final static int AANTAL_GEBRUIKERS = 300;
+    final static int NUMBER_OF_TRANSACTIONS = 5000;
     private int companyEmployeesIndex = 0;
     private Factory fabriekje;
 
@@ -55,6 +56,7 @@ public class FactoryService {
         List<Customer> users = generateUsers(AANTAL_GEBRUIKERS);
         List<SMEAccount> smeAccounts = new ArrayList<>();
         List<Employee> bankEmployees = fabriekje.generateBankEmployees();
+
         for (Company company : companies) {
             addEmployeesToCompany(company, users);
             addCompanyToSMEAccount(smeAccounts, company, bankEmployees);
@@ -96,14 +98,19 @@ public class FactoryService {
     private List<Company> generateCompanies(int aantalBedrijven){
         List<Company> companies = new ArrayList<>();
         for (int i = 0; i <aantalBedrijven ; i++) {
-                companies.add(fabriekje.generateCompany());
+
+            companies.add(fabriekje.generateCompany());
+
         }
         return companies;
     }
 
 
     private List<Customer> generateUsers(int aantalGebruikers){
-        Set<Customer> users = fabriekje.generateCustomers(aantalGebruikers);
+        Set<Customer> users = new HashSet<>();
+        //while(!fabriekje.getAddresses().isEmpty()){
+            users = fabriekje.generateCustomers(aantalGebruikers);
+        //}
         List<Customer> companyCustomers = new ArrayList<>();
         for (Customer customer :users) {
             companyCustomers.add(customer);
