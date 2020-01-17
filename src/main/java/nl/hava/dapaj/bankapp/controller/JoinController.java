@@ -50,7 +50,6 @@ public class JoinController {
                                   @RequestParam(name = "email") String email,
                                   @RequestParam(name = "street") String street,
                                   @RequestParam(name = "house_number") int houseNumber,
-                                  @RequestParam(name = "insert") String suffix,
                                   @RequestParam(name = "postcode") String postcode,
                                   @RequestParam(name = "city") String city,
                                   @RequestParam(name = "country") String country,
@@ -72,18 +71,15 @@ public class JoinController {
         Address address = null;
         Customer user   = new Customer(firstName, prefix, lastName, address, BSN, dateOfBirth, email);
 
-        User userCheck = userService.findUserBySocialSecurityNumber(BSN);
-
         //... check for existing Address otherwise create a new one
         address = addressService.getAddressByStreetandNumber(street, houseNumber);
         if(address == null) {
             address = new Address(street, houseNumber, postcode, city, country);
         }
         user.setAddress(address);
-        if (user.getAccounts()== null) {
-            addressService.save(address);
-            userService.save(user);
-        }
+        addressService.save(address);
+        userService.save(user);
+
 
         if (accountType.equals("private")) { //create an Account (particular account)
             String privateIban = IBANGeneratoRand.generateIBAN();

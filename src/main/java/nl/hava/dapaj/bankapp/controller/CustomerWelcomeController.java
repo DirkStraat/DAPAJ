@@ -76,10 +76,7 @@ public class CustomerWelcomeController {
     }
 
     public void fillModel(Model model){
-        System.out.println("model 1" + model);
         User user = (User) model.getAttribute("user");
-        System.out.println("model wordt gevuld");
-        System.out.println("model 2" + model);
         if (user != null) {
             List<AuthorizationInvitation> invitations = authorizationInvitationService.getInvitationsByUser(user);
             List<Account> accountsByUser = accountService.getAccountByUser(user);
@@ -96,7 +93,6 @@ public class CustomerWelcomeController {
                 String motd = String.format("Welkom %s.", user.getFirstName());
                 model.addAttribute("motd", motd);
             }
-            System.out.println("model 3" + model);
         }
     }
 
