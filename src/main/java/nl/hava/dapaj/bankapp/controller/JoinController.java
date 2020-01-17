@@ -85,7 +85,7 @@ public class JoinController {
             userService.save(user);
         }
 
-        if (accountType.equals("private") && user.getAccounts()==null) { //create an Account (particular account)
+        if (accountType.equals("private")) { //create an Account (particular account)
             String privateIban = IBANGeneratoRand.generateIBAN();
             Account privateAccount = new Account(privateIban);
             privateAccount.setAccountName(firstName + lastName);
@@ -95,7 +95,7 @@ public class JoinController {
             accountService.save(privateAccount);
             userService.save(user);
         }
-        else if (accountType.equals("corporate") && user.getAccounts()==null) { //create an SMEAccount
+        else if (accountType.equals("corporate")) { //create an SMEAccount
             Address companyAddress = null;
             Company company = new Company(companyName, companyAddress);
 
@@ -126,12 +126,7 @@ public class JoinController {
 
         model.addAttribute("new_user", true);
 
-        if (user.getAccounts()!= null) {
-            model.addAttribute("check_acount", true);
-            return "login";
-        } else {
-            return "set_password";
-        }
+        return "set_password";
 
     }
 }
