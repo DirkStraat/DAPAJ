@@ -14,4 +14,5 @@ public interface UserDao extends CrudRepository <User, Integer> {
   List<Customer> findCustomerByaccounts(Account accountId);
 
   User findUserBySocialSecurityNumber(String socialSecurityNumber);
+  List<Customer> findCustomerBySocialSecurityNumber(String socialSecurityNumber);
 }

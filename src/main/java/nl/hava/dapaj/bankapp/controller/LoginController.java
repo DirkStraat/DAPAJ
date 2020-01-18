@@ -62,7 +62,6 @@ public class LoginController {
         }else {
             enterLogin(model);
             return "login";
-
         }
     }
 

@@ -13,12 +13,16 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 public class JoinController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    CustomerService customerService;
 
     @Autowired
     CompanyService companyService;
@@ -66,6 +70,10 @@ public class JoinController {
                                   Model model
                                   ) {
 
+        if (customerService.findCustomerBySocialSecurityNumber(BSN).size() >= 1) {
+            model.addAttribute("check_existing_BSN", true);
+            return "login";
+        }
 
         //create the Customer ...
         Address address = null;
@@ -80,6 +88,9 @@ public class JoinController {
         addressService.save(address);
         userService.save(user);
 
+        Set<Account> ibanCheck = user.getAccounts();
+        System.out.println("check if BSN exists before private if " + customerService.findCustomerBySocialSecurityNumber(BSN));
+        System.out.println("before 'private' if " + ibanCheck);
 
         if (accountType.equals("private")) { //create an Account (particular account)
             String privateIban = IBANGeneratoRand.generateIBAN();
@@ -90,6 +101,9 @@ public class JoinController {
             user.getAccounts().add(privateAccount); //user as a set of accounts
             accountService.save(privateAccount);
             userService.save(user);
+            System.out.println("check if BSN exists at the end of private if " + customerService.findCustomerBySocialSecurityNumber(BSN));
+            System.out.println("end of 'private' if " + ibanCheck);
+
         }
         else if (accountType.equals("corporate")) { //create an SMEAccount
             Address companyAddress = null;
@@ -118,11 +132,12 @@ public class JoinController {
             Employee managerSME = employeeService.findEmployeeByRole("Manager SME");
             SMEAccount corporateAccount = new SMEAccount(corporateIban, companySector, managerSME, company);
             smeAccountService.save(corporateAccount);
+
+            System.out.println("check if BSN exists at the end of corporate if " + customerService.findCustomerBySocialSecurityNumber(BSN));
+            System.out.println("end of 'corporate' if " + ibanCheck);
+
         }
-
         model.addAttribute("new_user", true);
-
         return "set_password";
-
     }
 }
