@@ -12,10 +12,10 @@ import java.util.*;
 
 
 public class Factory {
-    static final int NUMBER_OF_CITIES = 6;
+    static final int NUMBER_OF_CITIES = 10;
     static final int NUMBER_OF_STREETS = 80;
-    static final int NUMBER_OF_HOUSES = 100;
-    static final int NUMBER_OF_IBANS = 2000;
+    static final int NUMBER_OF_HOUSES = 200;
+    static final int NUMBER_OF_IBANS = 200000;
 
     @Autowired
     TransactionService transactionService;

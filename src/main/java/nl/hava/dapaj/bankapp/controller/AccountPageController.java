@@ -84,6 +84,11 @@ public class AccountPageController {
             }
         }
 
+        getCompanyRepresentatives(account, users);
+        model.addAttribute("customers", users);
+    }
+
+    private void getCompanyRepresentatives(Account account, List<User> users) {
         SMEAccount smeAccount = smeAccountService.getSMEAccountByAccountId(account.getAccountID());
         if (smeAccount!=null) {
             Company company = companyService.getCompanyByAccount(account);
@@ -93,6 +98,5 @@ public class AccountPageController {
                 }
             }
         }
-        model.addAttribute("customers", users);
     }
 }
