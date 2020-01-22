@@ -13,10 +13,10 @@ import java.util.Set;
 
 @Service
 public class FactoryService {
-    final static int AANTAL_KLANTEN = 400;
-    final static int AANTAL_BEDRIJVEN = 100;
-    final static int AANTAL_GEBRUIKERS = 300;
-    final static int NUMBER_OF_TRANSACTIONS = 5000;
+    final static int AANTAL_KLANTEN = 4000;
+    final static int AANTAL_BEDRIJVEN = 1000;
+    final static int AANTAL_GEBRUIKERS = 3000;
+    final static int NUMBER_OF_TRANSACTIONS = 50000;
     private int companyEmployeesIndex = 0;
     private Factory fabriekje;
 
